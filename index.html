@@ -300,21 +300,17 @@
       
         
           
-            <p>##堆与栈是什么，与浅拷贝和深拷贝有什么联系？</p>
-<p>在计算机领域，堆栈是两种数据结构，都是一种数据项按序排列的数据结构，只能在一端(称为栈顶(top))对数据项进行插入和删除。</p>
+            <h2 id="堆与栈是什么，与浅拷贝和深拷贝有什么联系？"><a href="#堆与栈是什么，与浅拷贝和深拷贝有什么联系？" class="headerlink" title="堆与栈是什么，与浅拷贝和深拷贝有什么联系？"></a>堆与栈是什么，与浅拷贝和深拷贝有什么联系？</h2><p>在计算机领域，堆栈是两种数据结构，都是一种数据项按序排列的数据结构，只能在一端(称为栈顶(top))对数据项进行插入和删除。</p>
 <p>深拷贝和浅拷贝的主要区别就是其在内存中的存储类型不同，而堆和栈都是内存中划分出来用于存储的区域。</p>
 <blockquote>
 <p>栈（stack）为系统自动分配的内存空间，它由系统自动释放；而堆（heap）则是动态分配的内存，大小不定也不会自动释放。</p>
 </blockquote>
-<p>##ECMAScript 的数据类型</p>
-<p>因此在了解浅拷贝与深拷贝之前，我们先来了解一下ECMAScript 中的数据类型。</p>
-<p>###基本类型</p>
-<p>基本类型主要有：<code>undefined，boolean，number，string，null</code></p>
+<h2 id="ECMAScript-的数据类型"><a href="#ECMAScript-的数据类型" class="headerlink" title="ECMAScript 的数据类型"></a>ECMAScript 的数据类型</h2><p>因此在了解浅拷贝与深拷贝之前，我们先来了解一下ECMAScript 中的数据类型。</p>
+<h3 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h3><p>基本类型主要有：<code>undefined，boolean，number，string，null</code></p>
 <blockquote>
 <p>基本类型是存放在<strong>栈</strong>内存中的简单数据段，数据大小确定，内存空间大小可以分配，直接按值存放的，所以可以直接访问。</p>
 </blockquote>
-<p>###引用类型</p>
-<p>引用类型主要有：<code>object，array，function</code> </p>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>引用类型主要有：<code>object，array，function</code> </p>
 <blockquote>
 <p>引用类型是存放在<strong>堆</strong>内存中的对象。变量实际在<strong>栈</strong>内存中保存了一个指针，这个指针指向<strong>堆</strong>中的一个空间。每个空间大小不一样，要根据情况来进行特定的分配。当我们需要访问引用类型的值时，首先从<strong>栈</strong>中获得该对象的地址指针，然后再从<strong>堆</strong>内存中取得所需的数据。</p>
 </blockquote>
@@ -323,15 +319,13 @@
 <p>从上面我们可以得知，当我改变b数组时，a数组也发生了变化。但是当我改变c的值时，a却没有发生改变。这就是<strong>传值与传址的区别</strong>。</p>
 <p>因为a是数组，属于引用类型，所以它赋予给b的时候传的是栈中的地址（相当于新建了一个不同名“指针”），而不是堆内存中的对象，所以a和b是指向同一个堆内存。而c仅仅是从a堆内存中获取的一个数据值，并保存在栈中。所以当b修改的时候，会根据地址回到a堆内存中修改，而c则直接在栈中修改，并且不能指向a堆内存中。</p>
 <p><img src="/2018/04/07/JavaScript中的堆与栈、浅拷贝与深拷贝/2.png" alt=""></p>
-<p>##浅拷贝</p>
-<p>有上面的内容可以知道，在定义一个对象或数组时，变量存放的往往只是一个堆地址。当我们使用对象拷贝时，如果<strong>属性是对象或数组时</strong>，这时候我们传递的也只是一个堆地址。因此子对象在访问该属性时，会根据地址回溯到父对象指向的堆内存中，即<strong>父子对象发生了关联</strong> ，两者的属性值会指向同一内存空间。</p>
+<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>有上面的内容可以知道，在定义一个对象或数组时，变量存放的往往只是一个堆地址。当我们使用对象拷贝时，如果<strong>属性是对象或数组时</strong>，这时候我们传递的也只是一个堆地址。因此子对象在访问该属性时，会根据地址回溯到父对象指向的堆内存中，即<strong>父子对象发生了关联</strong> ，两者的属性值会指向同一内存空间。</p>
 <p><img src="/2018/04/07/JavaScript中的堆与栈、浅拷贝与深拷贝/3.png" alt=""></p>
 <p>例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">  key1: <span class="number">123</span>,</span><br><span class="line">  key2: [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> o)&#123;</span><br><span class="line">    obj[i] = o[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = copy(a);</span><br><span class="line">b.key1 = <span class="number">1234</span>; <span class="comment">//b对象的key1重新赋值</span></span><br><span class="line">b.key2.push(<span class="number">3</span>); <span class="comment">//b对象的key2数组里面插入一个新的值</span></span><br><span class="line"><span class="built_in">console</span>.log(b.key1); <span class="comment">//1234</span></span><br><span class="line"><span class="built_in">console</span>.log(a.key1): <span class="comment">//123</span></span><br><span class="line"><span class="built_in">console</span>.log(b.key2); <span class="comment">//1,2,3</span></span><br><span class="line"><span class="built_in">console</span>.log(a.key2); <span class="comment">//1,2,3</span></span><br></pre></td></tr></table></figure>
 <p>上述代码中，可以看出b的key1值改变了但是a的key1的值没有随着发生改变，但b的key2值改变后却导致a的key2的值也发生了改变。</p>
 <p>这是因为key1的值属于基本类型，所以拷贝的时候传递的就是该数据段。但是key2的值是堆内存中的对象，所以key2在拷贝的时候传递的是指向key2对象的地址，无论复制多少个key2，其值始终是指向a的key2对象的内存空间。</p>
-<p>##深拷贝</p>
-<p>有时候，我们<strong>不希望父子对象之间产生关联</strong>，那么这时候可以用到深拷贝。既然属性值类型是数组和或象时只会传址，那么我们就用以下的方法来解决这个问题，把父对象中所有属于对象的属性类型都遍历赋给子对象即可。</p>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>有时候，我们<strong>不希望父子对象之间产生关联</strong>，那么这时候可以用到深拷贝。既然属性值类型是数组和或象时只会传址，那么我们就用以下的方法来解决这个问题，把父对象中所有属于对象的属性类型都遍历赋给子对象即可。</p>
 <p><img src="/2018/04/07/JavaScript中的堆与栈、浅拷贝与深拷贝/4.png" alt=""></p>
 <ul>
 <li><p>JSON方法</p>
