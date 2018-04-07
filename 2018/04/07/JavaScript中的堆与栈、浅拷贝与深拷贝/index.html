@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="xzhzzz">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="地里有油"/>
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="地里有油"/>
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://yoursite.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="地里有油" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>地里有油</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Untitled Post</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/xzhzzz">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:xzh_zz@163.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By xzhzzz</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2018-04-07</span>
+            <span class="time">16:58:11</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <p>##JavaScript中的堆与栈、浅拷贝与深拷贝</p>
+<p>####堆与栈是什么，与浅拷贝和深拷贝有什么联系？</p>
+<p>在计算机领域，堆栈是两种数据结构，都是一种数据项按序排列的数据结构，只能在一端(称为栈顶(top))对数据项进行插入和删除。</p>
+<p>深拷贝和浅拷贝的主要区别就是其在内存中的存储类型不同，而堆和栈都是内存中划分出来用于存储的区域。</p>
+<blockquote>
+<p>栈（stack）为系统自动分配的内存空间，它由系统自动释放；而堆（heap）则是动态分配的内存，大小不定也不会自动释放。</p>
+</blockquote>
+<p>####ECMAScript 的数据类型</p>
+<p>因此在了解浅拷贝与深拷贝之前，我们先来了解一下ECMAScript 中的数据类型。</p>
+<h5 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h5><p>基本类型主要有：<code>undefined，boolean，number，string，null</code></p>
+<blockquote>
+<p>基本类型是存放在<strong>栈</strong>内存中的简单数据段，数据大小确定，内存空间大小可以分配，直接按值存放的，所以可以直接访问。</p>
+</blockquote>
+<h5 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h5><p>引用类型主要有：<code>object，array，function</code> </p>
+<blockquote>
+<p>引用类型是存放在<strong>堆</strong>内存中的对象。变量实际在<strong>栈</strong>内存中保存了一个指针，这个指针指向<strong>堆</strong>中的一个空间。每个空间大小不一样，要根据情况来进行特定的分配。当我们需要访问引用类型的值时，首先从<strong>栈</strong>中获得该对象的地址指针，然后再从<strong>堆</strong>内存中取得所需的数据。</p>
+</blockquote>
+<h5 id="基本类型与引用类型的主要区别"><a href="#基本类型与引用类型的主要区别" class="headerlink" title="基本类型与引用类型的主要区别"></a>基本类型与引用类型的主要区别</h5><p>基本类型与引用类型最大的区别实际就是<strong>传值</strong>与<strong>传址</strong>的区别 。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> b = a; <span class="comment">//传址</span></span><br><span class="line"><span class="keyword">var</span> c = a[<span class="number">0</span>]; <span class="comment">//传值</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">//1,2,3,4,5</span></span><br><span class="line"><span class="built_in">console</span>.log(c); <span class="comment">//1</span></span><br><span class="line">b[<span class="number">4</span>] = <span class="number">6</span>; <span class="comment">//改变b数组的某一项值</span></span><br><span class="line">c = <span class="number">7</span>; <span class="comment">//改变c的值</span></span><br><span class="line"><span class="built_in">console</span>.log(a[<span class="number">4</span>]); <span class="comment">//6 </span></span><br><span class="line"><span class="built_in">console</span>.log(a[<span class="number">0</span>]); <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>从上面我们可以得知，当我改变b数组时，a数组也发生了变化。但是当我改变c的值时，a却没有发生改变。这就是<strong>传值与传址的区别</strong>。</p>
+<p>因为a是数组，属于引用类型，所以它赋予给b的时候传的是栈中的地址（相当于新建了一个不同名“指针”），而不是堆内存中的对象，所以a和b是指向同一个堆内存。而c仅仅是从a堆内存中获取的一个数据值，并保存在栈中。所以当b修改的时候，会根据地址回到a堆内存中修改，而c则直接在栈中修改，并且不能指向a堆内存中。</p>
+<p><img src="https://images0.cnblogs.com/blog2015/746777/201508/171842170979894.png" alt=""></p>
+<p>###浅拷贝</p>
+<p>有上面的内容可以知道，在定义一个对象或数组时，变量存放的往往只是一个堆地址。当我们使用对象拷贝时，如果<strong>属性是对象或数组时</strong>，这时候我们传递的也只是一个堆地址。因此子对象在访问该属性时，会根据地址回溯到父对象指向的堆内存中，即<strong>父子对象发生了关联</strong> ，两者的属性值会指向同一内存空间。</p>
+<p><img src="https://images0.cnblogs.com/blog2015/746777/201508/181622241916222.png" alt=""></p>
+<p>例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">  key1: <span class="number">123</span>,</span><br><span class="line">  key2: [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> o)&#123;</span><br><span class="line">    obj[i] = o[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = copy(a);</span><br><span class="line">b.key1 = <span class="number">1234</span>; <span class="comment">//b对象的key1重新赋值</span></span><br><span class="line">b.key2.push(<span class="number">3</span>); <span class="comment">//b对象的key2数组里面插入一个新的值</span></span><br><span class="line"><span class="built_in">console</span>.log(b.key1); <span class="comment">//1234</span></span><br><span class="line"><span class="built_in">console</span>.log(a.key1): <span class="comment">//123</span></span><br><span class="line"><span class="built_in">console</span>.log(b.key2); <span class="comment">//1,2,3</span></span><br><span class="line"><span class="built_in">console</span>.log(a.key2); <span class="comment">//1,2,3</span></span><br></pre></td></tr></table></figure>
+<p>上述代码中，可以看出b的key1值改变了但是a的key1的值没有随着发生改变，但b的key2值改变后却导致a的key2的值也发生了改变。</p>
+<p>这是因为key1的值属于基本类型，所以拷贝的时候传递的就是该数据段。但是key2的值是堆内存中的对象，所以key2在拷贝的时候传递的是指向key2对象的地址，无论复制多少个key2，其值始终是指向a的key2对象的内存空间。</p>
+<p>###深拷贝</p>
+<p>有时候，我们<strong>不希望父子对象之间产生关联</strong>，那么这时候可以用到深拷贝。既然属性值类型是数组和或象时只会传址，那么我们就用以下的方法来解决这个问题，把父对象中所有属于对象的属性类型都遍历赋给子对象即可。</p>
+<p><img src="https://images0.cnblogs.com/blog2015/746777/201508/181648416137877.png" alt=""></p>
+<ul>
+<li><p>JSON方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(o));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">  key: [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> b = deepCopy(a); <span class="comment">//拷贝a</span></span><br><span class="line">b.key.push(<span class="number">3</span>); <span class="comment">//往b的key中插入新的值</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//1,2</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">//1,2,3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用递归</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">o,c</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> c = c || &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> o)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> o[i] === <span class="string">'object'</span>)&#123;</span><br><span class="line">      c[i] = (o[i].constructor === <span class="built_in">Array</span>) ? [] : &#123;&#125;;</span><br><span class="line">      copy(o[i], c[i]);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      c[i] = o[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = &#123;</span><br><span class="line">  key: [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> b = deepCopy(a); <span class="comment">//拷贝a</span></span><br><span class="line">b.key.push(<span class="number">3</span>); <span class="comment">//往b的key中插入新的值</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//1,2</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">//1,2,3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
