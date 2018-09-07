@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/09/07/Node中的events模块/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/09/07/Node中的events模块/2.png">
 <meta property="og:image" content="http://yoursite.com/2018/09/07/Node中的events模块/3.png">
-<meta property="og:updated_time" content="2018-09-07T08:24:37.330Z">
+<meta property="og:updated_time" content="2018-09-07T08:29:10.856Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js中的events模块">
 <meta name="twitter:description" content="前言 大多数 Node.js 核心 API 都采用惯用的异步事件驱动架构，其中某些类型的对象（触发器）会周期性地触发命名事件来调用函数对象（监听器）。例如，net.Server对象会在每次有新连接时触发事件；fs.ReadStream会在文件被打开时触发事件；流对象会在数据可读时触发事件。  events是Node.js 最重要的模块，Node.js中大部分的模块，都继承自events模块。与DO">
@@ -308,12 +308,12 @@
 <p>大多数 Node.js 核心 API 都采用惯用的异步事件驱动架构，其中某些类型的对象（触发器）会周期性地触发命名事件来调用函数对象（监听器）。例如，<code>net.Server</code>对象会在每次有新连接时触发事件；<code>fs.ReadStream</code>会在文件被打开时触发事件；<code>流对象</code>会在数据可读时触发事件。</p>
 </blockquote>
 <p>events是Node.js 最重要的模块，Node.js中大部分的模块，都继承自events模块。与DOM树上事件不同，Node.js中的events不存在事件冒泡、逐层捕获等行为。events模块只提供<code>EventEmitter</code> 类。</p>
-<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>所有能触发事件的对象都是 <code>EventEmitter</code> 类的实例。当 <code>EventEmitter</code> 对象触发一个事件时，所有绑定在该事件上的函数都被同步地调用。 </p>
+<h3 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h3><p>所有能触发事件的对象都是 <code>EventEmitter</code> 类的实例。当 <code>EventEmitter</code> 对象触发一个事件时，所有绑定在该事件上的函数都被同步地调用。 </p>
 <p><code>eventEmitter.on(eventName, fn)</code> 方法注册监听器。</p>
 <p><code>eventEmitter.emit(eventName, [arg1], [arg2], [...])</code> 方法手动触发监听器。</p>
 <p><code>eventEmitter.once(eventName, fn)</code> 方法注册一个调用一次的监听器。 当事件被触发时，监听器会被注销，然后再调用。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">eventEmitter.on(<span class="string">'event'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'触发了一个事件！'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">eventEmitter.emit(<span class="string">'event'</span>); </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> m = <span class="number">0</span>;</span><br><span class="line">eventEmitter.once(<span class="string">'eventOnce'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(++m);</span><br><span class="line">&#125;);</span><br><span class="line">eventEmitter.emit(<span class="string">'eventOnce'</span>); <span class="comment">// 第一次调用：打印: 1</span></span><br><span class="line">eventEmitter.emit(<span class="string">'eventOnce'</span>); <span class="comment">// 第二次调用：忽略</span></span><br></pre></td></tr></table></figure>
-<h3 id="其他用法"><a href="#其他用法" class="headerlink" title="其他用法"></a>其他用法</h3><p><code>eventEmitter.removeListener(eventName, fn)</code> 方法是移除已注册的监听器。</p>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p><code>eventEmitter.removeListener(eventName, fn)</code> 方法是移除已注册的监听器。</p>
 <p><code>eventEmitter.removeAllListeners ([eventName])</code> 方法移除所有或指定 eventName的监听器。</p>
 <p><code>eventEmitter.setMaxListeners(n)</code> 方法设置最大监听数量。默认情况下，如果为特定事件添加了超过 10 个监听器，则 EventEmitter会打印一个警告。值设为 Infinit（或 0）表明不限制监听器的数量。如无必要，最好的不要去改变默认的监听数量限制。因为事件监听数量是node检测内存泄露的一个维度。EventEmitter实例的最大监听数量不是一个实例的所有监听数量。例如同一个实例A类型事件5个监听者，B类型事件6个监听者，这个并不会有告警。如果A类型有11个监听者，就会有告警提示。如果在事件中发现类似的告警提示<strong>Possible EventEmitter memory leak detected</strong>，要知道从事件最大监听数的角度去排查问题。</p>
 <p><code>eventEmitter.getMaxListeners()</code> 方法返回 EventEmitter当前的最大监听器限制值。</p>
@@ -507,7 +507,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用法"><span class="nav-number">2.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他用法"><span class="nav-number">3.</span> <span class="nav-text">其他用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误事件处理"><span class="nav-number">4.</span> <span class="nav-text">错误事件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用events解决雪崩现象"><span class="nav-number">5.</span> <span class="nav-text">利用events解决雪崩现象</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本方法"><span class="nav-number">2.</span> <span class="nav-text">基本方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他方法"><span class="nav-number">3.</span> <span class="nav-text">其他方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误事件处理"><span class="nav-number">4.</span> <span class="nav-text">错误事件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用events解决雪崩现象"><span class="nav-number">5.</span> <span class="nav-text">利用events解决雪崩现象</span></a></li></ol></div>
             
 
           </div>
