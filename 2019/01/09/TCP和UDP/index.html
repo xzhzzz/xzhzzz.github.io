@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/01/09/TCP和UDP/1.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/09/TCP和UDP/2.png">
 <meta property="og:image" content="http://yoursite.com/2019/01/09/TCP和UDP/3.png">
-<meta property="og:updated_time" content="2019-01-09T14:22:32.135Z">
+<meta property="og:updated_time" content="2019-01-09T14:26:48.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP和UDP">
 <meta name="twitter:description" content="TCP/IP五层网络结构模型 物理层：物理层建立在物理通信介质的基础上，作为系统和通信介质的接口，用来实现数据链路实体间透明的比特 (bit) 流传输。只有该层为真实物理通信，其它各层为虚拟通信 数据链路层:在物理层提供比特流服务的基础上，建立相邻结点之间的数据链路，通过差错控制提供数据帧（Frame）在信道上无差错的传输，并进行各电路上的动作系列。数据的单位称为帧（frame） 网络层：选择合适">
@@ -363,20 +363,13 @@
 </ul>
 <h3 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h3><ul>
 <li>TCP是面向连接(Connection oriented)的协议，UDP是无连接(Connection less)协议；<br>TCP用三次握手建立连接：1) Client向server发送SYN；2) Server接收到SYN，回复Client一个SYN-ACK；3) Client接收到SYN_ACK，回复Server一个ACK。到此，连接建成。UDP发送数据前不需要建立连接。</li>
-<li><p>TCP可靠，UDP不可靠；TCP丢包会自动重传，UDP不会。</p>
-</li>
-<li><p>TCP有序，UDP无序；消息在传输过程中可能会乱序，后发送的消息可能会先到达，TCP会对其进行重排序，UDP不会。</p>
-</li>
-<li><p>TCP无界，UDP有界；TCP通过字节流传输，UDP中每一个包都是单独的。</p>
-</li>
-<li><p>TCP有流量控制（拥塞控制），UDP没有；主要靠三次握手实现。</p>
-</li>
-<li><p>TCP传输慢，UDP传输快；因为TCP需要建立连接、保证可靠性和有序性，所以比较耗时。这就是为什么视频流、广播电视、在线多媒体游戏等选择使用UDP。</p>
-</li>
-<li><p>TCP是重量级的，UDP是轻量级的；TCP要建立连接、保证可靠性和有序性，就会传输更多的信息，如TCP的包头比较大。</p>
-</li>
-<li><p>TCP的头部比UDP大；TCP头部需要20字节，UDP头部只要8个字节</p>
-</li>
+<li>TCP可靠，UDP不可靠；TCP丢包会自动重传，UDP不会。</li>
+<li>TCP有序，UDP无序；消息在传输过程中可能会乱序，后发送的消息可能会先到达，TCP会对其进行重排序，UDP不会。</li>
+<li>TCP无界，UDP有界；TCP通过字节流传输，UDP中每一个包都是单独的。</li>
+<li>TCP有流量控制（拥塞控制），UDP没有；主要靠三次握手实现。</li>
+<li>TCP传输慢，UDP传输快；因为TCP需要建立连接、保证可靠性和有序性，所以比较耗时。这就是为什么视频流、广播电视、在线多媒体游戏等选择使用UDP。</li>
+<li>TCP是重量级的，UDP是轻量级的；TCP要建立连接、保证可靠性和有序性，就会传输更多的信息，如TCP的包头比较大。</li>
+<li>TCP的头部比UDP大；TCP头部需要20字节，UDP头部只要8个字节。</li>
 </ul>
 
       
