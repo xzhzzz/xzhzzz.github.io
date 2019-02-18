@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript," />
+  <meta name="keywords" content="network," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="WebSocket是什么？WebSocket是用于在Web浏览器和服务器之间进行任意的双向数据传输的一种技术。WebSocket协议基于TCP协议实现，包含初始的握手过程，以及后续的多次数据帧双向传输过程。其目的是在WebSocket应用和WebSocket服务器进行频繁双向通信时，可以使服务器避免打开多个HTTP连接进行工作来节约资源，提高了服务器的工作效率和资源利用率。 为什么会有WebSoc">
-<meta name="keywords" content="JavaScript">
+<meta name="description" content="什么是RESTREST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到">
+<meta name="keywords" content="network">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WebSocket">
-<meta property="og:url" content="http://yoursite.com/2018/11/11/WebSocket/index.html">
+<meta property="og:title" content="REST和RESTful">
+<meta property="og:url" content="http://yoursite.com/2019/02/18/REST和RESTful/index.html">
 <meta property="og:site_name" content="地里有油">
-<meta property="og:description" content="WebSocket是什么？WebSocket是用于在Web浏览器和服务器之间进行任意的双向数据传输的一种技术。WebSocket协议基于TCP协议实现，包含初始的握手过程，以及后续的多次数据帧双向传输过程。其目的是在WebSocket应用和WebSocket服务器进行频繁双向通信时，可以使服务器避免打开多个HTTP连接进行工作来节约资源，提高了服务器的工作效率和资源利用率。 为什么会有WebSoc">
+<meta property="og:description" content="什么是RESTREST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-11T12:37:43.998Z">
+<meta property="og:image" content="http://yoursite.com/2019/02/18/REST和RESTful/1.jpg">
+<meta property="og:updated_time" content="2019-02-18T15:20:15.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WebSocket">
-<meta name="twitter:description" content="WebSocket是什么？WebSocket是用于在Web浏览器和服务器之间进行任意的双向数据传输的一种技术。WebSocket协议基于TCP协议实现，包含初始的握手过程，以及后续的多次数据帧双向传输过程。其目的是在WebSocket应用和WebSocket服务器进行频繁双向通信时，可以使服务器避免打开多个HTTP连接进行工作来节约资源，提高了服务器的工作效率和资源利用率。 为什么会有WebSoc">
+<meta name="twitter:title" content="REST和RESTful">
+<meta name="twitter:description" content="什么是RESTREST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/18/REST和RESTful/1.jpg">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/11/WebSocket/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/02/18/REST和RESTful/"/>
 
 
 
 
 
-  <title>WebSocket | 地里有油</title>
+  <title>REST和RESTful | 地里有油</title>
   
 
 
@@ -233,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/WebSocket/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/REST和RESTful/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xzhzzz">
@@ -250,7 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">WebSocket</h1>
+          <h1 class="post-title" itemprop="name headline">REST和RESTful</h1>
         
 
         <div class="post-meta">
@@ -262,8 +264,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-11T20:31:50+08:00">
-                2018-11-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T23:15:42+08:00">
+                2019-02-18
               </time>
             
 
@@ -300,19 +302,54 @@
       
 
       
-        <h3 id="WebSocket是什么？"><a href="#WebSocket是什么？" class="headerlink" title="WebSocket是什么？"></a>WebSocket是什么？</h3><p>WebSocket是用于在Web浏览器和服务器之间进行任意的双向数据传输的一种技术。WebSocket协议基于TCP协议实现，包含初始的握手过程，以及后续的多次数据帧双向传输过程。其目的是在WebSocket应用和WebSocket服务器进行频繁双向通信时，可以使服务器避免打开多个HTTP连接进行工作来节约资源，提高了服务器的工作效率和资源利用率。</p>
-<h3 id="为什么会有WebSocket？"><a href="#为什么会有WebSocket？" class="headerlink" title="为什么会有WebSocket？"></a>为什么会有WebSocket？</h3><p>WebSocket 是为了满足基于 Web 的日益增长的实时通信需求而产生的</p>
-<p>WebSocket出现之前在实时通信场景中的解决方法有： </p>
-<ul>
-<li>轮询：客户端设置一个定时请求，向服务器发送request询问有无新数据，服务器立即返回response，如果有更新则携带更新的数据。</li>
-<li>长轮询（long poll）: 和轮询相似，但是为阻塞模式的轮询，客户端请求新的数据request，但服务器会阻塞请求，直到有新数据后才返回response给客户端；然后客户端再重复此过程。这两种方式的特点，不断的建立HTTP连接，然后发送请求request，之后服务器等待处理。服务端体现的是一种被动性，同时这种处理方式，非常耗费网络带宽和服务器资源。</li>
+        <h2 id="什么是REST"><a href="#什么是REST" class="headerlink" title="什么是REST"></a>什么是REST</h2><p>REST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到一个功能强、性能好、适宜通信的架构。REST指的是一组架构约束条件和原则。” 如果一个架构符合REST的约束条件和原则，我们就称它为RESTful架构。</p>
+<h4 id="REST原则"><a href="#REST原则" class="headerlink" title="REST原则"></a>REST原则</h4><ul>
+<li>网络上的所有事物都被抽象为资源</li>
+<li>每个资源都有一个唯一的资源标识符</li>
+<li>同一个资源具有多种表现形式(xml，json等)</li>
+<li>对资源的各种操作不会改变资源标识符</li>
+<li>所有的操作都是无状态的</li>
 </ul>
-<p>轮询需要服务器有很快的处理速度和资源。long poll需要有很高的并发，也就是说同时接待客户的能力。而且在服务器向客户端推送更新时，因为被动性，对低延迟的应用体验不好；而因为request/response的交互方式，对网络带宽和服务器带来了额外的负担。而WebSocket的出现解决了这些问题。当服务器完成协议升级后（HTTP -&gt;Websocket），服务端就可以主动推送信息给客户端，解决了上面同步有延迟的问题。这就是为什么会有WebSocket技术的缘由。</p>
-<h3 id="WebSocket与HTTP"><a href="#WebSocket与HTTP" class="headerlink" title="WebSocket与HTTP"></a>WebSocket与HTTP</h3><p>WebSocket是提供使用一个Tcp连接进行双向通讯的机制，包括网络协议和API，以取代网页和服务器采用HTTP轮询进行双向通讯的机制。</p>
-<p>本质上来说，WebSocket是不限于HTTP协议的，但是由于现存大量的HTTP基础设施，代理，过滤，身份认证等等，WebSocket需要借用HTTP和HTTPS的端口。</p>
-<p>由于使用HTTP的端口，因此TCP连接建立后的握手消息是基于HTTP的，由服务器判断这是一个HTTP协议，还是WebSocket协议。 WebSocket连接除了建立和关闭时的握手，其数据传输的过程和HTTP就没有关系了。</p>
-<h3 id="WebSocket的使用"><a href="#WebSocket的使用" class="headerlink" title="WebSocket的使用"></a>WebSocket的使用</h3><p>WebSocket在客户端中的使用并不复杂。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> websocket = <span class="literal">null</span>;</span><br><span class="line"><span class="comment">// 判断当前浏览器是否支持WebSocket</span></span><br><span class="line"><span class="comment">// http -&gt; ws     https -&gt; wss</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">'WebSocket'</span> <span class="keyword">in</span> <span class="built_in">window</span>) &#123;</span><br><span class="line">    websocket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://localhost:8080/websocket"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    alert(<span class="string">'当前浏览器 Not support websocket'</span>)</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 连接发生错误的回调方法</span></span><br><span class="line">websocket.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"WebSocket连接发生错误"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 连接成功建立的回调方法</span></span><br><span class="line">websocket.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    websocket.send(<span class="string">'发送数据'</span>); <span class="comment">// 客户端发送消息</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 接收服务端消息的回调方法</span></span><br><span class="line">websocket.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event.data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接关闭的回调方法</span></span><br><span class="line">websocket.onclose = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"WebSocket连接关闭"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接</span></span><br><span class="line"><span class="built_in">window</span>.onbeforeunload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    websocket.close(); <span class="comment">// 客户端断开连接</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="什么是RESTful"><a href="#什么是RESTful" class="headerlink" title="什么是RESTful"></a>什么是RESTful</h2><p>遵守了<strong>REST</strong>原则的Web服务</p>
+<h2 id="二者的联系与区别"><a href="#二者的联系与区别" class="headerlink" title="二者的联系与区别"></a>二者的联系与区别</h2><p>RESTful是由REST派生出来的</p>
+<h2 id="RESTful-API"><a href="#RESTful-API" class="headerlink" title="RESTful API"></a>RESTful API</h2><p>ESTful API可以通过一套统一的接口为 Web，iOS和Android提供一致的服务。</p>
+<p><img src="/2019/02/18/REST和RESTful/1.jpg" alt=""></p>
+<h4 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h4><ul>
+<li>URL的根路径（包含api标识）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://api.demo.com/v1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>需要有api版本信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://api.demo.com/v1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>URL中只使用名词指定资源，不用动词，且推荐使用复数</li>
+</ul>
+<p>服务提供的RESTful API中，URL中只使用名词来指定资源，原则上不使用动词。“资源”是REST架构或者说整个网络处理的核心。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://api.demo.com/v1/cars // 获取某个账户下的车辆列表</span><br><span class="line">http://api.demo.com/v1/airplanes // 获取某个账户下的飞机列表</span><br></pre></td></tr></table></figure>
+<ul>
+<li>用HTTP协议里的动词来实现资源的添加，修改，删除等操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET 用来获取资源。</span><br><span class="line">POST 用来新建资源。</span><br><span class="line">PUT 用来更新资源。</span><br><span class="line">DELETE 用来删除资源。</span><br><span class="line">UPDATE 用来更新资源。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>GET应该是安全的，不会改变资源状态</p>
+<p>GET的时候只是获取资源，而不涉及添加、更新、删除资源。</p>
+</li>
+<li><p>使用正确的HTTP Status Code状态返回码</p>
+</li>
+</ul>
+<p>常用的有404，200，500，400等等。</p>
+<ul>
+<li>过滤信息</li>
+</ul>
+<p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。<br>下面是一些常见的参数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?limit=<span class="number">10</span> <span class="comment">// 指定返回记录的数量</span></span><br><span class="line">?offset=<span class="number">10</span> <span class="comment">// 指定返回记录的开始位置。</span></span><br><span class="line">?page=<span class="number">2</span>&amp;per_page=<span class="number">100</span> <span class="comment">// 指定第几页，以及每页的记录数。</span></span><br><span class="line">?sortby=name&amp;order=asc <span class="comment">// 指定返回结果按照哪个属性排序，以及排序顺序。</span></span><br><span class="line">?producy_type=<span class="number">1</span> <span class="comment">// 指定筛选条件</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>规范返回的数据</li>
+</ul>
+<p>为了保障前后端的数据交互的顺畅，建议规范数据的返回，并采用固定的数据格式封装。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    code: 0,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    msg: ’’</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总之，一个标准的RESTful API要可以做到，看Url就知道要操作的资源是什么；看Http Method就知道操作动作是什么，是添加（post）还是删除（delete）；看Http Status Code就知道操作结果如何，是成功（200）还是错误（500）；</p>
 
       
     </div>
@@ -330,7 +367,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/network/" rel="tag"># network</a>
           
         </div>
       
@@ -343,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/08/Node中的fs模块/" rel="next" title="Node中的fs模块">
-                <i class="fa fa-chevron-left"></i> Node中的fs模块
+              <a href="/2019/01/09/TCP和UDP/" rel="next" title="TCP和UDP">
+                <i class="fa fa-chevron-left"></i> TCP和UDP
               </a>
             
           </div>
@@ -352,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/09/修饰器/" rel="prev" title="修饰器">
-                修饰器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -488,7 +521,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket是什么？"><span class="nav-number">1.</span> <span class="nav-text">WebSocket是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么会有WebSocket？"><span class="nav-number">2.</span> <span class="nav-text">为什么会有WebSocket？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket与HTTP"><span class="nav-number">3.</span> <span class="nav-text">WebSocket与HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket的使用"><span class="nav-number">4.</span> <span class="nav-text">WebSocket的使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是REST"><span class="nav-number">1.</span> <span class="nav-text">什么是REST</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#REST原则"><span class="nav-number">1.0.1.</span> <span class="nav-text">REST原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是RESTful"><span class="nav-number">2.</span> <span class="nav-text">什么是RESTful</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二者的联系与区别"><span class="nav-number">3.</span> <span class="nav-text">二者的联系与区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RESTful-API"><span class="nav-number">4.</span> <span class="nav-text">RESTful API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特征"><span class="nav-number">4.0.1.</span> <span class="nav-text">特征</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
