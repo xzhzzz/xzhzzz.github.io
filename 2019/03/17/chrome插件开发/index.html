@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="地里有油">
 <meta property="og:description" content="什么是Chrome插件Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包。 插件开发Chrome插件开发只需保证项目的根目录有一个manifest.json的配置文件即可。 manifest.json下面是一个简单的demo配置文件，详细的配置文档可以参考官方文档（需自备梯子）。 12345678910">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/2.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/3.jpg">
-<meta property="og:updated_time" content="2019-03-17T13:04:31.764Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/17/chrome插件开发/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/17/chrome插件开发/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/17/chrome插件开发/3.jpg">
+<meta property="og:updated_time" content="2019-03-17T13:11:48.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chrome插件开发">
 <meta name="twitter:description" content="什么是Chrome插件Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个.crx后缀的压缩包。 插件开发Chrome插件开发只需保证项目的根目录有一个manifest.json的配置文件即可。 manifest.json下面是一个简单的demo配置文件，详细的配置文档可以参考官方文档（需自备梯子）。 12345678910">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/2.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/17/chrome插件开发/2.jpg">
 
 
 
@@ -310,10 +310,10 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	"manifest_version": 2, // 用于定义配置版本，必须为2</span><br><span class="line">	"name": "票房排行榜", // 插件名称</span><br><span class="line">	"version": "1.0", // 插件版本，用于迭代</span><br><span class="line">	"description": "实时电影票房排行榜", // 插件描述</span><br><span class="line">	"author": "xzhzzz", // 插件作者名称</span><br><span class="line">	"icons": // 插件图标</span><br><span class="line">	&#123;</span><br><span class="line">    <span class="attr">"16"</span>: <span class="string">"logo.png"</span>,</span><br><span class="line">		<span class="attr">"48"</span>: <span class="string">"logo.png"</span>,</span><br><span class="line">		<span class="attr">"128"</span>: <span class="string">"logo.png"</span></span><br><span class="line">	&#125;,</span><br><span class="line">	"browser_action": // 浏览器右上角配置</span><br><span class="line">	&#123;</span><br><span class="line">		"default_icon": "logo.png", // 右上角图标展示</span><br><span class="line">		"default_popup": "index.html" // 图标悬停时展示的页面</span><br><span class="line">  &#125;,</span><br><span class="line">  // 引用第三方资源白名单配置，不配置资源无效</span><br><span class="line">  "content_security_policy": "style-src 'self' 'unsafe-inline';script-src 'self' 'unsafe-            eval' https://cdn.bootcss.com; object-src 'self' ;"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>基本上文件配置好后，剩下的就是跟平常开发web页面一样，把内容填充到index.html就行了。</p>
 <p>下面是一个demo的项目结构。里面包含了已经打包的扩展程序的文件。</p>
-<p><img src="/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/2.jpg" alt=""></p>
+<p><img src="/2019/03/17/chrome插件开发/2.jpg" alt=""></p>
 <h2 id="安装到Chrome中"><a href="#安装到Chrome中" class="headerlink" title="安装到Chrome中"></a>安装到Chrome中</h2><p>从右上角菜单-&gt;更多工具-&gt;扩展程序可以进入插件管理页面，也可以直接在地址栏输入 <a href="chrome://extensions/" target="_blank" rel="noopener">chrome://extensions</a> 访问。进入到管理页面后需要勾选<code>开发者模式</code>。然后会出现<code>加载已解压的扩展程序</code>的选项，导入插件就好了。</p>
-<p><img src="/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/1.jpg" alt=""></p>
-<h2 id="demo效果"><a href="#demo效果" class="headerlink" title="demo效果"></a>demo效果</h2><p><img src="/2019/03/17/chrome插件开发/Users/xzhzzz/hexo/article/source/_posts/chrome插件开发/3.jpg" alt=""></p>
+<p><img src="/2019/03/17/chrome插件开发/1.jpg" alt=""></p>
+<h2 id="demo效果"><a href="#demo效果" class="headerlink" title="demo效果"></a>demo效果</h2><p><img src="/2019/03/17/chrome插件开发/3.jpg" alt=""></p>
 <h2 id="打包与发布"><a href="#打包与发布" class="headerlink" title="打包与发布"></a>打包与发布</h2><p>插件管理页面有一个打包的选项，然后会生成一个<code>.crx</code>文件，如果要发布到应用商店的话需要先登录Google账号，然后花5美元注册为开发者，就可以提交审核了。</p>
 
       
