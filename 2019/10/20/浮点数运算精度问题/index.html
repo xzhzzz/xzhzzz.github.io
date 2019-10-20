@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="###精度丢失问题 因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。 123456// 运算时精度丢失现象0.1 + 0.2 = 0.300000000000000040.3 - 0.2 = 0.099999999999">
+<meta name="description" content="精度丢失问题因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。 123456// 运算时精度丢失现象0.1 + 0.2 = 0.300000000000000040.3 - 0.2 = 0.0999999999999999">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浮点数运算精度问题">
 <meta property="og:url" content="http://yoursite.com/2019/10/20/浮点数运算精度问题/index.html">
 <meta property="og:site_name" content="地里有油">
-<meta property="og:description" content="###精度丢失问题 因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。 123456// 运算时精度丢失现象0.1 + 0.2 = 0.300000000000000040.3 - 0.2 = 0.099999999999">
+<meta property="og:description" content="精度丢失问题因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。 123456// 运算时精度丢失现象0.1 + 0.2 = 0.300000000000000040.3 - 0.2 = 0.0999999999999999">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/20/浮点数运算精度问题/1.png">
-<meta property="og:updated_time" content="2019-10-20T15:06:14.080Z">
+<meta property="og:updated_time" content="2019-10-20T15:09:23.771Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浮点数运算精度问题">
-<meta name="twitter:description" content="###精度丢失问题 因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。 123456// 运算时精度丢失现象0.1 + 0.2 = 0.300000000000000040.3 - 0.2 = 0.099999999999">
+<meta name="twitter:description" content="精度丢失问题因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。 123456// 运算时精度丢失现象0.1 + 0.2 = 0.300000000000000040.3 - 0.2 = 0.0999999999999999">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/20/浮点数运算精度问题/1.png">
 
 
@@ -302,11 +302,9 @@
       
 
       
-        <p>###精度丢失问题</p>
-<p>因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。</p>
+        <h3 id="精度丢失问题"><a href="#精度丢失问题" class="headerlink" title="精度丢失问题"></a>精度丢失问题</h3><p>因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运算时精度丢失现象</span></span><br><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> = <span class="number">0.30000000000000004</span></span><br><span class="line"><span class="number">0.3</span> - <span class="number">0.2</span> = <span class="number">0.09999999999999998</span></span><br><span class="line"><span class="number">19.9</span> * <span class="number">100</span> = <span class="number">1989.9999999999998</span></span><br><span class="line"><span class="number">0.3</span> / <span class="number">0.1</span> = <span class="number">2.9999999999999996</span></span><br><span class="line"><span class="number">1000000000000000128</span> === <span class="number">1000000000000000129</span></span><br></pre></td></tr></table></figure>
-<p>###为什么算术运算时会出现精度丢失</p>
-<p>首先JavaScript中不管是整数还是小数都是用Number类型，而Number类型采用“IEEE 754标准定义的双精度64位格式”（double-precision 64-bit format IEEE 754 values）存储，这样的存储结构优点是可以归一化处理整数和小数，节省存储空间。</p>
+<h3 id="为什么算术运算时会出现精度丢失"><a href="#为什么算术运算时会出现精度丢失" class="headerlink" title="为什么算术运算时会出现精度丢失"></a>为什么算术运算时会出现精度丢失</h3><p>首先JavaScript中不管是整数还是小数都是用Number类型，而Number类型采用“IEEE 754标准定义的双精度64位格式”（double-precision 64-bit format IEEE 754 values）存储，这样的存储结构优点是可以归一化处理整数和小数，节省存储空间。</p>
 <p>64-bit存储可分为三个部分：</p>
 <ul>
 <li>符号位S：第 1 位是正负数符号位（sign），0代表正数，1代表负数</li>
@@ -321,8 +319,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.0100110011001100110011001100110011001100110011001100</span></span><br></pre></td></tr></table></figure>
 <p>再转换为十进制，就成了0.30000000000000004，所以进行算术计算时会出现精度丢失。</p>
 <p>不单单只是JavaScript会出现这种问题，只要是数字格式采用“IEEE 754标准定义的双精度64位格式”的语言都会出现这种问题（具体有哪些语言可以访问<a href="http://0.30000000000000004.com/），但部分语言如C++/C#/Java等语言中已经封装好了方法来避免精度丢失的问题，而" target="_blank" rel="noopener">http://0.30000000000000004.com/），但部分语言如C++/C#/Java等语言中已经封装好了方法来避免精度丢失的问题，而</a> JavaScript是一门弱类型的语言，从设计思想上就没有对浮点数有个严格的数据类型，所以精度丢失的问题就显得格外突出。</p>
-<p>###规避的方法</p>
-<p>方法1：通过toFixed()方法来保留小数。因为这个方法是根据四舍五入来保留小数的，所以最后的计算结果不精确。</p>
+<h3 id="规避的方法"><a href="#规避的方法" class="headerlink" title="规避的方法"></a>规避的方法</h3><p>方法1：通过toFixed()方法来保留小数。因为这个方法是根据四舍五入来保留小数的，所以最后的计算结果不精确。</p>
 <p>方法2：把要计算的数字升级（乘以10的n次幂）成计算机能够精确识别的整数，计算完以后再降级。（建议使用该方法）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 将一个浮点数转换成整数，返回整数和倍数</span></span><br><span class="line"><span class="comment">* 如 3.14 -&gt; 314 倍数是100</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">function <span class="title">toInteger</span><span class="params">(floatNum)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> ret = &#123; times: <span class="number">1</span>, num: <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否为一个整数</span></span><br><span class="line">    <span class="keyword">if</span> (Math.floor(floatNum) === floatNum) &#123;</span><br><span class="line">        ret.num = floatNum</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> strfi = `$&#123;floatNum&#125;`</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 查找小数点的下标</span></span><br><span class="line">    <span class="keyword">const</span> dotPos = strfi.indexOf(<span class="string">'.'</span>)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 获取小数的位数</span></span><br><span class="line">    <span class="keyword">const</span> len = strfi.substr(dotPos + <span class="number">1</span>).length</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// Math.pow(10,len)指定10的len次幂 </span></span><br><span class="line">    <span class="keyword">const</span> time = Math.pow(<span class="number">10</span>, len)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 将浮点数转化为整数</span></span><br><span class="line">    <span class="keyword">const</span> intNum = parseInt(floatNum * time + <span class="number">0.5</span>, <span class="number">10</span>)</span><br><span class="line">    ret.times = time</span><br><span class="line">    ret.num = intNum</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*进行运算</span></span><br><span class="line"><span class="comment">*三个参数分别是要运算的两个数和运算符</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">function <span class="title">operation</span><span class="params">(a, b, op)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> o1 = toInteger(a)</span><br><span class="line">    <span class="keyword">const</span> o2 = toInteger(b)</span><br><span class="line">    <span class="keyword">const</span> n1 = o1.num</span><br><span class="line">    <span class="keyword">const</span> n2 = o2.num</span><br><span class="line">    <span class="keyword">const</span> t1 = o1.times</span><br><span class="line">    <span class="keyword">const</span> t2 = o2.times</span><br><span class="line">    <span class="keyword">const</span> max = t1 &gt; t2 ? t1 : t2</span><br><span class="line">    let result = <span class="keyword">null</span></span><br><span class="line">    <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'add'</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 + n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 + n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) + n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'subtract'</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 - n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 - n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) - n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'multiply'</span>:</span><br><span class="line">        result = (n1 * n2) / (t1 * t2)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'divide'</span>:</span><br><span class="line">        result = (n1 / n2) / (t2 / t1)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        console.log(<span class="string">'不存在的运算类型'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0.1 + 0.2 </span></span><br><span class="line">operation(<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="string">'add'</span>) <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
 
@@ -415,8 +412,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -477,6 +483,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#精度丢失问题"><span class="nav-number">1.</span> <span class="nav-text">精度丢失问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么算术运算时会出现精度丢失"><span class="nav-number">2.</span> <span class="nav-text">为什么算术运算时会出现精度丢失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规避的方法"><span class="nav-number">3.</span> <span class="nav-text">规避的方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
