@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="network," />
+  <meta name="keywords" content="data," />
 
 
 
@@ -79,20 +79,23 @@
 
 
 
-<meta name="description" content="什么是RESTREST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到">
-<meta name="keywords" content="network">
+<meta name="description" content="前言树是学习数据结构的重点。本章主要是学习树的一些基本概念。 基本概念####结点 结点是数据结构中的基础，是构成复杂数据结构的基本组成单位。 树树（Tree）是n（n&amp;gt;=0)个结点的有限集。n=0时称为空树。在任意一颗非空树中： 1）有且仅有一个特定的称为根（Root）的结点； 2）当n&amp;gt;1时，其余结点可分为m(m&amp;gt;0)个互不相交的有限集T1、T2、……、Tn，其中每一个集合本">
+<meta name="keywords" content="data">
 <meta property="og:type" content="article">
-<meta property="og:title" content="REST和RESTful">
-<meta property="og:url" content="http://yoursite.com/2019/02/18/REST和RESTful/index.html">
+<meta property="og:title" content="二叉树学习（一）">
+<meta property="og:url" content="http://yoursite.com/2020/03/07/二叉树学习（一）/index.html">
 <meta property="og:site_name" content="...">
-<meta property="og:description" content="什么是RESTREST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到">
+<meta property="og:description" content="前言树是学习数据结构的重点。本章主要是学习树的一些基本概念。 基本概念####结点 结点是数据结构中的基础，是构成复杂数据结构的基本组成单位。 树树（Tree）是n（n&amp;gt;=0)个结点的有限集。n=0时称为空树。在任意一颗非空树中： 1）有且仅有一个特定的称为根（Root）的结点； 2）当n&amp;gt;1时，其余结点可分为m(m&amp;gt;0)个互不相交的有限集T1、T2、……、Tn，其中每一个集合本">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/02/18/REST和RESTful/1.jpg">
-<meta property="og:updated_time" content="2019-02-18T15:31:54.000Z">
+<meta property="og:image" content="http://yoursite.com/2020/03/07/二叉树学习（一）/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/07/二叉树学习（一）/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/07/二叉树学习（一）/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/07/二叉树学习（一）/4.png">
+<meta property="og:updated_time" content="2020-03-07T03:12:41.172Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="REST和RESTful">
-<meta name="twitter:description" content="什么是RESTREST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到">
-<meta name="twitter:image" content="http://yoursite.com/2019/02/18/REST和RESTful/1.jpg">
+<meta name="twitter:title" content="二叉树学习（一）">
+<meta name="twitter:description" content="前言树是学习数据结构的重点。本章主要是学习树的一些基本概念。 基本概念####结点 结点是数据结构中的基础，是构成复杂数据结构的基本组成单位。 树树（Tree）是n（n&amp;gt;=0)个结点的有限集。n=0时称为空树。在任意一颗非空树中： 1）有且仅有一个特定的称为根（Root）的结点； 2）当n&amp;gt;1时，其余结点可分为m(m&amp;gt;0)个互不相交的有限集T1、T2、……、Tn，其中每一个集合本">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/07/二叉树学习（一）/1.png">
 
 
 
@@ -122,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/18/REST和RESTful/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/07/二叉树学习（一）/"/>
 
 
 
 
 
-  <title>REST和RESTful | ...</title>
+  <title>二叉树学习（一） | ...</title>
   
 
 
@@ -235,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/18/REST和RESTful/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/07/二叉树学习（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xzhzzz">
@@ -252,7 +255,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">REST和RESTful</h1>
+          <h1 class="post-title" itemprop="name headline">二叉树学习（一）</h1>
         
 
         <div class="post-meta">
@@ -264,8 +267,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T23:15:42+08:00">
-                2019-02-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-07T10:42:57+08:00">
+                2020-03-07
               </time>
             
 
@@ -302,55 +305,28 @@
       
 
       
-        <h2 id="什么是REST"><a href="#什么是REST" class="headerlink" title="什么是REST"></a>什么是REST</h2><p>REST全称是REpresentational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。首次出现于2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范（1.0版和1.1版）的主要编写者之一。他在论文中提到：”我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到一个功能强、性能好、适宜通信的架构。REST指的是一组架构约束条件和原则。” 如果一个架构符合REST的约束条件和原则，我们就称它为RESTful架构。</p>
-<h4 id="REST原则"><a href="#REST原则" class="headerlink" title="REST原则"></a>REST原则</h4><ul>
-<li>网络上的所有事物都被抽象为资源</li>
-<li>每个资源都有一个唯一的资源标识符</li>
-<li>同一个资源具有多种表现形式(xml，json等)</li>
-<li>对资源的各种操作不会改变资源标识符</li>
-<li>所有的操作都是无状态的</li>
-</ul>
-<h2 id="什么是RESTful"><a href="#什么是RESTful" class="headerlink" title="什么是RESTful"></a>什么是RESTful</h2><p>遵守了<strong>REST</strong>原则的Web服务</p>
-<h2 id="二者的联系与区别"><a href="#二者的联系与区别" class="headerlink" title="二者的联系与区别"></a>二者的联系与区别</h2><p>RESTful是由REST派生出来的</p>
-<h2 id="RESTful-API"><a href="#RESTful-API" class="headerlink" title="RESTful API"></a>RESTful API</h2><p>RESTful API可以通过一套统一的接口为 Web，iOS和Android提供一致的服务。</p>
-<p><img src="/2019/02/18/REST和RESTful/1.jpg" alt=""></p>
-<h4 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h4><ul>
-<li>URL的根路径（包含api标识）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://api.demo.com/v1</span><br></pre></td></tr></table></figure>
-<ul>
-<li>需要有api版本信息</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://api.demo.com/v1</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>URL中只使用名词指定资源，不用动词，且推荐使用复数</p>
-<p>服务提供的RESTful API中，URL中只使用名词来指定资源，原则上不使用动词。“资源”是REST架构或者说整个网络处理的核心。例如：</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://api.demo.com/v1/cars // 获取某个账户下的车辆列表</span><br><span class="line">http://api.demo.com/v1/airplanes // 获取某个账户下的飞机列表</span><br></pre></td></tr></table></figure>
-<ul>
-<li>用HTTP协议里的动词来实现资源的添加，修改，删除等操作</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET 用于获取资源。</span><br><span class="line">POST 用于新建资源。</span><br><span class="line">DELETE 用于删除资源。</span><br><span class="line">PUT 用于更新资源。</span><br><span class="line">UPDATE 用于更新资源。</span><br><span class="line">PATCH 用于更新资源。</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>GET应该是安全的，不会改变资源状态</p>
-<p>GET的时候只是获取资源，而不涉及添加、更新、删除资源。</p>
-</li>
-<li><p>使用正确的HTTP Status Code状态返回码</p>
-<p>常用的有404，200，500，400等等。</p>
-</li>
-<li><p>过滤信息</p>
-<p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。<br>下面是一些常见的参数。</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?limit=<span class="number">10</span> <span class="comment">// 指定返回记录的数量</span></span><br><span class="line">?offset=<span class="number">10</span> <span class="comment">// 指定返回记录的开始位置。</span></span><br><span class="line">?page=<span class="number">2</span>&amp;per_page=<span class="number">100</span> <span class="comment">// 指定第几页，以及每页的记录数。</span></span><br><span class="line">?sortby=name&amp;order=asc <span class="comment">// 指定返回结果按照哪个属性排序，以及排序顺序。</span></span><br><span class="line">?producy_type=<span class="number">1</span> <span class="comment">// 指定筛选条件</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>规范返回的数据</p>
-<p>为了保障前后端的数据交互的顺畅，建议规范数据的返回，并采用固定的数据格式封装。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    code: 0,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    msg: ’’</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>总之，一个标准的RESTful API要可以做到，看Url就知道要操作的资源是什么；看Http Method就知道操作动作是什么，是添加（post）还是删除（delete）；看Http Status Code就知道操作结果如何，是成功（200）还是错误（500）；</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>树是学习数据结构的重点。本章主要是学习树的一些基本概念。</p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>####结点</p>
+<p><strong>结点</strong>是数据结构中的基础，是构成复杂数据结构的基本组成单位。</p>
+<h4 id="树"><a href="#树" class="headerlink" title="树"></a>树</h4><p><strong>树（Tree）</strong>是n（n&gt;=0)个结点的有限集。n=0时称为空树。在任意一颗非空树中：<br> 1）有且仅有一个特定的称为根（Root）的结点；<br> 2）当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1、T2、……、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。</p>
+<p>此外，树的定义还需要注意以下两点：<br> 1）n&gt;0时根结点是唯一的，不可能存在多个根结点，数据结构中的树只能有一个根结点。<br> 2）m&gt;0时，子树的个数没有限制，但它们一定是互不相交的。</p>
+<p><img src="/2020/03/07/二叉树学习（一）/1.png" alt=""></p>
+<p>由树的定义可以看出，树的定义使用了递归的方式。所以递归在树的学习过程中起着重要作用。</p>
+<h4 id="结点的度"><a href="#结点的度" class="headerlink" title="结点的度"></a>结点的度</h4><p>结点拥有的子树数目称为结点的<strong>度</strong>。</p>
+<p><img src="/2020/03/07/二叉树学习（一）/2.png" alt=""></p>
+<p>####结点关系</p>
+<p>结点子树的根结点为该结点的<strong>孩子结点</strong>。相应该结点称为孩子结点的<strong>双亲结点</strong>。<br> 如上图中，A为B的双亲结点，B为A的孩子结点。<br> 同一个双亲结点的孩子结点之间互称<strong>兄弟结点</strong>。<br> 如上图中，结点B与结点C互为兄弟结点。</p>
+<h4 id="结点层次"><a href="#结点层次" class="headerlink" title="结点层次"></a>结点层次</h4><p>从根开始定义起，根为第一层，根的孩子为第二层，以此类推。</p>
+<p><img src="/2020/03/07/二叉树学习（一）/3.png" alt=""></p>
+<h4 id="树的深度"><a href="#树的深度" class="headerlink" title="树的深度"></a>树的深度</h4><p>树中结点的最大层次数称为树的深度或高度。如上图所示树的深度为4。</p>
+<h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><p><strong>二叉树</strong>是n(n&gt;=0)个结点的有限集合，该集合或者为空集（称为空二叉树），或者由一个根结点和两棵互不相交的、分别称为根结点的左子树和右子树组成。</p>
+<p><img src="/2020/03/07/二叉树学习（一）/4.png" alt=""></p>
+<h4 id="二叉树特点"><a href="#二叉树特点" class="headerlink" title="二叉树特点"></a>二叉树特点</h4><p>由二叉树定义以及图示分析得出二叉树有以下特点：<br> 1）每个结点最多有两颗子树，所以二叉树中不存在度大于2的结点。<br> 2）左子树和右子树是有顺序的，次序不能任意颠倒。<br> 3）即使树中某结点只有一棵子树，也要区分它是左子树还是右子树。</p>
+<h4 id="二叉树性质"><a href="#二叉树性质" class="headerlink" title="二叉树性质"></a>二叉树性质</h4><p>1）在二叉树的第i层上最多有2i-1 个节点 。（i&gt;=1）<br>2）二叉树中如果深度为k,那么最多有2k-1个节点。(k&gt;=1）<br>3）n0=n2+1  n0表示度数为0的节点数，n2表示度数为2的节点数。<br>4）在完全二叉树中，具有n个节点的完全二叉树的深度为[log2n]+1，其中[log2n]是向下取整。<br>5）若对含 n 个结点的完全二叉树从上到下且从左至右进行 1 至 n 的编号，则对完全二叉树中任意一个编号为 i 的结点有如下特性：</p>
+<blockquote>
+<p>(1) 若 i=1，则该结点是二叉树的根，无双亲，否则，编号为 [i/2] 的结点为其双亲结点；<br>(2) 若 2i&gt;n，则该结点无左孩子，  否则，编号为 2i 的结点为其左孩子结点；<br>(3) 若 2i+1&gt;n，则该结点无右孩子结点，  否则，编号为2i+1 的结点为其右孩子结点。</p>
+</blockquote>
+<h3 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h3><p>本章主要学习树的一些基本概念，下一章是介绍树的各种不同类型：一般二叉树、完全二叉树、满二叉树、线索二叉树、霍夫曼树、二叉排序树、平衡二叉树、红黑树、B树。</p>
 
       
     </div>
@@ -368,7 +344,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/network/" rel="tag"># network</a>
+            <a href="/tags/data/" rel="tag"># data</a>
           
         </div>
       
@@ -381,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/09/TCP和UDP/" rel="next" title="TCP和UDP">
-                <i class="fa fa-chevron-left"></i> TCP和UDP
+              <a href="/2019/11/03/数据类型判断/" rel="next" title="数据类型判断">
+                <i class="fa fa-chevron-left"></i> 数据类型判断
               </a>
             
           </div>
@@ -390,10 +366,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/17/chrome插件开发/" rel="prev" title="chrome插件开发">
-                chrome插件开发 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,7 +498,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是REST"><span class="nav-number">1.</span> <span class="nav-text">什么是REST</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#REST原则"><span class="nav-number">1.0.1.</span> <span class="nav-text">REST原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是RESTful"><span class="nav-number">2.</span> <span class="nav-text">什么是RESTful</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二者的联系与区别"><span class="nav-number">3.</span> <span class="nav-text">二者的联系与区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RESTful-API"><span class="nav-number">4.</span> <span class="nav-text">RESTful API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特征"><span class="nav-number">4.0.1.</span> <span class="nav-text">特征</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#树"><span class="nav-number">2.1.</span> <span class="nav-text">树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结点的度"><span class="nav-number">2.2.</span> <span class="nav-text">结点的度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结点层次"><span class="nav-number">2.3.</span> <span class="nav-text">结点层次</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树的深度"><span class="nav-number">2.4.</span> <span class="nav-text">树的深度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树"><span class="nav-number">2.5.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树特点"><span class="nav-number">2.6.</span> <span class="nav-text">二叉树特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树性质"><span class="nav-number">2.7.</span> <span class="nav-text">二叉树性质</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
             
 
           </div>
