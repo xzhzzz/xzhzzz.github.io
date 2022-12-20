@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="iOS单击延迟这要追溯至2007年初，苹果公司在发布首款iPhone前遇到了一个问题：当时的网站都是为大屏幕设备所设计的，于是提出了视区（Viewport）的概念，其中一项即是用户在浏览网页时，可以在页面的任何地方通过双击操作将页面放大（Double Tap to Zoom）。这个交互功能提升了用户浏览网页时的体验，于是Android和iOS的移动端浏览器纷纷支持了这个功能，但是对于双击这个操作而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端iOS单击延迟与单击穿透问题">
+<meta property="og:url" content="https://xzhzzz.github.io/2022/08/28/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="iOS单击延迟这要追溯至2007年初，苹果公司在发布首款iPhone前遇到了一个问题：当时的网站都是为大屏幕设备所设计的，于是提出了视区（Viewport）的概念，其中一项即是用户在浏览网页时，可以在页面的任何地方通过双击操作将页面放大（Double Tap to Zoom）。这个交互功能提升了用户浏览网页时的体验，于是Android和iOS的移动端浏览器纷纷支持了这个功能，但是对于双击这个操作而">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xzhzzz.github.io/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/1.png">
+<meta property="article:published_time" content="2022-08-28T06:28:50.000Z">
+<meta property="article:modified_time" content="2022-12-16T08:38:36.916Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xzhzzz.github.io/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/1.png">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2022/08/28/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2022/08/28/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/","path":"2022/08/28/移动端iOS单击延迟与单击穿透问题/","title":"移动端iOS单击延迟与单击穿透问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>移动端iOS单击延迟与单击穿透问题 | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F"><span class="nav-number">1.</span> <span class="nav-text">iOS单击延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9C%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E2%80%9D%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">“单击穿透”问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/08/28/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="移动端iOS单击延迟与单击穿透问题 | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          移动端iOS单击延迟与单击穿透问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-28 14:28:50" itemprop="dateCreated datePublished" datetime="2022-08-28T14:28:50+08:00">2022-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="iOS单击延迟"><a href="#iOS单击延迟" class="headerlink" title="iOS单击延迟"></a>iOS单击延迟</h3><p>这要追溯至2007年初，苹果公司在发布首款iPhone前遇到了一个问题：当时的网站都是为大屏幕设备所设计的，于是提出了视区（Viewport）的概念，其中一项即是用户在浏览网页时，可以在页面的任何地方通过双击操作将页面放大（Double Tap to Zoom）。这个交互功能提升了用户浏览网页时的体验，于是Android和iOS的移动端浏览器纷纷支持了这个功能，但是对于双击这个操作而言，其实是包括了两次单击操作，当第一次单击完成后，系统需要有一段时间来监听是否有第二次单击，如果有则表明此次操作是一个双击操作，而这段时间间隔大概有300毫秒（ms）。</p>
+<p>因此，哪怕是只想要单击这个事件，也都会经过双击放大这个判断逻辑，导致要等到300毫秒之后才能收到单击事件程序逻辑的反馈，这就是300毫秒的单击延迟问题。</p>
+<p>对于Android系统的浏览器而言，可以通过给视区设置user-scalable&#x3D;no来禁止用户进行缩放，随后就可以正常地使用原生的click事件而没有延迟；对于iOS系统而言，浏览器对user-scalable支持度存在Bug（漏洞），导致了无法通过简单的设置来达到正常使用原生click事件的目的。代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot; initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以，在iOS移动端，如果想要实现真正的单击事件而没有300毫秒延迟问题，就不能采用原生的click事件，可以通过touch（touchstart、touchmove和touchend）事件来模拟一次单击操作。好在当前业界已有比较流行的方案，例如Zepto.js中的tap事件和FastClick.js库可用来解决这个问题，在这里主要介绍一下FastClick.js库。</p>
+<p>FastClick.js是FT Labs团队结合touch事件专门为解决移动端浏览器的300毫秒单击延迟问题所开发的一个轻量级的库。正常情况下，在移动Web端，当用户单击屏幕时，会依次触发touchstart、touchmove（0 次或多次）、touchend、click（原生）这些事件。touchmove事件只有当手指在屏幕上移动时才会触发。Touchstart、touchmove或者touchend 事件的任意一个调用event.preventDefault()方法，都会直接阻止原生click事件的触发。</p>
+<p>FastClick的实现原理是在检测到touchend事件触发时，把浏览器在300毫秒之后原生的click事件阻止掉，然后通过DOM自定义事件立即发出一个模拟的click事件，这样就消除了300毫秒的延迟，提供了一个快速响应的“单击”事件。如下代码演示了FastClick的使用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>FastClick.js<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;./fastclick.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;click&quot;</span>&gt;</span>点我<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 页面加载完成后，使用FastClick，一般传递最外层的body元素即可</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">FastClick</span>.<span class="title function_">attach</span>(<span class="variable language_">document</span>.<span class="property">body</span>);<span class="comment">// 在实际的项目中，需判断在iOS移动端才需要此程序逻辑</span></span></span><br><span class="line"><span class="language-javascript">    &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;click&quot;</span>).<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">alert</span>(<span class="string">&quot;单击触发！ &quot;</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;,<span class="literal">false</span>)</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，在不修改<code>&lt;meta&gt;</code>标签中的user-scalable属性的情况下，300毫秒单击延迟的问题只会出现在iOS系统的浏览器中，并且解决方案只需要针对iOS端，上文也提到了这个问题的产生是由于对user-scalable支持度存在Bug，之后苹果公司也意识到了这个问题的严重性，于是在iOS 9.3版本时，提供了一个基于新的内核<strong>WKWebView</strong>的浏览器，并将其应用在Safari浏览器上，由此解决了这个问题（存在300毫秒单击延迟问题的浏览器是UIWebView，这个内核已经不再维护了），并且后续使用iOS 9.3版本系统的浏览器在访问页面时，会默认使用WKWebView浏览器。至此，移动Web端的300毫秒单击延迟问题得到了彻底的改善。</p>
+<h3 id="“单击穿透”问题"><a href="#“单击穿透”问题" class="headerlink" title="“单击穿透”问题"></a>“单击穿透”问题</h3><p>在移动Web端，有一个很常见的应用场景，单击一个按钮会出现一个蒙层，此蒙层是全屏遮盖，并且有最高层级，当单击蒙层时，蒙层消失。此场景和交互操作看似并没有什么问题，但是假如页面中有一个绑定了单击事件的<code>&lt;div&gt;</code>元素被蒙层遮盖，而单击蒙层关闭时的位置刚好和该<code>&lt;div&gt;</code>元素重合，那么蒙层关闭后会同时触发该<code>&lt;div&gt;</code>元素的单击事件，对于用户来说，这个操作并不是要单击该<code>&lt;div&gt;</code>元素，这就是所谓的“单击穿透”问题，如图。</p>
+<p><img src="/%E7%A7%BB%E5%8A%A8%E7%AB%AFiOS%E5%8D%95%E5%87%BB%E5%BB%B6%E8%BF%9F%E4%B8%8E%E5%8D%95%E5%87%BB%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98/1.png" alt="image.png"></p>
+<p>出现“单击穿透”问题需要有个条件，即蒙层是通过绑定的touch事件来实现隐藏，而其遮盖的<code>&lt;div&gt;</code>元素绑定的是原生click事件，这样就形成了touch事件触发之后，蒙层隐藏了，300毫秒后当前这个触摸点的click事件又触发了，就形成“单击穿透”。</p>
+<p>移动Web端的“单击穿透”问题出现的原因其实和300毫秒单击延迟问题脱不了关系，但是“单击穿透”出现的场景比较单一，并且也比较好解决。</p>
+<p>解决“单击穿透”问题可以从问题出现的原因上来着手，主要有以下两种解决方案：</p>
+<ul>
+<li>不要同时混用touch事件和click事件，要么给蒙层和<code>&lt;div&gt;</code>元素同时绑定touch事件，要么同时绑定click事件，在iOS 9.3版本之后，只用click事件即可，此方案体验最好。</li>
+<li>延迟蒙层消失的时间，例如在touch事件触发后，在350毫秒后再让蒙层消失，这样后面的<code>&lt;div&gt;</code>元素就不会触发click事件了，此方案会导致蒙层消失的响应慢，体验差，并且有时会触发两次消失逻辑，故不推荐使用。</li>
+</ul>
+<p>无论是300毫秒单击延迟问题，还是“单击穿透”问题，这些都是移动Web端特有的问题，也在一定程度上反映出移动Web端环境的复杂性，需要注意支持度和兼容性问题的地方很多，所以大家在进行移动Web端开发时，要有意识地去关注这些问题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/26/dependencies%E3%80%81devDependencies%E3%80%81peerDependencies/" rel="prev" title="dependencies、devDependencies、peerDependencies">
+                  <i class="fa fa-chevron-left"></i> dependencies、devDependencies、peerDependencies
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/04/JavaScript-i18n%E4%BA%86%E8%A7%A3/" rel="next" title="JavaScript i18n了解">
+                  JavaScript i18n了解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="blobBlob 对象表示一个不可变、原始数据的类文件对象。 12&#x2F;&#x2F; 构造函数const blob &#x3D; new Blob(array, options)   array 是一个由ArrayBuffer, ArrayBufferView, Blob, DOMString 等对象构成的数组，DOMStrings会被编码为UTF-8。 options 是一个可选，它可能会指定如下两个属性： type，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blob、File、Base64、FileReader学习">
+<meta property="og:url" content="https://xzhzzz.github.io/2022/03/06/Blob%E3%80%81File%E3%80%81Base64%E3%80%81FileReader%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="blobBlob 对象表示一个不可变、原始数据的类文件对象。 12&#x2F;&#x2F; 构造函数const blob &#x3D; new Blob(array, options)   array 是一个由ArrayBuffer, ArrayBufferView, Blob, DOMString 等对象构成的数组，DOMStrings会被编码为UTF-8。 options 是一个可选，它可能会指定如下两个属性： type，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-06T06:13:39.000Z">
+<meta property="article:modified_time" content="2022-12-16T08:38:36.888Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2022/03/06/Blob%E3%80%81File%E3%80%81Base64%E3%80%81FileReader%E5%AD%A6%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2022/03/06/Blob%E3%80%81File%E3%80%81Base64%E3%80%81FileReader%E5%AD%A6%E4%B9%A0/","path":"2022/03/06/Blob、File、Base64、FileReader学习/","title":"Blob、File、Base64、FileReader学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Blob、File、Base64、FileReader学习 | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#blob"><span class="nav-number">1.</span> <span class="nav-text">blob</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.0.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.2.</span> <span class="nav-text">方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File"><span class="nav-number">2.</span> <span class="nav-text">File</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base64"><span class="nav-number">3.</span> <span class="nav-text">Base64</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">3.0.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">3.0.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FileReader"><span class="nav-number">4.</span> <span class="nav-text">FileReader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-2"><span class="nav-number">4.0.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-2"><span class="nav-number">4.0.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.0.3.</span> <span class="nav-text">事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">4.0.4.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2"><span class="nav-number">5.</span> <span class="nav-text">相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob%E5%92%8CFile%E7%9A%84%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2"><span class="nav-number">5.1.</span> <span class="nav-text">Blob和File的互相转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Blob%E8%BD%ACFile"><span class="nav-number">5.1.1.</span> <span class="nav-text">Blob转File</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#File%E8%BD%ACBlob"><span class="nav-number">5.1.2.</span> <span class="nav-text">File转Blob</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File%E3%80%81Blob%E3%80%81img%E8%BD%ACBase64"><span class="nav-number">5.2.</span> <span class="nav-text">File、Blob、img转Base64</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#File%E8%BD%ACBase64"><span class="nav-number">5.2.1.</span> <span class="nav-text">File转Base64</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#img%E8%BD%ACBase64"><span class="nav-number">5.2.2.</span> <span class="nav-text">img转Base64</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Base64%E8%BD%ACBlob%E3%80%81File"><span class="nav-number">5.3.</span> <span class="nav-text">Base64转Blob、File</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Base64%E8%BD%ACBlob"><span class="nav-number">5.3.1.</span> <span class="nav-text">Base64转Blob</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Base64%E8%BD%ACFile"><span class="nav-number">5.3.2.</span> <span class="nav-text">Base64转File</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/03/06/Blob%E3%80%81File%E3%80%81Base64%E3%80%81FileReader%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Blob、File、Base64、FileReader学习 | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Blob、File、Base64、FileReader学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-06 14:13:39" itemprop="dateCreated datePublished" datetime="2022-03-06T14:13:39+08:00">2022-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="blob"><a href="#blob" class="headerlink" title="blob"></a>blob</h2><p><code>Blob</code> 对象表示一个不可变、原始数据的类文件对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造函数</span></span><br><span class="line"><span class="keyword">const</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>(array, options)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>array 是一个由<code>ArrayBuffer, ArrayBufferView, Blob, DOMString</code> 等对象构成的数组，<code>DOMStrings</code>会被编码为UTF-8。</li>
+<li>options 是一个可选，它可能会指定如下两个属性：<ul>
+<li>type，默认值为 <code>&quot;&quot;</code>，内容的MIME类型。</li>
+<li>endings，默认值为<code>&quot;transparent&quot;</code>，用于指定包含行结束符<code>\n</code>的字符串如何被写入。 它是以下两个值中的一个： <code>&quot;native&quot;</code>，代表行结束符会被更改为适合宿主操作系统文件系统的换行符，或者 <code>&quot;transparent&quot;</code>，代表会保持blob中保存的结束符不变</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> blob1 = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&#x27;hello randy&#x27;</span>], &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><code>type</code> 类型 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types">常见的MIME 类型</a></li>
+<li><code>size</code> 大小、单位为字节</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;randy&quot;</span>], &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"><span class="comment">// 输出的对象有如下属性</span></span><br><span class="line"><span class="comment">// size: 10;</span></span><br><span class="line"><span class="comment">// type: &quot;text/plain&quot;;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(blob);</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li><code>slice()</code> 从 <code>Blob</code> 中截取一部分并返回一个新的 <code>Blob</code>(用法同数组的 <code>slice</code>)</li>
+<li><code>arrayBuffer()</code> 返回一个以二进制形式展现的 <code>promise</code></li>
+<li><code>stream()</code> 返回一个<code>ReadableStream</code>对象</li>
+<li><code>text()</code> 返回一个文本形式的 <code>promise</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转成stream</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(blob.<span class="title function_">stream</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转成Arraybuffer</span></span><br><span class="line">blob.<span class="title function_">arrayBuffer</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转成文本</span></span><br><span class="line">blob.<span class="title function_">text</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="File"><a href="#File" class="headerlink" title="File"></a>File</h2><p><code>File</code> 描述文件信息的一个对象，可以让 <code>JavaScript</code> 访问文件信息。<code>File</code> 继承于 <code>Blob</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> file = <span class="keyword">new</span> <span class="title class_">File</span>(array, name[, options])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>array 是一个由<code>ArrayBuffer, ArrayBufferView, Blob, DOMString</code> 等对象构成，<code>DOMStrings</code>会被编码为UTF-8。</li>
+<li>name 表示文件名称，或者文件路径。</li>
+<li>options 是一个可选，它可能会指定如下两个属性：<ul>
+<li>type，默认值为 <code>&quot;&quot;</code>，内容的MIME类型。</li>
+<li>lastModified: 数值，表示文件最后修改时间的 Unix 时间戳（毫秒）。默认值为 Date.now()。</li>
+</ul>
+</li>
+</ul>
+<h4 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><code>type</code> 类型</li>
+<li><code>size</code> 大小、单位为字节</li>
+<li><code>name</code> 文件名称</li>
+<li><code>lastModified</code> 最后修改时间（时间戳）</li>
+<li><code>lastModifiedDate</code> 最后修改时间</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> file1 = <span class="keyword">new</span> <span class="title class_">File</span>([<span class="string">&quot;文件对象&quot;</span>], <span class="string">&quot;test&quot;</span>, &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"><span class="comment">// 输出的对象有如下属性</span></span><br><span class="line"><span class="comment">// lastModified: 1647933418331</span></span><br><span class="line"><span class="comment">// lastModifiedDate: Tue Mar 22 2022 15:16:58 GMT+0800 (中国标准时间) &#123;&#125;</span></span><br><span class="line"><span class="comment">// name: &quot;test&quot;</span></span><br><span class="line"><span class="comment">// size: 12</span></span><br><span class="line"><span class="comment">// type: &quot;text/plain&quot;</span></span><br><span class="line"><span class="comment">// webkitRelativePath: &quot;&quot;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(file1);</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h4><ul>
+<li><code>slice()</code> 从 <code>Blob</code> 中截取一部分并返回一个新的 <code>Blob</code>(用法同数组的 <code>slice</code>)</li>
+<li><code>arrayBuffer()</code> 返回一个以二进制形式展现的 <code>promise</code></li>
+<li><code>stream()</code> 返回一个<code>ReadableStream</code>对象</li>
+<li><code>text()</code> 返回一个文本形式的 <code>promise</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转成stream</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(file1.<span class="title function_">stream</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转成Arraybuffer</span></span><br><span class="line">file1.<span class="title function_">arrayBuffer</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转成文本</span></span><br><span class="line">file1.<span class="title function_">text</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h2><p>Base64是一种编码格式，在前端经常会碰到，格式是 <code>data:[&lt;mediatype&gt;][;base64],&lt;data&gt;</code> 。</p>
+<p>除了使用工具进行Base64编码外，js还内置了两个方法能进行字符串的Base64的编码和解码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str1 = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编码</span></span><br><span class="line"><span class="keyword">const</span> b1 = <span class="variable language_">window</span>.<span class="title function_">btoa</span>(str1);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解码</span></span><br><span class="line"><span class="keyword">const</span> str2 = <span class="variable language_">window</span>.<span class="title function_">atob</span>(b1);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str2);</span><br></pre></td></tr></table></figure>
+
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>可以将二进制数据（比如图片）转化为可打印字符，方便传输数据。</li>
+<li>对数据进行简单的加密，肉眼是安全的。</li>
+<li>如果是在html或者css处理图片，可以减少http请求。</li>
+</ol>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>内容编码后体积变大， 至少大1&#x2F;3。因为是三字节变成四个字节，当只有一个字节的时候，也至少会变成三个字节。</li>
+<li>编码和解码需要额外工作量。</li>
+</ol>
+<h2 id="FileReader"><a href="#FileReader" class="headerlink" title="FileReader"></a>FileReader</h2><p>FileReader 对象允许 Web 应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容.</p>
+<h4 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h4><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FileReader.error</td>
+<td>一个DOMException，表示在读取文件时发生的错误 。</td>
+</tr>
+<tr>
+<td>FileReader.result</td>
+<td>返回文件的内容。只有在读取操作完成后，此属性才有效，返回的数据的格式取决于是使用哪种读取方法来执行读取操作的。</td>
+</tr>
+<tr>
+<td>FileReader.readyState</td>
+<td>表示FileReader状态的数字。0 还没有加载任何数据。1 数据正在被加载。2 已完成全部的读取请求。</td>
+</tr>
+</tbody></table>
+<h4 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h4><p>需要注意的是 ，无论读取成功或失败，方法并不会返回读取结果，这一结果存储在 result属性中。</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FileReader.abort()</td>
+<td>中止读取操作。在返回时，readyState 属性为 DONE。</td>
+</tr>
+<tr>
+<td>FileReader.readAsArrayBuffer()</td>
+<td>将读取的内容转成ArrayBuffer。</td>
+</tr>
+<tr>
+<td>FileReader.readAsBinaryString()</td>
+<td>将读取的内容转成二进制数据。</td>
+</tr>
+<tr>
+<td>FileReader.readAsDataURL()</td>
+<td>将读取的内容转成并将其编码为 base64 的 data url。 格式是 <code>data:[&lt;mediatype&gt;][;base64],&lt;data&gt;</code></td>
+</tr>
+<tr>
+<td>FileReader.readAsText()</td>
+<td>将数据读取为给定编码（默认为 utf-8 编码）的文本字符串。</td>
+</tr>
+</tbody></table>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FileReader.onabort</td>
+<td>处理 abort 事件。该事件在读取操作被中断时触发。</td>
+</tr>
+<tr>
+<td>FileReader.onerror</td>
+<td>处理 error 事件。该事件在读取操作发生错误时触发。</td>
+</tr>
+<tr>
+<td>FileReader.onload</td>
+<td>处理 load 事件。该事件在读取操作完成时触发。</td>
+</tr>
+<tr>
+<td>FileReader.onloadstart</td>
+<td>处理 loadstart 事件。该事件在读取操作开始时触发。</td>
+</tr>
+<tr>
+<td>FileReader.onloadend</td>
+<td>处理 loadend 事件。该事件在读取操作结束时（要么成功，要么失败）触发。</td>
+</tr>
+<tr>
+<td>FileReader.onprogress</td>
+<td>处理 progress 事件。该事件在读取Blob时触发。</td>
+</tr>
+</tbody></table>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> blob3 = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;randy&quot;</span>], &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fileReader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line"></span><br><span class="line">fileReader.<span class="title function_">readAsDataURL</span>(blob3);</span><br><span class="line"></span><br><span class="line">fileReader.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(fileReader);</span><br><span class="line">  <span class="comment">// 通过fileReader获取结果</span></span><br><span class="line">  <span class="comment">// fileReader.result 是结果（如果成功）</span></span><br><span class="line">  <span class="comment">// fileReader.error 是 error（如果失败）。</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="相互转换"><a href="#相互转换" class="headerlink" title="相互转换"></a>相互转换</h2><h3 id="Blob和File的互相转换"><a href="#Blob和File的互相转换" class="headerlink" title="Blob和File的互相转换"></a>Blob和File的互相转换</h3><h4 id="Blob转File"><a href="#Blob转File" class="headerlink" title="Blob转File"></a>Blob转File</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> blob1 = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&quot;blob文件&quot;</span>], &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"><span class="comment">// blob转file</span></span><br><span class="line"><span class="keyword">const</span> file2 = <span class="keyword">new</span> <span class="title class_">File</span>([blob1], <span class="string">&quot;test2&quot;</span>, &#123; <span class="attr">type</span>: blob1.<span class="property">type</span> &#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;file2: &quot;</span>, file2);</span><br></pre></td></tr></table></figure>
+
+<h4 id="File转Blob"><a href="#File转Blob" class="headerlink" title="File转Blob"></a>File转Blob</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> file1 = <span class="keyword">new</span> <span class="title class_">File</span>([<span class="string">&quot;文件对象&quot;</span>], <span class="string">&quot;test&quot;</span>, &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"><span class="comment">// file转blob</span></span><br><span class="line"><span class="keyword">const</span> blob2 = <span class="keyword">new</span> <span class="title class_">Blob</span>([file1], &#123; <span class="attr">type</span>: file1.<span class="property">type</span> &#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;blob2: &quot;</span>, blob2);</span><br></pre></td></tr></table></figure>
+
+<h3 id="File、Blob、img转Base64"><a href="#File、Blob、img转Base64" class="headerlink" title="File、Blob、img转Base64"></a>File、Blob、img转Base64</h3><p>Blob转Base64</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;randy&quot;</span>], &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fileReader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line"></span><br><span class="line">fileReader.<span class="title function_">readAsDataURL</span>(blob);</span><br><span class="line"></span><br><span class="line">fileReader.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(fileReader.<span class="property">result</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="File转Base64"><a href="#File转Base64" class="headerlink" title="File转Base64"></a>File转Base64</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File转Base64</span></span><br><span class="line"><span class="keyword">const</span> file1 = <span class="keyword">new</span> <span class="title class_">File</span>([<span class="string">&quot;文件对象&quot;</span>], <span class="string">&quot;test&quot;</span>, &#123; <span class="attr">type</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fileReader = <span class="keyword">new</span> <span class="title class_">FileReader</span>();</span><br><span class="line"></span><br><span class="line">fileReader.<span class="title function_">readAsDataURL</span>(file1);</span><br><span class="line"></span><br><span class="line">fileReader.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(fileReader);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="img转Base64"><a href="#img转Base64" class="headerlink" title="img转Base64"></a>img转Base64</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">img2base64</span> = (<span class="params">imgUrl</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> image = <span class="keyword">new</span> <span class="title class_">Image</span>();</span><br><span class="line">  image.<span class="property">src</span> = imgUrl;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    image.<span class="property">onload</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> canvas = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;canvas&quot;</span>);</span><br><span class="line">      canvas.<span class="property">width</span> = image.<span class="property">width</span>;</span><br><span class="line">      canvas.<span class="property">height</span> = image.<span class="property">height</span>;</span><br><span class="line">      <span class="keyword">var</span> context = canvas.<span class="title function_">getContext</span>(<span class="string">&quot;2d&quot;</span>);</span><br><span class="line">      context.<span class="title function_">drawImage</span>(image, <span class="number">0</span>, <span class="number">0</span>, image.<span class="property">width</span>, image.<span class="property">height</span>);</span><br><span class="line">      <span class="keyword">let</span> dataUrl = canvas.<span class="title function_">toDataURL</span>(<span class="string">&quot;image/png&quot;</span>);</span><br><span class="line">      <span class="title function_">resolve</span>(dataUrl);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">img2base64</span>(<span class="string">&quot;./logo.png&quot;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Base64转Blob、File"><a href="#Base64转Blob、File" class="headerlink" title="Base64转Blob、File"></a>Base64转Blob、File</h3><h4 id="Base64转Blob"><a href="#Base64转Blob" class="headerlink" title="Base64转Blob"></a>Base64转Blob</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">dataURLtoBlob</span>(<span class="params">dataurl</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> arr = dataurl.<span class="title function_">split</span>(<span class="string">&quot;,&quot;</span>),</span><br><span class="line">    mime = arr[<span class="number">0</span>].<span class="title function_">match</span>(<span class="regexp">/:(.*?);/</span>)[<span class="number">1</span>],</span><br><span class="line">    bstr = <span class="title function_">atob</span>(arr[<span class="number">1</span>]),</span><br><span class="line">    n = bstr.<span class="property">length</span>,</span><br><span class="line">    u8arr = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(n);</span><br><span class="line">  <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">    u8arr[n] = bstr.<span class="title function_">charCodeAt</span>(n);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Blob</span>([u8arr], &#123; <span class="attr">type</span>: mime &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Base64转File"><a href="#Base64转File" class="headerlink" title="Base64转File"></a>Base64转File</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">dataURLtoFile</span>(<span class="params">dataurl, filename</span>) &#123;</span><br><span class="line">  <span class="comment">//将base64转换为文件</span></span><br><span class="line">  <span class="keyword">var</span> arr = dataurl.<span class="title function_">split</span>(<span class="string">&quot;,&quot;</span>),</span><br><span class="line">    mime = arr[<span class="number">0</span>].<span class="title function_">match</span>(<span class="regexp">/:(.*?);/</span>)[<span class="number">1</span>],</span><br><span class="line">    bstr = <span class="title function_">atob</span>(arr[<span class="number">1</span>]),</span><br><span class="line">    n = bstr.<span class="property">length</span>,</span><br><span class="line">    u8arr = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(n);</span><br><span class="line">  <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">    u8arr[n] = bstr.<span class="title function_">charCodeAt</span>(n);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">File</span>([u8arr], filename, &#123; <span class="attr">type</span>: mime &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/27/BFC%E5%AD%A6%E4%B9%A0/" rel="prev" title="BFC学习">
+                  <i class="fa fa-chevron-left"></i> BFC学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/13/JSON-stringify%E5%AD%A6%E4%B9%A0/" rel="next" title="JSON.stringify学习">
+                  JSON.stringify学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言 大多数 Node.js 核心 API 都采用惯用的异步事件驱动架构，其中某些类型的对象（触发器）会周期性地触发命名事件来调用函数对象（监听器）。例如，net.Server对象会在每次有新连接时触发事件；fs.ReadStream会在文件被打开时触发事件；流对象会在数据可读时触发事件。  events是Node.js 最重要的模块，Node.js中大部分的模块，都继承自events模块。与DO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js中的events模块">
+<meta property="og:url" content="https://xzhzzz.github.io/2018/09/09/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="前言 大多数 Node.js 核心 API 都采用惯用的异步事件驱动架构，其中某些类型的对象（触发器）会周期性地触发命名事件来调用函数对象（监听器）。例如，net.Server对象会在每次有新连接时触发事件；fs.ReadStream会在文件被打开时触发事件；流对象会在数据可读时触发事件。  events是Node.js 最重要的模块，Node.js中大部分的模块，都继承自events模块。与DO">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xzhzzz.github.io/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/1.png">
+<meta property="og:image" content="https://xzhzzz.github.io/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/2.png">
+<meta property="og:image" content="https://xzhzzz.github.io/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/3.png">
+<meta property="article:published_time" content="2018-09-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-16T08:38:36.896Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="Node">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xzhzzz.github.io/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/1.png">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2018/09/09/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2018/09/09/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/","path":"2018/09/09/Node中的events模块/","title":"Node.js中的events模块"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Node.js中的events模块 | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">基本方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">其他方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">错误事件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8events%E8%A7%A3%E5%86%B3%E9%9B%AA%E5%B4%A9%E7%8E%B0%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">利用events解决雪崩现象</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2018/09/09/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Node.js中的events模块 | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node.js中的events模块
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-09T00:00:00+08:00">2018-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>大多数 Node.js 核心 API 都采用惯用的异步事件驱动架构，其中某些类型的对象（触发器）会周期性地触发命名事件来调用函数对象（监听器）。例如，<code>net.Server</code>对象会在每次有新连接时触发事件；<code>fs.ReadStream</code>会在文件被打开时触发事件；<code>流对象</code>会在数据可读时触发事件。</p>
+</blockquote>
+<p>events是Node.js 最重要的模块，Node.js中大部分的模块，都继承自events模块。与DOM树上事件不同，Node.js中的events不存在事件冒泡、逐层捕获等行为。events模块只提供<code>EventEmitter</code> 类。</p>
+<h3 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h3><p>所有能触发事件的对象都是 <code>EventEmitter</code> 类的实例。当 <code>EventEmitter</code> 对象触发一个事件时，所有绑定在该事件上的函数都被同步地调用。 </p>
+<p><code>eventEmitter.on(eventName, fn)</code> 方法注册监听器。</p>
+<p><code>eventEmitter.emit(eventName, [arg1], [arg2], [...])</code> 方法手动触发监听器。</p>
+<p><code>eventEmitter.once(eventName, fn)</code> 方法注册一个调用一次的监听器。 当事件被触发时，监听器会被注销，然后再调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventEmitter</span> = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> <span class="title class_">EventEmitter</span>();</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;event&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;触发了一个事件！&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;event&#x27;</span>); </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> m = <span class="number">0</span>;</span><br><span class="line">eventEmitter.<span class="title function_">once</span>(<span class="string">&#x27;eventOnce&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(++m);</span><br><span class="line">&#125;);</span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;eventOnce&#x27;</span>); <span class="comment">// 第一次调用：打印: 1</span></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;eventOnce&#x27;</span>); <span class="comment">// 第二次调用：忽略</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p><code>eventEmitter.removeListener(eventName, fn)</code> 方法是移除已注册的监听器。</p>
+<p><code>eventEmitter.removeAllListeners ([eventName])</code> 方法移除所有或指定 eventName的监听器。</p>
+<p><code>eventEmitter.setMaxListeners(n)</code> 方法设置最大监听数量。默认情况下，如果为特定事件添加了超过 10 个监听器，则 EventEmitter会打印一个警告。值设为 Infinit（或 0）表明不限制监听器的数量。如无必要，最好的不要去改变默认的监听数量限制。因为事件监听数量是node检测内存泄露的一个维度。EventEmitter实例的最大监听数量不是一个实例的所有监听数量。例如同一个实例A类型事件5个监听者，B类型事件6个监听者，这个并不会有告警。如果A类型有11个监听者，就会有告警提示。如果在事件中发现类似的告警提示<strong>Possible EventEmitter memory leak detected</strong>，要知道从事件最大监听数的角度去排查问题。</p>
+<p><code>eventEmitter.getMaxListeners() </code> 方法返回 EventEmitter当前的最大监听器限制值。</p>
+<p><code>eventEmitter.listenerCount(eventName)</code> 方法返回正在监听名为 eventName的事件的监听器的数量。</p>
+<h3 id="错误事件处理"><a href="#错误事件处理" class="headerlink" title="错误事件处理"></a>错误事件处理</h3><p>当 <code>EventEmitter</code> 实例中发生错误时，会触发一个 <code>&#39;error&#39;</code> 事件。 这在 Node.js 中是特殊情况。</p>
+<p>如果 <code>EventEmitter</code> 没有为 <code>&#39;error&#39;</code> 事件注册至少一个监听器，则当 <code>&#39;error&#39;</code> 事件触发时，会抛出错误、打印堆栈跟踪、且退出 Node.js 进程。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventEmitter</span> = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> <span class="title class_">EventEmitter</span>();</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;whoops!&#x27;</span>));</span><br><span class="line"><span class="comment">// 抛出错误，并使 Node.js 崩溃</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>为了防止 Node.js 进程崩溃，应该始终为 <code>&#39;error&#39;</code> 事件注册监听器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventEmitter</span> = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> <span class="title class_">EventEmitter</span>();</span><br><span class="line"></span><br><span class="line">eventEmitter.<span class="title function_">on</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;有错误&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;error&#x27;</span>, <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;whoops!&#x27;</span>));</span><br><span class="line"><span class="comment">// 打印: 有错误</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="利用events解决雪崩现象"><a href="#利用events解决雪崩现象" class="headerlink" title="利用events解决雪崩现象"></a>利用events解决雪崩现象</h3><p>雪崩问题就是在缓存失效后，并发访问量大量涌入数据库执行查询操作，导致数据库无法同时承受如此大的访问量，从而影响网站效果。</p>
+<p><img src="/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/1.png" alt="img"></p>
+<p><img src="/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/2.png" alt="img"></p>
+<p>在 Node.js 中简单的数据库查询代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">select</span> = (<span class="params">callback</span>) =&gt; &#123;</span><br><span class="line">    db.<span class="title function_">select</span>(<span class="string">&#x27;SQL&#x27;</span>, <span class="function">(<span class="params">results</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">callback</span>(results);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上是一句数据库查询的调用，如果站点刚好启动，这时候缓存中是不存在数据的，而如果访问量巨大，同一句 SQL 会被发送到数据库中反复查询，影响到服务的整体性能。一个改进是添加一个状态锁。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">select</span> = (<span class="params">callback</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (status === <span class="string">&#x27;ready&#x27;</span>) &#123;</span><br><span class="line">        status = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line">        db.<span class="title function_">select</span>(<span class="string">&#x27;SQL&#x27;</span>, <span class="function">(<span class="params">results</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="title function_">callback</span>(results);</span><br><span class="line">            status = <span class="string">&#x27;ready&#x27;</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>但是这种情景，连续的多次调用 select，只有第一次调用是生效的，后续的 select 是没有数据服务的。所以这个时候引入事件队列：</p>
+<p><img src="/Node%E4%B8%AD%E7%9A%84events%E6%A8%A1%E5%9D%97/3.png" alt="img"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EventEmitter</span> = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> eventEmitter = <span class="keyword">new</span> <span class="title class_">EventEmitter</span>();</span><br><span class="line"><span class="keyword">let</span> status = <span class="string">&#x27;ready&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">select</span> = (<span class="params">callback</span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 将该实例的该操作放入队列，并且操作只执行一次</span></span><br><span class="line">    eventEmitter.<span class="title function_">once</span>(<span class="string">&#x27;selected&#x27;</span>, callback);</span><br><span class="line">    <span class="keyword">if</span> (status === <span class="string">&#x27;ready&#x27;</span>) &#123;</span><br><span class="line">        status = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line">        db.<span class="title function_">select</span>(<span class="string">&#x27;SQL&#x27;</span>, <span class="function">(<span class="params">results</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 将该操作返回的数据作为回调函数的输入参数，执行回调函数</span></span><br><span class="line">            eventEmitter.<span class="title function_">emit</span>(<span class="string">&#x27;selected&#x27;</span>, results);</span><br><span class="line">            status = <span class="string">&#x27;ready&#x27;</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>代码分析：<br>对于每一次查询，都会通过 once 方法订阅 selected 事件。当某个查询正在进行时，其他同时到达的查询处于 pending 状态，在订阅了 selected 事件后什么都不做，而请求的回调被压入事件队列中。当查询结束时，执行 emit 方法发布 selected 事件并更新状态。此时，那些订阅了 selected 事件的查询的回调函数被依次调用，并传入查询结果 results 作为参数。由于 once 方法的（执行一次就会将监视器移除）特点，每个查询的回调只会被执行一次。执行回调函数以后，由于 status 变为 ready，又可以响应其他的查询。</p>
+<p>在这个过程中，对于相同的 SQL 语句，保证在同一个查询开始到结束的时间中永远只有一次，在这查询期间到来的相同查询，只需在队列中等待数据就绪即可。这些相同查询只是利用了这次查询的结果执行了回调而已，并没有查询数据库，节省了重复的数据库调用开销。</p>
+<p>由于 Node.js 单线程执行的原因，此处无需担心状态问题。这种方式其实也可以应用到其他远程调用的场景中，即使外部没有缓存策略，也能有效节省重复开销。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Node/" rel="tag"># Node</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/08/04/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="正则表达式">
+                  <i class="fa fa-chevron-left"></i> 正则表达式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/08/Node%E4%B8%AD%E7%9A%84fs%E6%A8%A1%E5%9D%97/" rel="next" title="Node中的fs模块">
+                  Node中的fs模块 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

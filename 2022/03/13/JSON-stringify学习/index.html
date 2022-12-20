@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参数在日常编程中，我们经常 JSON.stringify 方法将某个对象转换成 JSON 字符串形式。 12345const stu &#x3D; &amp;#123;    name: &amp;#x27;zcxiaobao&amp;#x27;,    age: 18&amp;#125;console.log(JSON.stringify(stu)); &#x2F;&#x2F; &amp;#123;&quot;name&quot;:&quot;zcxiaobao&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSON.stringify学习">
+<meta property="og:url" content="https://xzhzzz.github.io/2022/03/13/JSON-stringify%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="参数在日常编程中，我们经常 JSON.stringify 方法将某个对象转换成 JSON 字符串形式。 12345const stu &#x3D; &amp;#123;    name: &amp;#x27;zcxiaobao&amp;#x27;,    age: 18&amp;#125;console.log(JSON.stringify(stu)); &#x2F;&#x2F; &amp;#123;&quot;name&quot;:&quot;zcxiaobao&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-13T07:09:37.000Z">
+<meta property="article:modified_time" content="2022-12-16T08:38:36.890Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2022/03/13/JSON-stringify%E5%AD%A6%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2022/03/13/JSON-stringify%E5%AD%A6%E4%B9%A0/","path":"2022/03/13/JSON-stringify学习/","title":"JSON.stringify学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JSON.stringify学习 | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#replacer"><span class="nav-number">1.1.</span> <span class="nav-text">replacer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E4%B8%80-undefined%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81Symbol%E5%80%BC"><span class="nav-number">2.1.</span> <span class="nav-text">特性一: undefined、函数、Symbol值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E4%BA%8C-toJSON-%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">特性二: toJSON() 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E4%B8%89-%E5%B8%83%E5%B0%94%E5%80%BC%E3%80%81%E6%95%B0%E5%AD%97%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.3.</span> <span class="nav-text">特性三: 布尔值、数字、字符串的包装对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E5%9B%9B-NaN-Infinity-null"><span class="nav-number">2.4.</span> <span class="nav-text">特性四: NaN Infinity null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E4%BA%94-Date%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.5.</span> <span class="nav-text">特性五: Date对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E5%85%AD-Symbol"><span class="nav-number">2.6.</span> <span class="nav-text">特性六: Symbol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E4%B8%83-BigInt"><span class="nav-number">2.7.</span> <span class="nav-text">特性七: BigInt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E5%85%AB-%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8"><span class="nav-number">2.8.</span> <span class="nav-text">特性八: 循环引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7%E4%B9%9D-%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7"><span class="nav-number">2.9.</span> <span class="nav-text">特性九: 可枚举属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E5%A4%84"><span class="nav-number">3.</span> <span class="nav-text">用处</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">删除对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E5%8E%BB%E9%87%8D"><span class="nav-number">3.2.</span> <span class="nav-text">数组对象去重</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">4.</span> <span class="nav-text">注意</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/03/13/JSON-stringify%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JSON.stringify学习 | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JSON.stringify学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-13 15:09:37" itemprop="dateCreated datePublished" datetime="2022-03-13T15:09:37+08:00">2022-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p>在日常编程中，我们经常 <code>JSON.stringify</code> 方法将某个对象转换成 <code>JSON</code> 字符串形式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> stu = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;zcxiaobao&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(stu)); <span class="comment">// &#123;&quot;name&quot;:&quot;zcxiaobao&quot;,&quot;age&quot;:18&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p> <code>MDN</code> 中对 <code>stringify</code> 的定义。</p>
+<p>MDN 中指出: <code>JSON.stringify()</code> 方法将一个 <code>JavaScript</code> 对象或值转换为 <code>JSON</code> 字符串，如果指定了一个 <code>replacer</code> 函数，则可以选择性地替换值，或者指定的 <code>replacer</code> 是数组，则可选择性地仅包含数组指定的属性。</p>
+<p> <code>stringify</code> 语法和参数介绍:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>(value[, replacer [, space]])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>value</code>: 将要序列后成 JSON 字符串的值。</p>
+</li>
+<li><p><code>replacer</code></p>
+<p>(可选)</p>
+<ol>
+<li>如果该参数是一个<strong>函数</strong>，则在序列化过程中，被序列化的值的每个属性都会经过该函数的转换和处理</li>
+<li>如果该参数是一个<strong>数组</strong>，则只有包含在这个数组中的属性名才会被序列化到最终的 <code>JSON</code> 字符串中</li>
+<li>如果该参数为 <code>null</code> 或者未提供，则对象所有的属性都会被序列化。</li>
+</ol>
+</li>
+<li><p><code>space</code></p>
+<p>(可选): 指定缩进用的空白字符串，用于美化输出</p>
+<ol>
+<li>如果参数是个数字，它代表有多少的空格，上限为10</li>
+<li>该值若小于1，则意味着没有空格</li>
+<li>如果该参数为字符串（当字符串长度超过10个字母，取其前10个字母），该字符串将被作为空格</li>
+<li>如果该参数没有提供（或者为 null），将没有空格</li>
+</ol>
+</li>
+</ul>
+<h3 id="replacer"><a href="#replacer" class="headerlink" title="replacer"></a>replacer</h3><ol>
+<li><code>replacer</code> 作为函数</li>
+</ol>
+<p><code>replacer</code> 作为函数，它有两个参数，键(<code>key</code>) 和 值(<code>value</code>)，并且两个参数都会被序列化。</p>
+<p>在开始时，<strong>replacer 函数会被传入一个空字符串作为 key 值，代表着要被 stringify 的这个对象</strong>。理解这点很重要，<code>replacer</code> 函数并非是上来就把对象解析成键值对形式，而是先传入了<strong>待序列化对象</strong>。随后每个对象或数组上的属性会被依次传入。<strong>如果函数返回值为undefined或者函数时，该属性值会被过滤掉</strong>，其余按照返回规则。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// repalcer 接受两个参数 key value，key value 分别为对象的每个键值对</span></span><br><span class="line"><span class="comment">// 因此可以根据键或者值的类型进行简单筛选</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">replacer</span>(<span class="params">key, value</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> value === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = &#123;<span class="attr">foundation</span>: <span class="string">&quot;Mozilla&quot;</span>, <span class="attr">model</span>: <span class="string">&quot;box&quot;</span>, <span class="attr">week</span>: <span class="number">45</span>, <span class="attr">transport</span>: <span class="string">&quot;car&quot;</span>, <span class="attr">month</span>: <span class="number">7</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> jsonString = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(foo, replacer);</span><br><span class="line"><span class="comment">// &#123;&quot;week&quot;:45,&quot;month&quot;:7&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>序列化的是数组，若 <code>replacer</code> 函数返回 <code>undefined</code> 或者函数，当前值不会被忽略，而将会被 <code>null</code> 取代。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list = [<span class="number">1</span>, <span class="string">&#x27;22&#x27;</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">const</span> jsonString = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(list, replacer) <span class="comment">// &#x27;[1,null,3]&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>replacer</code> 作为数组</li>
+</ol>
+<p>作为数组比较好理解，过滤数组中出现的键值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = &#123;<span class="attr">foundation</span>: <span class="string">&quot;Mozilla&quot;</span>, <span class="attr">model</span>: <span class="string">&quot;box&quot;</span>, <span class="attr">week</span>: <span class="number">45</span>, <span class="attr">transport</span>: <span class="string">&quot;car&quot;</span>, <span class="attr">month</span>: <span class="number">7</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> jsonString = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(foo, [<span class="string">&#x27;week&#x27;</span>, <span class="string">&#x27;month&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>JSON 序列化结果为 <code>&#123;&quot;week&quot;:45,&quot;month&quot;:7&#125;</code>, 只保留 <code>week</code> 和 <code>month</code> 属性值。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="特性一-undefined、函数、Symbol值"><a href="#特性一-undefined、函数、Symbol值" class="headerlink" title="特性一: undefined、函数、Symbol值"></a>特性一: undefined、函数、Symbol值</h3><ol>
+<li>出现在非数组对象属性值中: <code>undefined</code>、任意函数、<code>Symbol</code> 值在序列化过程中将会被<strong>忽略</strong></li>
+<li>出现在数组中: <code>undefined</code>、任意函数、<code>Symbol</code>值会被转化为 <strong>null</strong></li>
+<li>单独转换时: 会返回 <strong>undefined</strong></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 对象属性值中存在这三种值会被忽略</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;zc&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  <span class="comment">// 函数会被忽略</span></span><br><span class="line">  <span class="title function_">sayHello</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// undefined会被忽略</span></span><br><span class="line">  <span class="attr">wife</span>: <span class="literal">undefined</span>,</span><br><span class="line">  <span class="comment">// Symbol值会被忽略</span></span><br><span class="line">  <span class="attr">id</span>: <span class="title class_">Symbol</span>(<span class="number">111</span>),</span><br><span class="line">  <span class="comment">// [Symbol(&#x27;zc&#x27;)]: &#x27;zc&#x27;,</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出结果: &#123;&quot;name&quot;:&quot;zc&quot;,&quot;age&quot;:18&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 数组中这三种值会被转化为 null</span></span><br><span class="line"><span class="keyword">const</span> list = [</span><br><span class="line">  <span class="string">&#x27;zc&#x27;</span>, </span><br><span class="line">  <span class="number">18</span>, </span><br><span class="line">  <span class="comment">// 函数转化为 null</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">sayHello</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">  &#125;, </span><br><span class="line">  <span class="comment">// undefined 转换为 null</span></span><br><span class="line">  <span class="literal">undefined</span>, </span><br><span class="line">  <span class="comment">// Symbol 转换为 null</span></span><br><span class="line">  <span class="title class_">Symbol</span>(<span class="number">111</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// [&quot;zc&quot;,18,null,null,null]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(list))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 这三种值单独转化将会返回 undefined</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="literal">undefined</span>))  <span class="comment">// undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="title class_">Symbol</span>(<span class="number">111</span>))) <span class="comment">// undefined</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="keyword">function</span> <span class="title function_">sayHello</span>(<span class="params"></span>) &#123; </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello world&#x27;</span>)</span><br><span class="line">&#125;)) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特性二-toJSON-方法"><a href="#特性二-toJSON-方法" class="headerlink" title="特性二: toJSON() 方法"></a>特性二: toJSON() 方法</h3><p>转换值如果有 <code>toJSON()</code> 方法，<code>toJSON()</code> 方法返回什么值，序列化结果就返回什么值，其余值会被忽略。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;zc&#x27;</span>,</span><br><span class="line">  <span class="title function_">toJSON</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;return toJSON&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// return toJSON</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj));</span><br></pre></td></tr></table></figure>
+
+<h3 id="特性三-布尔值、数字、字符串的包装对象"><a href="#特性三-布尔值、数字、字符串的包装对象" class="headerlink" title="特性三: 布尔值、数字、字符串的包装对象"></a>特性三: 布尔值、数字、字符串的包装对象</h3><p><strong>布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>([<span class="keyword">new</span> <span class="title class_">Number</span>(<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;zcxiaobao&quot;</span>), <span class="keyword">new</span> <span class="title class_">Boolean</span>(<span class="literal">true</span>)]);</span><br><span class="line"><span class="comment">// [1,&quot;zcxiaobao&quot;,true]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特性四-NaN-Infinity-null"><a href="#特性四-NaN-Infinity-null" class="headerlink" title="特性四: NaN Infinity null"></a>特性四: NaN Infinity null</h3><p>特性四主要针对 <code>JavaScript</code> 里面的特殊值，例如 <code>Number</code> 类型里的 <code>NaN</code> 和 <code>Infinity</code> 及 null 。此三种数值<strong>序列化过程中都会被当做 <code>null</code></strong> 。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [null,null,null,null,null]</span></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>([<span class="literal">null</span>, <span class="title class_">NaN</span>, -<span class="title class_">NaN</span>, <span class="title class_">Infinity</span>, -<span class="title class_">Infinity</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 特性三讲过布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值</span></span><br><span class="line"><span class="comment">// 隐式类型转换就会调用包装类，因此会先调用 Number =&gt; NaN</span></span><br><span class="line"><span class="comment">// 之后再转化为 null</span></span><br><span class="line"><span class="comment">// 1/0 =&gt; Infinity =&gt; null</span></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>([<span class="title class_">Number</span>(<span class="string">&#x27;123a&#x27;</span>), +<span class="string">&#x27;123a&#x27;</span>, <span class="number">1</span>/<span class="number">0</span>])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="特性五-Date对象"><a href="#特性五-Date对象" class="headerlink" title="特性五: Date对象"></a>特性五: Date对象</h3><p><code>Date</code> 对象上部署了 <code>toJSON</code> 方法(同 <code>Date.toISOString()</code>)将其转换为字符串，因此 <strong>JSON.stringify() 将会序列化 Date 的值为时间格式字符串</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &quot;2022-03-06T08:24:56.138Z&quot;</span></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>(<span class="keyword">new</span> <span class="title class_">Date</span>())</span><br></pre></td></tr></table></figure>
+
+<h3 id="特性六-Symbol"><a href="#特性六-Symbol" class="headerlink" title="特性六: Symbol"></a>特性六: Symbol</h3><p>特性一提到，<code>Symbol</code> 类型当作值来使用时，对象、数组、单独使用分别会被忽略、转换为 <code>null</code> 、转化为 <code>undefined</code>。</p>
+<p>同样的，<strong>所有以 Symbol 为属性键的属性都会被完全忽略掉，即便 replacer 参数中强制指定包含了它们</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;zcxiaobao&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  [<span class="title class_">Symbol</span>(<span class="string">&#x27;lyl&#x27;</span>)]: <span class="string">&#x27;unique&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">replacer</span>(<span class="params">key, value</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> key === <span class="string">&#x27;symbol&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj, replacer);</span><br></pre></td></tr></table></figure>
+
+<p>通过上面案例，我们可以看出，虽然我们通过 <code>replacer</code> 强行指定了返回 <code>Symbol</code> 类型值，但最终还是会被忽略掉。</p>
+<h3 id="特性七-BigInt"><a href="#特性七-BigInt" class="headerlink" title="特性七: BigInt"></a>特性七: BigInt</h3><p><code>JSON.stringify</code> 规定: <strong>尝试去转换 <code>BigInt</code> 类型的值会抛出 <code>TypeError</code></strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bigNumber = <span class="title class_">BigInt</span>(<span class="number">1</span>)</span><br><span class="line"><span class="comment">// Uncaught TypeError: Do not know how to serialize a BigInt</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(bigNumber))</span><br></pre></td></tr></table></figure>
+
+<h3 id="特性八-循环引用"><a href="#特性八-循环引用" class="headerlink" title="特性八: 循环引用"></a>特性八: 循环引用</h3><p>特性八指出: <strong>对包含循环引用的对象（对象之间相互引用，形成无限循环）执行此方法，会抛出错误</strong></p>
+<p>日常开发中深拷贝最简单暴力的方式就是使用 <code>JSON.parse(JSON.stringify(obj))</code>，但此方法下的深拷贝存在巨坑，关键问题就在于 <code>stringify</code> 无法处理循环引用问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;zcxiaobao&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> loopObj = &#123;</span><br><span class="line">  obj</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 形成循环引用</span></span><br><span class="line">obj.<span class="property">loopObj</span> = loopObj;</span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Uncaught TypeError: Converting circular structure to JSON</span></span><br><span class="line"><span class="comment">    --&gt; starting at object with constructor &#x27;Object&#x27;</span></span><br><span class="line"><span class="comment">    |     property &#x27;loopObj&#x27; -&gt; object with constructor &#x27;Object&#x27;</span></span><br><span class="line"><span class="comment">    --- property &#x27;obj&#x27; closes the circle</span></span><br><span class="line"><span class="comment">    at JSON.stringify (&lt;anonymous&gt;)</span></span><br><span class="line"><span class="comment">    at &lt;anonymous&gt;:10:6</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="特性九-可枚举属性"><a href="#特性九-可枚举属性" class="headerlink" title="特性九: 可枚举属性"></a>特性九: 可枚举属性</h3><p>对于对象(包括 <code>Map/Set/WeakMap/WeakSet</code>)的序列化，除了上文讲到的一些情况，<code>stringify</code> 也明确规定，<strong>仅会序列化可枚举的属性</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不可枚举的属性默认会被忽略</span></span><br><span class="line"><span class="comment">// &#123;&quot;age&quot;:18&#125;</span></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>(</span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">create</span>(</span><br><span class="line">        <span class="literal">null</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">name</span>: &#123; <span class="attr">value</span>: <span class="string">&#x27;zcxiaobao&#x27;</span>, <span class="attr">enumerable</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">            <span class="attr">age</span>: &#123; <span class="attr">value</span>: <span class="number">18</span>, <span class="attr">enumerable</span>: <span class="literal">true</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><h3 id="删除对象属性"><a href="#删除对象属性" class="headerlink" title="删除对象属性"></a>删除对象属性</h3><p>借助 <code>replacer</code> 函数，我们还可以删除对象的某些属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;zcxiaobao&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// &#123;&quot;age&quot;:18&#125;</span></span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj, <span class="function">(<span class="params">key, val</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 返回值为 undefined时，该属性会被忽略 </span></span><br><span class="line">  <span class="keyword">if</span> (key === <span class="string">&#x27;name&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> val;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组对象去重"><a href="#数组对象去重" class="headerlink" title="数组对象去重"></a>数组对象去重</h3><p>由于 <code>JSON.stringify</code> 序列化 <code>&#123;x:1, y:1&#125;</code> 和 <code>&#123;y:1, x:1&#125;</code> 结果不同，因此在开始之前我们需要处理一下数组中的对象。</p>
+<ol>
+<li>方法一: 将数组中的每个对象的键按字典序排列</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> newItem = &#123;&#125;;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">keys</span>(item)   <span class="comment">// 获取对象键值</span></span><br><span class="line">        .<span class="title function_">sort</span>()       <span class="comment">// 键值排序</span></span><br><span class="line">        .<span class="title function_">map</span>(<span class="function"><span class="params">key</span> =&gt;</span> &#123; <span class="comment">// 生成新对象</span></span><br><span class="line">          newItem[key] = item[key];</span><br><span class="line">        &#125;)</span><br><span class="line">  <span class="comment">// 使用 newItem 进行去重操作</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><code>JSON.stringify</code> 提供了 <code>replacer</code> 数组格式参数，可以过滤数组。</p>
+<ol>
+<li>方法二: 借助 <code>replacer</code> 数组格式</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">unique</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> keySet = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">  <span class="keyword">const</span> uniqueObj = &#123;&#125;</span><br><span class="line">  <span class="comment">// 提取所有的键</span></span><br><span class="line">  arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="title class_">Object</span>.<span class="title function_">keys</span>(item).<span class="title function_">forEach</span>(<span class="function"><span class="params">key</span> =&gt;</span> keySet.<span class="title function_">add</span>(key))</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">const</span> replacer = [...keySet];</span><br><span class="line">  arr.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 所有的对象按照规定键值 replacer 过滤</span></span><br><span class="line">    unique[<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(item, replacer)] = item;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Object</span>.<span class="title function_">keys</span>(unique).<span class="title function_">map</span>(<span class="function"><span class="params">u</span> =&gt;</span> <span class="title class_">JSON</span>.<span class="title function_">parse</span>(u))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试一下</span></span><br><span class="line"><span class="title function_">unique</span>([</span><br><span class="line">  &#123;&#125;, </span><br><span class="line">  &#123;&#125;, </span><br><span class="line">  &#123;<span class="attr">x</span>:<span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">x</span>:<span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">a</span>:<span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">x</span>:<span class="number">1</span>,<span class="attr">a</span>:<span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">x</span>:<span class="number">1</span>,<span class="attr">a</span>:<span class="number">1</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">x</span>:<span class="number">1</span>,<span class="attr">a</span>:<span class="number">1</span>,<span class="attr">b</span>:<span class="number">1</span>&#125;</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回结果</span></span><br><span class="line">[&#123;&#125;,&#123;<span class="string">&quot;x&quot;</span>:<span class="number">1</span>&#125;,&#123;<span class="string">&quot;a&quot;</span>:<span class="number">1</span>&#125;,&#123;<span class="string">&quot;x&quot;</span>:<span class="number">1</span>,<span class="string">&quot;a&quot;</span>:<span class="number">1</span>&#125;,&#123;<span class="string">&quot;x&quot;</span>:<span class="number">1</span>,<span class="string">&quot;a&quot;</span>:<span class="number">1</span>,<span class="string">&quot;b&quot;</span>:<span class="number">1</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>使用 <code>JSON.parse(JSON.stringify)</code> 是实现对象的深拷贝最简单暴力的方法之一。</p>
+<ol>
+<li>循环引用问题，<code>stringify</code> 会报错</li>
+<li>函数、<code>undefined</code>、<code>Symbol</code> 会被忽略</li>
+<li><code>NaN</code>、<code>Infinity</code> 和 <code>-Infinity</code> 会被序列化成 <code>null</code></li>
+<li>…</li>
+</ol>
+<p>因此在使用 <code>JSON.parse(JSON.stringify)</code> 做深拷贝时，一定要深思熟虑。如果没有上述隐患，<code>JSON.parse(JSON.stringify)</code> 是一个可行的深拷贝方案。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/06/Blob%E3%80%81File%E3%80%81Base64%E3%80%81FileReader%E5%AD%A6%E4%B9%A0/" rel="prev" title="Blob、File、Base64、FileReader学习">
+                  <i class="fa fa-chevron-left"></i> Blob、File、Base64、FileReader学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/23/meta%E6%A0%87%E7%AD%BE/" rel="next" title="meta标签">
+                  meta标签 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

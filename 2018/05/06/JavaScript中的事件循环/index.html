@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言JavaScript是一门单线程、非阻塞的脚本语言。 单线程意味着javascript代码在执行的任何时候，都只有一个主线程来处理所有的任务。 非阻塞则是当代码需要进行一项异步任务（无法立刻返回结果，需要花一定时间才能返回的任务，如I&#x2F;O事件）的时候，主线程会挂起这个任务，然后在异步任务返回结果的时候再根据一定规则去执行相应的回调。 那为什么JavaScript是单线程呢？是因为Ja">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中的事件循环">
+<meta property="og:url" content="https://xzhzzz.github.io/2018/05/06/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="前言JavaScript是一门单线程、非阻塞的脚本语言。 单线程意味着javascript代码在执行的任何时候，都只有一个主线程来处理所有的任务。 非阻塞则是当代码需要进行一项异步任务（无法立刻返回结果，需要花一定时间才能返回的任务，如I&#x2F;O事件）的时候，主线程会挂起这个任务，然后在异步任务返回结果的时候再根据一定规则去执行相应的回调。 那为什么JavaScript是单线程呢？是因为Ja">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xzhzzz.github.io/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/event_loop.jpg">
+<meta property="article:published_time" content="2018-05-06T06:41:17.000Z">
+<meta property="article:modified_time" content="2022-12-16T08:38:36.891Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xzhzzz.github.io/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/event_loop.jpg">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2018/05/06/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2018/05/06/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/","path":"2018/05/06/JavaScript中的事件循环/","title":"JavaScript中的事件循环"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript中的事件循环 | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">事件循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%BC%82%E6%AD%A5%E4%B8%AD%E7%9A%84Microtasks%E5%92%8CMacrotasks"><span class="nav-number">3.</span> <span class="nav-text">进阶：异步中的Microtasks和Macrotasks</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2018/05/06/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JavaScript中的事件循环 | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript中的事件循环
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-05-06 14:41:17" itemprop="dateCreated datePublished" datetime="2018-05-06T14:41:17+08:00">2018-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JavaScript是一门<strong>单线程</strong>、<strong>非阻塞</strong>的脚本语言。</p>
+<p><strong>单线程</strong>意味着javascript代码在执行的任何时候，都只有一个主线程来处理所有的任务。</p>
+<p><strong>非阻塞</strong>则是当代码需要进行一项异步任务（无法立刻返回结果，需要花一定时间才能返回的任务，如I&#x2F;O事件）的时候，主线程会挂起这个任务，然后在异步任务返回结果的时候再根据一定规则去执行相应的回调。</p>
+<p>那为什么JavaScript是单线程呢？是因为JavaScript最开始的执行环境是在浏览器中，而我们需要进行各种各样的dom操作。如果JavaScript是多线程的，那么当两个线程同时对dom进行一项操作，例如一个向其添加事件，而另一个删除了这个dom，那程序就会出现问题。因此，JavaScript只能用一个主线程来执行代码，这样就保证了程序执行的一致性。</p>
+<p>但是，单线程虽然保证了程序执行顺序但是也限制了JavaScript的效率，因此H5中新增了web worker技术。这项技术可以让JavaScript多线程运行。然而，使用web worker技术开的多线程有着诸多限制，例如：所有新线程都受主线程的完全控制，不能独立执行。这意味着这些“线程” 实际上应属于主线程的子线程。另外，这些子线程并没有执行I&#x2F;O操作的权限，只能为主线程分担一些诸如计算等任务。所以严格来讲这些线程并没有完整的功能，也因此这项技术并非改变了JavaScript语言的单线程本质。</p>
+<p>而JavaScript的另一个特点是<strong>非阻塞</strong>，而非阻塞是因为事件循环机制（event loop）。</p>
+<blockquote>
+<p>本文主要讲的是浏览器环境下的事件循环而非node环境下的，两个环境下的事件循环之间<strong>存在差异</strong>。</p>
+</blockquote>
+<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3><p>先来一段代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;start&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout&quot;</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;end&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//运行后的结果如下：</span></span><br><span class="line"><span class="comment">//start</span></span><br><span class="line"><span class="comment">//end</span></span><br><span class="line"><span class="comment">//setTimeout</span></span><br></pre></td></tr></table></figure>
+
+<p>在控制台中运行上述代码，我们可以看出先输出“start”和”end”,然后大约1秒后输出”setTimeout”。代码并有在1s中之后才输出“end”，而是立即输出。这是因为setTimeout方法是一个异步的函数。也就是说代码中设置了一个异步延时函数时，代码并不会阻塞，只会在浏览器的事件表中进行记录，代码会继续执行下去。但延时的时间结束后，事件表会将setTimeout的回调函数添加至事件队列（task queue）中，事件队列拿到了任何后便将任何压入到执行栈（stack）中，然后执行栈执行任务，输出”setTImeout”。</p>
+<p>现在，对上面的代码进行一些修改：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;start&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout&quot;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>); <span class="comment">//这里延时改为了0</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;end&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//运行后的结果如下：</span></span><br><span class="line"><span class="comment">//start</span></span><br><span class="line"><span class="comment">//end</span></span><br><span class="line"><span class="comment">//setTimeout</span></span><br></pre></td></tr></table></figure>
+
+<p>在代码中我们将延时时间改为0，但是输出的结果并没有改变。这是因为setTimeout的回调函数只是被添加到事件队列（stack queue）中，但是不会立即执行。因为当前的执行栈中还有任务没有执行结束，所以setTimeout任务还在排队，直到”end“输出后，当前的执行栈中任务执行完毕，执行栈为空，这时候JS引擎便会检查事件队列，把setTimeout任务压入执行栈中执行。</p>
+<p>根据上面的代码我们知道，js引擎遇到一个异步事件后并不会一直等待其返回结果，而是会将这个事件挂起，继续执行执行栈中的其他任务。当一个异步事件返回结果后，js会将这个事件加入与当前执行栈不同的另一个队列，我们称之为事件队列。被放入事件队列不会立刻执行其回调，而是等待当前执行栈中的所有任务都执行完毕，主线程处于闲置状态时，主线程会去查找事件队列是否有任务。如果有，那么主线程会从中取出排在第一位的事件，并把这个事件对应的回调放入执行栈中，然后执行其中的同步代码，如此反复，这样就形成了一个无限的循环。这个过程被称为“事件循环（Event Loop）”。</p>
+<p><img src="/JavaScript%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/event_loop.jpg"></p>
+<p>上图中的stack表示我们所说的执行栈，Web APIs则是代表一些异步事件，而callback queue即事件队列。</p>
+<h3 id="进阶：异步中的Microtasks和Macrotasks"><a href="#进阶：异步中的Microtasks和Macrotasks" class="headerlink" title="进阶：异步中的Microtasks和Macrotasks"></a>进阶：异步中的Microtasks和Macrotasks</h3><p>异步任务分为两类：macrotasks（宏任务）和microtasks（微任务，<strong>ES2015规范中称为Job</strong>） ，所属的API如下：</p>
+<p>macrotasks（宏任务）:</p>
+<ul>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>setImmediate</li>
+<li>requestAnimationFrame</li>
+<li>I&#x2F;O</li>
+<li>UI渲染</li>
+</ul>
+<p>microtasks（微任务）:</p>
+<ul>
+<li>process.nextTick</li>
+<li>promise</li>
+<li>Object.observe</li>
+<li>MutationObserver</li>
+</ul>
+<p>WHATWG规范：</p>
+<ul>
+<li>一个事件循环(event loop)会有一个或多个任务队列(task queue)</li>
+<li><strong>task queue 就是 macrotask queue</strong></li>
+<li>每一个 event loop 都有一个 microtask queue</li>
+<li>task queue &#x3D;&#x3D; macrotask queue !&#x3D; microtask queue</li>
+<li>一个任务 task 可以放入 macrotask queue 也可以放入 microtask queue 中</li>
+<li>当一个任务被放入microtask或者macrotask队列后，准备工作就已经结束，这时候可以开始执行任务了。</li>
+</ul>
+<blockquote>
+<p>根据上面的描述，事件循环的运行机制大概可以分为以下几个步骤：</p>
+<ol>
+<li>检查事件队列是否为空，如果为空，则继续检查；如果不为空，则执行2；</li>
+<li>取出<strong>macrotask</strong>，压入执行栈；</li>
+<li>执行任务；</li>
+<li>任务执行完后，检查<strong>microtask</strong>队列，如果不为空则执行里面的任务。如果为空，这执行5；</li>
+<li>检查执行栈，如果执行栈为空，则执行1；如果不为空，则继续检查；</li>
+</ol>
+</blockquote>
+<p>举个例子看是否掌握了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">  	<span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve</span>) &#123;</span><br><span class="line">  		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;promise2&#x27;</span>)</span><br><span class="line">  		<span class="title function_">resolve</span>()</span><br><span class="line"> 	&#125;).<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;then2&#x27;</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;,<span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve</span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;promise1&#x27;</span>)</span><br><span class="line">  	<span class="title function_">resolve</span>()</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;then1&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;end&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//运行后的结果如下：</span></span><br><span class="line"><span class="comment">//start</span></span><br><span class="line"><span class="comment">//promise1</span></span><br><span class="line"><span class="comment">//end</span></span><br><span class="line"><span class="comment">//then1</span></span><br><span class="line"><span class="comment">//setTimeout</span></span><br><span class="line"><span class="comment">//promise2</span></span><br><span class="line"><span class="comment">//then2</span></span><br></pre></td></tr></table></figure>
+
+<p>在控制台中运行上述代码，代码开始运行时，从macrotask queue中取出任务执行，然后输出”start”，遇到setTimeout，把setTimeout放入macrotask queue中，继续运行，遇到实例化promise输出”promise1”，然后运行resolve()，然后遇到promise.then，放入到microtask queue中，然后输出”end”，当前macrotask 执行完了，然后取出microtask queue中的任务，输出”then1”。当前microtask执行完后，在macrotask queue取出下一个macrotask，压入执行栈，输出”setTimeout”，然后实例化promise，输出”promise2”，然后遇到promise.then，放入到microtask queue中，当前macrotask 执行完了，然后取出microtask queue中的任务，输出”then2”。然后继续检查macrotask queue，如果不为空，则继续取出macrotask。为空则继续检查。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/07/JavaScript%E4%B8%AD%E7%9A%84%E5%A0%86%E4%B8%8E%E6%A0%88%E3%80%81%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/" rel="prev" title="JavaScript中的堆与栈、浅拷贝与深拷贝">
+                  <i class="fa fa-chevron-left"></i> JavaScript中的堆与栈、浅拷贝与深拷贝
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/06/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" rel="next" title="浏览器进程与线程">
+                  浏览器进程与线程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
