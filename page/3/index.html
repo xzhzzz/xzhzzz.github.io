@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,103 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2019/03/17/chrome%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/17/chrome%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">chrome插件开发</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-03-17 20:15:27" itemprop="dateCreated datePublished" datetime="2019-03-17T20:15:27+08:00">2019-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="什么是Chrome插件"><a href="#什么是Chrome插件" class="headerlink" title="什么是Chrome插件"></a>什么是Chrome插件</h2><p>Chrome插件是一个用Web技术开发、用来增强浏览器功能的软件，它其实就是一个由HTML、CSS、JS、图片等资源组成的一个<code>.crx</code>后缀的压缩包。</p>
+<h2 id="插件开发"><a href="#插件开发" class="headerlink" title="插件开发"></a>插件开发</h2><p>Chrome插件开发只需保证项目的根目录有一个<code>manifest.json</code>的配置文件即可。</p>
+<p>下面是这个插件demo的项目结构。里面包含了已经打包的扩展程序的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── chrome-plg-movierank.crx      // chrome打包后的插件包</span><br><span class="line">├── chrome-plg-movierank.pem      // chrome导入插件后生成的密钥</span><br><span class="line">├── index.html                    // 插件的html入口文件</span><br><span class="line">├── index.css                     // 插件的css文件</span><br><span class="line">├── index.js                      // 插件的js文件</span><br><span class="line">├── logo.png                      // 插件的logo</span><br><span class="line">├── manifest.json                 // 插件配置文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="manifest-json"><a href="#manifest-json" class="headerlink" title="manifest.json"></a>manifest.json</h3><p>下面是一个简单的demo配置文件，详细的配置文档可以参考<a target="_blank" rel="noopener" href="https://developer.chrome.com/extensions/manifest">官方文档（需自备梯子）</a>。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;manifest_version&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span> <span class="comment">// 用于定义配置版本，必须为2</span></span><br><span class="line">	<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;票房排行榜&quot;</span><span class="punctuation">,</span> <span class="comment">// 插件名称</span></span><br><span class="line">	<span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0&quot;</span><span class="punctuation">,</span> <span class="comment">// 插件版本，用于迭代</span></span><br><span class="line">	<span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;实时电影票房排行榜&quot;</span><span class="punctuation">,</span> <span class="comment">// 插件描述</span></span><br><span class="line">	<span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xzhzzz&quot;</span><span class="punctuation">,</span> <span class="comment">// 插件作者名称</span></span><br><span class="line">	<span class="attr">&quot;icons&quot;</span><span class="punctuation">:</span> <span class="comment">// 插件图标</span></span><br><span class="line">	<span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;16&quot;</span><span class="punctuation">:</span> <span class="string">&quot;logo.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;48&quot;</span><span class="punctuation">:</span> <span class="string">&quot;logo.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;128&quot;</span><span class="punctuation">:</span> <span class="string">&quot;logo.png&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;browser_action&quot;</span><span class="punctuation">:</span> <span class="comment">// 浏览器右上角配置</span></span><br><span class="line">	<span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;default_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;logo.png&quot;</span><span class="punctuation">,</span> <span class="comment">// 右上角图标展示</span></span><br><span class="line">		<span class="attr">&quot;default_popup&quot;</span><span class="punctuation">:</span> <span class="string">&quot;index.html&quot;</span> <span class="comment">// 图标悬停时展示的页面</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="comment">// 引用第三方资源白名单配置，不配置资源无效</span></span><br><span class="line">  <span class="attr">&quot;content_security_policy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;;script-src &#x27;self&#x27; &#x27;unsafe-            eval&#x27; https://cdn.bootcss.com; object-src &#x27;self&#x27; ;&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>基本上文件配置好后，剩下的就是跟平常开发web页面一样，把内容填充到index.html就行了。</p>
+<h3 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h3><p>入口文件，使用了第三方cdn链接vue和axios库</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>实时电影票房排行榜<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/vue/2.6.6/vue.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcss.com/axios/0.18.0/axios.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;./index.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;list&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>排名<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>影片名<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>实时票房（万）<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>票房占比<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>上映天数<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span>&gt;</span>累计票房（万）<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in rankList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">:title</span>=<span class="string">&quot;item.Irank&quot;</span>&gt;</span>&#123;&#123;item.Irank&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">:title</span>=<span class="string">&quot;item.MovieName&quot;</span>&gt;</span>&#123;&#123;item.MovieName&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">:title</span>=<span class="string">&quot;item.BoxOffice&quot;</span>&gt;</span>&#123;&#123;item.BoxOffice&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">:title</span>=<span class="string">&quot;item.boxPer&quot;</span>&gt;</span>&#123;&#123;item.boxPer&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">:title</span>=<span class="string">&quot;item.movieDay&quot;</span>&gt;</span>&#123;&#123;item.movieDay === &#x27;0&#x27; ? &#x27;-&#x27; : item.movieDay&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">:title</span>=<span class="string">&quot;item.sumBoxOffice&quot;</span>&gt;</span>&#123;&#123;item.sumBoxOffice === &#x27;0.00&#x27; ? &#x27;-&#x27; : item.sumBoxOffice&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="index-css"><a href="#index-css" class="headerlink" title="index.css"></a>index.css</h3><p>用css简单的处理一下布局</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#app</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">540px</span>;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">240px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.item</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.item</span> <span class="selector-tag">span</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">90px</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">text-overflow</span>: ellipsis;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h3><p>使用axios库请求第三方接口获取排行榜数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">rankList</span>: &#123;&#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">getMovieData</span>()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">getMovieData</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">axios</span>(&#123;</span><br><span class="line">                <span class="attr">methos</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">                <span class="attr">url</span>: <span class="string">&#x27;http://www.cbooo.cn/BoxOffice/GetHourBoxOffice&#x27;</span>,</span><br><span class="line">            &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">rankList</span> = res.<span class="property">data</span>.<span class="property">data2</span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装到Chrome中"><a href="#安装到Chrome中" class="headerlink" title="安装到Chrome中"></a>安装到Chrome中</h2><p>从右上角菜单-&gt;更多工具-&gt;扩展程序可以进入插件管理页面，也可以直接在地址栏输入 <a href="chrome://extensions/">chrome:&#x2F;&#x2F;extensions</a> 访问。进入到管理页面后需要勾选<code>开发者模式</code>。然后会出现<code>加载已解压的扩展程序</code>的选项，导入插件就好了。</p>
+<p><img src="/chrome%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/1.jpg"></p>
+<h2 id="demo效果"><a href="#demo效果" class="headerlink" title="demo效果"></a>demo效果</h2><p><img src="/chrome%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/3.jpg"></p>
+<h2 id="打包与发布"><a href="#打包与发布" class="headerlink" title="打包与发布"></a>打包与发布</h2><p>插件管理页面有一个打包的选项，然后会生成一个<code>.crx</code>文件，如果要发布到应用商店的话需要先登录Google账号，然后花5美元注册为开发者，就可以提交审核了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1385,120 +1482,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 安装相关包</span><br><span class="line">npm install -g vue-cli</span><br><span class="line">vue init simulatedgreg/electron-vue my-project</span><br><span class="line"></span><br><span class="line"># 安装项目相关依赖</span><br><span class="line">cd my-project</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 
 <p>electron-vue 利用 <code>vue-cli</code> 作为脚手架工具，加上拥有 <code>vue-loader</code> 的 <code>webpack</code>、<code>electron-builder</code>，以及一些最常用的插件，如<code>vue-router</code>、<code>vuex</code> 等。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2018/06/06/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xzhzzz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="...">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/06/06/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="post-title-link" itemprop="url">浏览器进程与线程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-06-06 10:48:44" itemprop="dateCreated datePublished" datetime="2018-06-06T10:48:44+08:00">2018-06-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>做为一名前端开发，我们代码的应用场景往往是在浏览器上。那么我们对浏览器是否有比较清晰的了解呢？什么是多进程架构浏览器？为什么浏览器内核是多线程？Javascript是单线程又是什么鬼？进程和线程是否分得清楚呢？</p>
-</blockquote>
-<p>进程和线程是操作系统的基本概念，许多人会有所了解，但不能较为清晰的分辨。 这里我们需要了解下面几个点。</p>
-<h4 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h4><p>CPU是计算机的核心，其负责承担计算机的计算任务。这里我们比喻为一个工厂。</p>
-<h4 id="进程（process）"><a href="#进程（process）" class="headerlink" title="进程（process）"></a>进程（process）</h4><p>学术上说，进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体。这里将进程比喻为工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</p>
-<h4 id="线程（thread）"><a href="#线程（thread）" class="headerlink" title="线程（thread）"></a>线程（thread）</h4><p>在早期的操作系统中并没有线程的概念，进程是能拥有资源和独立运行的最小单位，也是程序执行的最小单位。任务调度采用的是时间片轮转的抢占式调度方式，而进程是任务调度的最小单位，每个进程有各自独立的一块内存，使得各个进程之间内存地址相互隔离。后来，随着计算机的发展，对CPU的要求越来越高，进程之间的切换开销较大，已经无法满足越来越复杂的程序的要求了。于是就发明了线程，线程是程序执行中一个单一的顺序控制流程，是程序执行流的最小单元。这里把线程比喻一个车间的工人，即一个车间可以允许由多个工人协同完成一个任务。</p>
-<h4 id="进程和线程的区别和关系"><a href="#进程和线程的区别和关系" class="headerlink" title="进程和线程的区别和关系"></a>进程和线程的区别和关系</h4><ul>
-<li>进程是操作系统分配资源的最小单位，线程是程序执行的最小单位。</li>
-<li>一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线；</li>
-<li>进程之间相互独立，但同一进程下的各个线程之间共享程序的内存空间(包括代码段、数据集、堆等)及一些进程级的资源(如打开文件和信号)。</li>
-<li>调度和切换：线程上下文切换比进程上下文切换要快得多。</li>
-</ul>
-<h4 id="多进程和多线程"><a href="#多进程和多线程" class="headerlink" title="多进程和多线程"></a>多进程和多线程</h4><ul>
-<li>多进程：多进程指的是在同一个时间里，同一个计算机系统中如果允许两个或两个以上的进程处于运行状态。多进程带来的好处是明显的，比如你可以听歌的同时，打开编辑器敲代码，编辑器和听歌软件的进程之间丝毫不会相互干扰。</li>
-<li>多线程是指程序中包含多个执行流，即在一个程序中可以同时运行多个不同的线程来执行不同的任务，也就是说允许单个程序创建多个并行执行的线程来完成各自的任务。</li>
-</ul>
-<h2 id="浏览器多进程架构"><a href="#浏览器多进程架构" class="headerlink" title="浏览器多进程架构"></a>浏览器多进程架构</h2><p>跟现在的部分多线程浏览器不一样，Chrome浏览器使用多个进程来隔离不同的网页。因此在Chrome中打开一个网页相当于起了一个进程。</p>
-<h4 id="那么Chrome为什么要使用多进程架构"><a href="#那么Chrome为什么要使用多进程架构" class="headerlink" title="那么Chrome为什么要使用多进程架构?"></a>那么Chrome为什么要使用多进程架构?</h4><p>在浏览器刚被设计出来的时候，那时的网页非常的简单，每个网页的资源占有率是非常低的，因此一个进程处理多个网页时可行的。然后在今天，大量网页变得日益复杂。把所有网页都放进一个进程的浏览器面临在健壮性，响应速度，安全性方面的挑战。因为如果浏览器中的<code>一个tab网页崩溃的话，将会导致其他被打开的网页应用</code>。另外相对于线程，进程之间是不共享资源和地址空间的,所以不会存在太多的安全问题，而由于多个线程共享着相同的地址空间和资源,所以会存在<code>线程之间有可能会恶意修改或者获取非授权数据等复杂的安全问题。</code></p>
-<p>在了解这个知识点线，我们需要先说明下什么是<code>浏览器内核</code>。</p>
-<h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><p>简单来说浏览器内核是通过取得页面内容、整理信息（应用CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。从上面我们可以知道，Chrome浏览器为每个tab页面单独启用进程，因此每个tab网页都有由其独立的渲染引擎实例。</p>
-<h4 id="浏览器内核是多线程"><a href="#浏览器内核是多线程" class="headerlink" title="浏览器内核是多线程"></a>浏览器内核是多线程</h4><p>浏览器内核是多线程，在内核控制下各线程相互配合以保持同步，一个浏览器通常由以下常驻线程组成：</p>
-<ul>
-<li>GUI 渲染线程</li>
-<li>JavaScript引擎线程</li>
-<li>定时触发器线程</li>
-<li>事件触发线程</li>
-<li>异步http请求线程</li>
-</ul>
-<h4 id="GUI渲染线程"><a href="#GUI渲染线程" class="headerlink" title="GUI渲染线程"></a>GUI渲染线程</h4><p><code>GUI渲染线程</code>负责渲染浏览器界面HTML元素,当界面需要重绘(Repaint)或由于某种操作引发回流(reflow)时,该线程就会执行。在Javascript引擎运行脚本期间,GUI渲染线程都是处于挂起状态的,也就是说被”冻结”了.</p>
-<h4 id="Javascript引擎线程"><a href="#Javascript引擎线程" class="headerlink" title="Javascript引擎线程"></a>Javascript引擎线程</h4><p><code>Javascript引擎</code>，也可以称为JS内核，主要负责处理Javascript脚本程序，例如V8引擎。Javascript引擎线程理所当然是负责解析Javascript脚本，运行代码。</p>
-<p>Javascript是<strong>单线程</strong>的，那么为什么Javascript要是单线程的？</p>
-<p>这是因为Javascript这门脚本语言诞生的使命所致：JavaScript为处理页面中用户的交互，以及操作DOM树、CSS样式树来给用户呈现一份动态而丰富的交互体验和服务器逻辑的交互处理。如果JavaScript是多线程的方式来操作这些UI DOM，则可能出现UI操作的冲突； 如果Javascript是多线程的话，在多线程的交互下，处于UI中的DOM节点就可能成为一个临界资源，假设存在两个线程同时操作一个DOM，一个负责修改一个负责删除，那么这个时候就需要浏览器来裁决如何生效哪个线程的执行结果。当然我们可以通过锁来解决上面的问题。但为了避免因为引入了锁而带来更大的复杂性，Javascript在最初就选择了单线程执行。</p>
-<p><strong>GUI 渲染线程 与 JavaScript引擎线程互斥！</strong></p>
-<p>由于JavaScript是可操纵DOM的，如果在修改这些元素属性同时渲染界面（即JavaScript线程和UI线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。因此为了防止渲染出现不可预期的结果，浏览器设置GUI渲染线程与JavaScript引擎为互斥的关系，当JavaScript引擎执行时GUI线程会被挂起，GUI更新会被保存在一个队列中等到引擎线程空闲时立即被执行。</p>
-<p>从上面我们可以推理出，由于GUI渲染线程与JavaScript执行线程是互斥的关系，当浏览器在执行JavaScript程序的时候，GUI渲染线程会被保存在一个队列中，直到JS程序执行完成，才会接着执行。因此如果JS执行的时间过长，这样就会造成页面的渲染不连贯，导致<strong>页面渲染加载阻塞</strong>的感觉。</p>
-<h4 id="定时触发器线程"><a href="#定时触发器线程" class="headerlink" title="定时触发器线程"></a>定时触发器线程</h4><p>浏览器定时计数器并不是由JavaScript引擎计数的, 因为JavaScript引擎是单线程的, 如果处于阻塞线程状态就会影响记计时的准确, 因此通过单独线程来计时并触发定时是更为合理的方案。</p>
-<h4 id="事件触发线程"><a href="#事件触发线程" class="headerlink" title="事件触发线程"></a>事件触发线程</h4><p>当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待JS引擎的处理。这些事件可以是当前执行的代码块如定时任务、也可来自浏览器内核的其他线程如鼠标点击、AJAX异步请求等，但由于JS的单线程关系所有这些事件都得排队等待JS引擎处理。</p>
-<h4 id="异步http请求线程"><a href="#异步http请求线程" class="headerlink" title="异步http请求线程"></a>异步http请求线程</h4><p>在XMLHttpRequest在连接后是通过浏览器新开一个线程请求， 将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件放到 JavaScript引擎的处理队列中等待处理。</p>
 
       
     </div>

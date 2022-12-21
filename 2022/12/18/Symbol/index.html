@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Symbol是什么Symbol作为原始数据类型的一种，表示独一无二的值，在之前，对象的键以字符串的形式存在，所以极易引发键名冲突问题，而Symbol的出现正是解决了这个痛点，它的使用方式也很简单。 Symbol的使用创建一个Symbol与创建Object不同，只需要a &#x3D; Symbol()即可 12let a &#x3D; Symbol()typeof a  使用时需要注意的是：不可以使用new来搭配Sym">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Symbol">
+<meta property="og:url" content="https://xzhzzz.github.io/2022/12/18/Symbol/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="Symbol是什么Symbol作为原始数据类型的一种，表示独一无二的值，在之前，对象的键以字符串的形式存在，所以极易引发键名冲突问题，而Symbol的出现正是解决了这个痛点，它的使用方式也很简单。 Symbol的使用创建一个Symbol与创建Object不同，只需要a &#x3D; Symbol()即可 12let a &#x3D; Symbol()typeof a  使用时需要注意的是：不可以使用new来搭配Sym">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-18T06:28:30.000Z">
+<meta property="article:modified_time" content="2022-12-21T03:31:17.776Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2022/12/18/Symbol/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2022/12/18/Symbol/","path":"2022/12/18/Symbol/","title":"Symbol"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Symbol | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">Symbol是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Symbol的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Symbol的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">作为对象的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%8D%E4%BD%8E%E4%BB%A3%E7%A0%81%E8%80%A6%E5%90%88"><span class="nav-number">3.2.</span> <span class="nav-text">降低代码耦合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%85%B1%E4%BA%ABSymbol"><span class="nav-number">3.3.</span> <span class="nav-text">全局共享Symbol</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E7%BD%AESymbol%E5%80%BC%E5%8F%88%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">内置Symbol值又是什么</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/12/18/Symbol/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Symbol | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Symbol
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-12-18 14:28:30" itemprop="dateCreated datePublished" datetime="2022-12-18T14:28:30+08:00">2022-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-21 11:31:17" itemprop="dateModified" datetime="2022-12-21T11:31:17+08:00">2022-12-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Symbol是什么"><a href="#Symbol是什么" class="headerlink" title="Symbol是什么"></a>Symbol是什么</h2><p><code>Symbol</code>作为原始数据类型的一种，表示独一无二的值，在之前，对象的键以字符串的形式存在，所以极易引发键名冲突问题，而<code>Symbol</code>的出现正是解决了这个痛点，它的使用方式也很简单。</p>
+<h2 id="Symbol的使用"><a href="#Symbol的使用" class="headerlink" title="Symbol的使用"></a>Symbol的使用</h2><p>创建一个<code>Symbol</code>与创建<code>Object</code>不同，只需要<code>a = Symbol()</code>即可</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">typeof</span> a</span><br></pre></td></tr></table></figure>
+
+<p>使用时需要注意的是：<strong>不可以使用<code>new</code>来搭配<code>Symbol()</code>构造实例</strong>，因为其会抛出错误</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">typeof</span> a <span class="comment">// Symbol is not a constructor</span></span><br></pre></td></tr></table></figure>
+
+<p>通常使用<code>new</code>来构造是想要得到一个包装对象，而<code>Symbol</code>不允许这么做，那么如果我们想要得到一个<code>Symbol()</code>的对象形式，可以使用<code>Object()</code>函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Object</span>(a)</span><br><span class="line"><span class="keyword">typeof</span> b <span class="comment">// object</span></span><br></pre></td></tr></table></figure>
+
+<p>介绍到这里，问题来了，<code>Symbol</code>看起来都一样，我们怎么区分呢？我们需要传入一个字符串的参数用来描述<code>Symbol()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>()</span><br></pre></td></tr></table></figure>
+
+<p>上面看来<code>a</code>和<code>b</code>的值都是<code>Symbol</code>，代码阅读上，两者没区分，那么我们调用<code>Symbol()</code>函数的时候传入字符串用来描述我们构建的<code>Symbol()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>(<span class="string">&quot;b&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol的应用"><a href="#Symbol的应用" class="headerlink" title="Symbol的应用"></a>Symbol的应用</h2><blockquote>
+<p><code>Symbol</code>的应用其实利用了唯一性的特性。</p>
+</blockquote>
+<h3 id="作为对象的属性"><a href="#作为对象的属性" class="headerlink" title="作为对象的属性"></a>作为对象的属性</h3><p>在不了解一个对象的时候，想为其添加一个方法或者属性，又怕键名重复引起覆盖的问题，而这个时候我们就需要一个<strong>唯一</strong>性的键来解决这个问题，于是<code>Symbol</code>出场了，它可以作为对象的属性的键，并键名避免冲突。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>()</span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;</span><br><span class="line">obj[a] = <span class="string">&quot;hello world&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我在上面创建了一个<code>symbol</code>作为键的对象，其步骤如下</p>
+<ol>
+<li>创建一个<code>Symbol</code></li>
+<li>创建一个对象</li>
+<li>通过<code>obj[]</code>将<code>Symbol</code>作为对象的键</li>
+</ol>
+<p>值得注意的是我们无法使用<code>.</code>来调用对象的<code>Symbol</code>属性，所以必须使用<code>[]</code>来访问<code>Symbol</code>属性</p>
+<h3 id="降低代码耦合"><a href="#降低代码耦合" class="headerlink" title="降低代码耦合"></a>降低代码耦合</h3><p>我们经常会遇到这种代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (name === <span class="string">&quot;111&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>又或者</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (name) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;2&quot;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这两段段代码中作为判断控制语句的<code>&quot;1&quot;</code>与<code>&quot;2&quot;</code>被称为魔术字符串，即<strong>与代码强耦合的字符串</strong>，可以理解为与程序代码强制绑定在一起，然而这会导致一个问题，在条件判断复杂的情况下，我们想要更改我们的判断条件，就需要更改每一个判断控制，维护起来非常麻烦，所以我们可以换一种形式来解决字符串与代码强耦合。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> judge = &#123;</span><br><span class="line">    <span class="attr">name_1</span>:<span class="string">&quot;1&quot;</span></span><br><span class="line">    <span class="attr">name_2</span>:<span class="string">&quot;2&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">switch</span> (name) &#123;</span><br><span class="line">    <span class="keyword">case</span> judge.<span class="property">name_1</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">case</span> judge.<span class="property">name_2</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们声明了一个存储判断条件字符串的对象，通过修改对象来自如地控制判断条件，当然本小节的主题是<code>Symbol</code>，所以还能继续优化！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> judge = &#123;</span><br><span class="line">    <span class="attr">rectangle</span>:<span class="title class_">Symbol</span>(<span class="string">&quot;rectangle&quot;</span>),</span><br><span class="line">    <span class="attr">triangle</span>:<span class="title class_">Symbol</span>(<span class="string">&quot;triangle&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getArea</span>(<span class="params">model, size</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (model) &#123;</span><br><span class="line">        <span class="keyword">case</span> judge.<span class="property">rectangle</span>:</span><br><span class="line">            <span class="keyword">return</span> size.<span class="property">width</span> * size.<span class="property">height</span></span><br><span class="line">        <span class="keyword">case</span> judge.<span class="property">triangle</span>:</span><br><span class="line">            <span class="keyword">return</span> size.<span class="property">width</span> * size.<span class="property">height</span> / <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> area = <span class="title function_">getArea</span>(judge.<span class="property">rectangle</span> ,&#123;<span class="attr">width</span>:<span class="number">100</span>, <span class="attr">height</span>:<span class="number">200</span>&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(area)</span><br></pre></td></tr></table></figure>
+
+<p>为了更加直观地了解我们优化的过程，上面我创建了一个求面积的工具函数，利用<code>Symbol</code>的特性，我们使我们的条件判断更加精确，而如果是字符串形式，没有唯一的特点，可能会出现判断错误的情况。</p>
+<h3 id="全局共享Symbol"><a href="#全局共享Symbol" class="headerlink" title="全局共享Symbol"></a>全局共享Symbol</h3><p>如果我们想在不同的地方调用已经同一<code>Symbol</code>即全局共享的<code>Symbol</code>，可以通过<code>Symbol.for()</code>方法，参数为创建时传入的描述字符串，该方法可以遍历<strong>全局注册表</strong>中的的<code>Symbol</code>，当搜索到相同描述，那么会调用这个<code>Symbol</code>，如果没有搜索到，就会创建一个新的<code>Symbol</code>。</p>
+<p>为了更好地理解，请看下面例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">a === b <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>如上创建<code>Symbol</code></p>
+<ol>
+<li>首先通过<code>Symbol.for()</code>在全局注册表中寻找描述为<code>a</code>的<code>Symbol</code>，而目前没有符合条件的<code>Symbol</code>，所以创建了一个描述为<code>a</code>的<code>Symbol</code></li>
+<li>当声明<code>b</code>并使用<code>Symbol.for()</code>在全局注册表中寻找描述为<code>a</code>的<code>Symbol</code>，找到并赋值</li>
+<li>比较<code>a</code>与<code>b</code>结果为<code>true</code>反映了<code>Symbol.for()</code>的作用</li>
+</ol>
+<p>再来看看下面这段代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">a === b <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>结果竟然是<code>false</code>，与上面的区别仅仅在于第一个<code>Symbol</code>的创建方式，分析一下为什么会出现这样的结果：</p>
+<ol>
+<li>使用<code>Symbol(&quot;a&quot;)</code>直接创建，所以该<code>Symbol(&quot;a&quot;)</code>不在全局注册表中</li>
+<li>使用<code>Symbol.for(&quot;a&quot;)</code>在全局注册表中寻找描述为<code>a</code>的<code>Symbol</code>，并没有找到，所以在全局注册表中又创建了一个描述为<code>a</code>的新的<code>Symbol</code></li>
+<li>秉承<code>Symbol</code>创建的唯一特性，所以<code>a</code>与<code>b</code>创建的<code>Symbol</code>不同，结果为<code>false</code></li>
+</ol>
+<p>问题来了！我们如何去判断我们的<code>Symbol</code>是否在全局注册表中呢？</p>
+<p><code>Symbol.keyFor()</code>帮我们解决了这个问题，他可以通过变量名查询该变量名对应的<code>Symbol</code>是否在全局注册表中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="title class_">Symbol</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> b = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&quot;a&quot;</span>)</span><br><span class="line"><span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(a) <span class="comment">// undefined</span></span><br><span class="line"><span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(b) <span class="comment">// &#x27;a&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果查询存在即返回该<code>Symbol</code>的描述，如果不存在则返回<code>undefined</code></p>
+<p>以上通过使用<code>Symbol.for()</code>实现了<code>Symbol</code>全局共享，下面我们来看看<code>Symbol</code>的另一种应用</p>
+<h2 id="内置Symbol值又是什么"><a href="#内置Symbol值又是什么" class="headerlink" title="内置Symbol值又是什么"></a>内置<code>Symbol</code>值又是什么</h2><p>上面的<code>Symbol</code>使用是我们自定义的，而Javascript又内置了<code>Symbol</code>值，可以理解为：由于唯一性特点，在对象内，作为一个唯一性的键并对应着一个方法，在对象调用某方法的时候会调用这个<code>Symbol</code>值对应的方法，并且还可以通过更改内置<code>Symbol</code>值对应的方法来达到更改外部方法作用的效果。</p>
+<p>为了更好地理解上面这一大段话，以<code>Symbol.hasInstance</code>作为例子来看看内置<code>Symbol</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">demo</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> [<span class="title class_">Symbol</span>.<span class="property">hasInstance</span>](item) &#123;</span><br><span class="line">        <span class="keyword">return</span> item === <span class="string">&quot;1&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">&quot;1&quot;</span> <span class="keyword">instanceof</span> demo <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Symbol</span>.<span class="property">hasInstance</span><span class="string">`对应的外部方法是`</span><span class="keyword">instanceof</span><span class="string">`，这个大家熟悉吧，经常用于判断类型。而在上面的代码片段中，我创建了一个`</span>demo<span class="string">`类，并重写了`</span><span class="title class_">Symbol</span>.<span class="property">hasInstance</span><span class="string">`，所以其对应的`</span><span class="keyword">instanceof</span><span class="string">`行为也会发生改变，其内部的机制是这样的：当我们调用`</span><span class="keyword">instanceof</span><span class="string">`方法的时候，内部对应调用`</span><span class="title class_">Symbol</span>.<span class="property">hasInstance</span><span class="string">`对应的方法即`</span><span class="keyword">return</span> item === <span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/12/18/vue%E7%9A%84nextTick/" rel="prev" title="vue的nextTick">
+                  <i class="fa fa-chevron-left"></i> vue的nextTick
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
