@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,94 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2023/03/02/HTML%E4%B8%ADsrc%E5%92%8Chref%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/02/HTML%E4%B8%ADsrc%E5%92%8Chref%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">HTML中src和href的区别</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-02 11:17:23 / 修改时间：11:19:03" itemprop="dateCreated datePublished" datetime="2023-03-02T11:17:23+08:00">2023-03-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="src的特性"><a href="#src的特性" class="headerlink" title="src的特性"></a>src的特性</h1><h3 id="1-引用外部资源"><a href="#1-引用外部资源" class="headerlink" title="1. 引用外部资源"></a>1. 引用外部资源</h3><p><code>src</code>属性（source）是用于指定嵌入到HTML文档中的外部资源的路径，例如图像、音频、视频等。<code>src</code>指向的资源会被浏览器直接加载并显示或执行。常见的使用方式包括：<code>&lt;img src=&quot;image.png&quot;&gt;</code>，<code>&lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;</code>，<code>&lt;audio src=&quot;audio.mp3&quot;&gt;&lt;/audio&gt;</code>，<code>&lt;video src=&quot;video.mp4&quot;&gt;&lt;/video&gt;</code>等。<code>script</code>元素、<code>img</code>元素、<code>iframe</code>元素、<code>video</code>元素。</p>
+<h3 id="2-会替换元素本身的内容"><a href="#2-会替换元素本身的内容" class="headerlink" title="2. 会替换元素本身的内容"></a>2. 会替换元素本身的内容</h3><p>比如下面这两段代码，会打印出2，而不是打印1。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">&lt;script src=<span class="string">&quot;./test.js&quot;</span>&gt;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>原因就是<code>test.js</code>的代码嵌入到了当前<code>script</code>元素中，导致原本的内容被替换。</p>
+<h3 id="3-会暂停其他资源的下载"><a href="#3-会暂停其他资源的下载" class="headerlink" title="3. 会暂停其他资源的下载"></a>3. 会暂停其他资源的下载</h3><p>当浏览器解析到使用src的元素时，会暂停其他资源资源的下载，直到src引用资源加载、编译、执行完毕。这也是为什么script元素推荐放在html结构的底部。</p>
+<h1 id="href的特性"><a href="#href的特性" class="headerlink" title="href的特性"></a>href的特性</h1><h3 id="1-表示超链接"><a href="#1-表示超链接" class="headerlink" title="1. 表示超链接"></a>1. 表示超链接</h3><p><code>href</code>属性（hypertext reference）是用于指定链接的URL地址，用于在文档中创建超链接，让用户可以通过点击链接跳转到另一个页面或文档。常见的使用方式包括：<code>&lt;a href=&quot;http://www.example.com&quot;&gt;Example&lt;/a&gt;</code>，<code>&lt;link href=&quot;stylesheet.css&quot; rel=&quot;stylesheet&quot;&gt;</code>等。</p>
+<p><code>a</code>标签、<code>link</code>标签，表示外部资源与该页面的联系。</p>
+<h3 id="2-不会替换元素本身的内容"><a href="#2-不会替换元素本身的内容" class="headerlink" title="2. 不会替换元素本身的内容"></a>2. 不会替换元素本身的内容</h3><p>比如下面这段代码，点击a标签跳转到另外一个页面，但图片内容没有被替换。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;www.baidu.com&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;xxx&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-不会暂停其他资源的下载"><a href="#3-不会暂停其他资源的下载" class="headerlink" title="3. 不会暂停其他资源的下载"></a>3. 不会暂停其他资源的下载</h3><p>像CSS那样影响页面观感的可以放在html结构的头部优先加载。</p>
+<h1 id="核心思想上的区别"><a href="#核心思想上的区别" class="headerlink" title="核心思想上的区别"></a>核心思想上的区别</h1><ul>
+<li>src代表的是网站的一部分，没有会对网站的使用造成影响。</li>
+<li>href代表网站的附属资源，没有不会对网站的核心逻辑和结构造成影响。</li>
+</ul>
+<h1 id="为什么引用CSS使用href？"><a href="#为什么引用CSS使用href？" class="headerlink" title="为什么引用CSS使用href？"></a>为什么引用CSS使用href？</h1><ul>
+<li>正如href代表的含义一样，CSS属于网站的附属资源，不影响网站核心逻辑和结构。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1220,142 +1308,6 @@ URL.createObjectURL(blob) 存在于当前document内，清除方式只有upload(
 <h4 id="stylus的样式穿透-使用-gt-gt-gt"><a href="#stylus的样式穿透-使用-gt-gt-gt" class="headerlink" title="stylus的样式穿透 使用 &gt;&gt;&gt;"></a>stylus的样式穿透 使用 &gt;&gt;&gt;</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span> &gt;&gt;&gt; <span class="selector-class">.swiper-pagination-bullet-active</span></span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br></pre></td></tr></table></figure>
 
 <h4 id="sass和less的样式穿透-使用-x2F-deep-x2F"><a href="#sass和less的样式穿透-使用-x2F-deep-x2F" class="headerlink" title="sass和less的样式穿透 使用 &#x2F;deep&#x2F;"></a>sass和less的样式穿透 使用 &#x2F;deep&#x2F;</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 语法</span><br><span class="line">外层 /deep/ 第三方组件 &#123;</span><br><span class="line">    样式</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// eg</span><br><span class="line"><span class="selector-class">.wrapper</span> /deep/ <span class="selector-class">.swiper-pagination-bullet-active</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/04/23/meta%E6%A0%87%E7%AD%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xzhzzz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="...">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/23/meta%E6%A0%87%E7%AD%BE/" class="post-title-link" itemprop="url">meta标签</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-23 12:02:55" itemprop="dateCreated datePublished" datetime="2022-04-23T12:02:55+08:00">2022-04-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><code>meta</code>标签一般放在整个<code>html</code>页面的<code>head</code>标签里，在<code>MDN</code>中的定义：</p>
-<blockquote>
-<p>meta是<strong>文档级元数据元素</strong>，用来表示那些不能由其它 HTML 元相关元素（<code>&lt;base&gt;</code>、<code>&lt;link&gt;</code>, <code>&lt;script&gt;</code>、<code>&lt;style&gt;</code>或 <code>&lt;title&gt;</code>）之一表示的任何元数据。</p>
-</blockquote>
-<p>简单说就是传达页面信息。</p>
-<p><code>meta</code> 标签定义的元数据的类型：</p>
-<ul>
-<li>如果设置了 <code>name</code>属性，<code>meta</code> 元素提供的是文档级别的元数据，应用于整个页面。</li>
-<li>如果设置了 <code>http-equiv</code>属性，<code>meta</code> 元素则是编译指令，提供的信息与类似命名的 HTTP 头部相同。</li>
-<li>如果设置了 <code>charset</code>属性，<code>meta</code> 元素是一个字符集声明，告诉文档使用哪种字符编码。</li>
-<li>如果设置了 <code>itemprop</code> 属性，<code>meta</code> 元素提供用户定义的元数据。</li>
-</ul>
-<h2 id="name属性"><a href="#name属性" class="headerlink" title="name属性"></a>name属性</h2><p><code>name</code>和<code>content</code>一起使用，前者表示要表示的元数据的<code>名称</code>，后者是元数据的<code>值</code>。</p>
-<h3 id="author"><a href="#author" class="headerlink" title="author"></a>author</h3><p>用来表示网页的作者的名字，例如某个组织或者机构。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;aaa@mail.abc.com&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="description"><a href="#description" class="headerlink" title="description"></a>description</h3><p>是一段对页面内容的描述。以百度的<code>description</code>标签为例：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;全球领先的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="keywords"><a href="#keywords" class="headerlink" title="keywords"></a>keywords</h3><p>与页面内容相关的关键词，使用逗号分隔。某些搜索引擎在遇到这些关键字时，会用这些关键字对文档进行分类。 还是以百度为例：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;Keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;网上购物,网上商城,家电,手机,电脑,服装,居家,母婴,美妆,个护,食品,生鲜,京东&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="viewpoint"><a href="#viewpoint" class="headerlink" title="viewpoint"></a>viewpoint</h3><p>为 viewport（视口）的初始大小提供指示。目前仅用于移动设备。</p>
-<p>可能你也发现了，我们在<code>vscode</code>中自动生成<code>html</code>的代码片段时，会自动生成：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>width</code>用来设置 viewport 的宽度为设备宽度;</p>
-<p><code>initial-scale</code>为设备宽度与 viewport 大小之间的缩放比例。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;minimum-scale=1,initial-scale=1,maximum-scale=1,user-scalable=no&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="robots"><a href="#robots" class="headerlink" title="robots"></a>robots</h3><p>表示爬虫对此页面的处理行为，或者说，应当遵守的规则，是用来做搜索引擎抓取的。</p>
-<p>它的<code>content</code>可以为：</p>
-<ol>
-<li><code>all</code>:搜索引擎将索引此网页，并继续通过此网页的链接索引文件将被检索</li>
-<li><code>none</code>:搜索引擎讲忽略此网页</li>
-<li><code>index</code>:搜索引擎索引此网页</li>
-<li><code>follow</code>:搜索引擎继续通过此网页的链接索引搜索其它的网页</li>
-</ol>
-<h3 id="renderer"><a href="#renderer" class="headerlink" title="renderer"></a>renderer</h3><p>用来指定双核浏览器的渲染方式，比如360浏览器，可以通过这个设置来指定360浏览器的渲染方式</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;webkit&quot;</span>&gt;</span> //默认webkit内核</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie-comp&quot;</span>&gt;</span> //默认IE兼容模式</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie-stand&quot;</span>&gt;</span> //默认IE标准模式</span><br></pre></td></tr></table></figure>
-
-<h2 id="http-equiv"><a href="#http-equiv" class="headerlink" title="http-equiv"></a>http-equiv</h2><p><code>http-equiv</code>也是和<code>content</code>一起使用，前者表示要表示的元数据的<code>名称</code>，后者是元数据的<code>值</code>。</p>
-<p><code>http-equiv</code> 所有允许的值都是特定 HTTP 头部的名称，</p>
-<h3 id="X-UA-Compatible"><a href="#X-UA-Compatible" class="headerlink" title="X-UA-Compatible"></a>X-UA-Compatible</h3><p>我们最常见的<code>http-equiv</code>值可能就是<code>X-UA-Compatible</code>了，它常常长这个样子：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge,chrome=1&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>它是用来是做IE浏览器适配的。</p>
-<p><code>IE=edge</code>告诉浏览器，以当前浏览器支持的最新版本来渲染，IE9就以IE9版本来渲染。</p>
-<p><code>chrome=1</code>告诉浏览器，如果当前IE浏览器安装了<code>Google Chrome Frame</code>插件，就以chrome内核来渲染页面。</p>
-<p>像上图这种两者都存在的情况：如果有chrome插件，就以chrome内核渲染，如果没有，就以当前浏览器支持的最高版本渲染。</p>
-<p>另外，这个属性支持的范围是<code>IE8-IE11</code></p>
-<p>你可能注意到了，如果在我们的<code>http</code>头部中也设置了这个属性，并且和<code>meta</code>中设置的有冲突，那么哪一个优先呢？ 开发者偏好（<code>meta</code>标签）优先于Web服务器设置（HTTP头）。</p>
-<h3 id="content-type"><a href="#content-type" class="headerlink" title="content-type"></a>content-type</h3><p>用来声明文档类型和字符集</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="x-dns-prefetch-control"><a href="#x-dns-prefetch-control" class="headerlink" title="x-dns-prefetch-control"></a>x-dns-prefetch-control</h3><p>一般来说，HTML页面中的a标签会自动启用DNS提前解析来提升网站性能，但是在使用https协议的网站中失效了，我们可以设置：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;x-dns-prefetch-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>来打开dns对a标签的提前解析</p>
-<h3 id="cache-control、Pragma、Expires"><a href="#cache-control、Pragma、Expires" class="headerlink" title="cache-control、Pragma、Expires"></a>cache-control、Pragma、Expires</h3><p>和缓存相关的设置，但是遗憾的是这些往往不生效，我们一般都通过<code>http headers</code>来设置缓存策略。</p>
-
       
     </div>
 

@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,141 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2018/07/07/dom%E6%93%8D%E4%BD%9C%E6%88%90%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/07/dom%E6%93%8D%E4%BD%9C%E6%88%90%E6%9C%AC/" class="post-title-link" itemprop="url">dom操作成本</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-07 15:26:59" itemprop="dateCreated datePublished" datetime="2018-07-07T15:26:59+08:00">2018-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="DOM是什么"><a href="#DOM是什么" class="headerlink" title="DOM是什么"></a>DOM是什么</h3><blockquote>
+<p>Document Object Model 文档对象模型</p>
+</blockquote>
+<p>可能很多人第一反应就是div、p、span等html标签。但要知道，DOM是Model，是Object Model，对象模型，是为HTML（and XML）提供的API。HTML(Hyper Text Markup Language)是一种标记语言，HTML在DOM的模型标准中被视为对象，DOM只提供编程接口，却无法实际操作HTML里面的内容。但在浏览器中，前端可以用JavaScript通过DOM去操作HTML。</p>
+<p>那只有JavaScript可以操作HTML么？Python也是可以访问DOM。所以DOM不是提供给Javascript的API，也不是Javascript里的API。</p>
+<blockquote>
+<p>除了DOM，还存在CSSOM：CSS Object Model，浏览器将CSS代码解析成树形的数据结构，与DOM是两个独立的数据结构。</p>
+</blockquote>
+<h3 id="浏览器渲染过程"><a href="#浏览器渲染过程" class="headerlink" title="浏览器渲染过程"></a>浏览器渲染过程</h3><p>讨论DOM操作成本，肯定要先了解该成本的来源，那么就离不开浏览器渲染。</p>
+<p>过程如下：</p>
+<ol>
+<li>解析HTML，构建DOM树（这里遇到外链，此时会发起请求）</li>
+<li>解析CSS，生成CSS规则树</li>
+<li>合并DOM树和CSS规则，生成render树</li>
+<li>布局render树（Layout&#x2F;reflow），负责各元素尺寸、位置的计算</li>
+<li>绘制render树（paint），绘制页面像素信息</li>
+<li>浏览器会将各层的信息发送给GPU，GPU将各层合成（composite），显示在屏幕上</li>
+</ol>
+<h4 id="构建DOM树"><a href="#构建DOM树" class="headerlink" title="构建DOM树"></a>构建DOM树</h4><p>无论是DOM还是CSSOM，都是要经过 <code>Bytes → characters → tokens → nodes → objectmodel</code>这个过程。</p>
+<p><img src="/dom%E6%93%8D%E4%BD%9C%E6%88%90%E6%9C%AC/dom1.png" alt="img"></p>
+<blockquote>
+<p>构建过程：当前节点的所有子节点都构建好后才会去构建当前节点的下一个兄弟节点。</p>
+</blockquote>
+<h4 id="构建CSSOM树"><a href="#构建CSSOM树" class="headerlink" title="构建CSSOM树"></a>构建CSSOM树</h4><p>上述也提到了CSSOM的构建过程，也是树的结构，在最终计算各个节点的样式时，浏览器都会先从该节点的普遍属性（比如body里设置的全局样式）开始，再去应用该节点的具体属性。还有要注意的是，每个浏览器都有自己默认的样式表，因此很多时候这棵CSSOM树只是对这张默认样式表的部分替换。</p>
+<h4 id="生成render树"><a href="#生成render树" class="headerlink" title="生成render树"></a>生成render树</h4><p>DOM树和CSSOM树合并生成render树</p>
+<p>简单描述合并的过程：</p>
+<p>DOM树从根节点开始遍历<strong>可见</strong>节点，这里之所以强调了“可见”，是因为如果遇到设置了类似 <code>display:none;</code>的不可见节点，在render过程中是会被跳过的（但 <code>visibility:hidden;opacity:0</code>这种仍旧占据空间的节点不会被跳过render），保存各个节点的样式信息及其余节点的从属关系。</p>
+<h4 id="Layout-布局"><a href="#Layout-布局" class="headerlink" title="Layout 布局"></a>Layout 布局</h4><p>有了各个节点的样式信息和属性，但不知道各个节点的确切位置和大小，所以要通过布局将样式信息和属性转换为实际可视窗口的相对大小和位置。</p>
+<h4 id="Paint-绘制"><a href="#Paint-绘制" class="headerlink" title="Paint 绘制"></a>Paint 绘制</h4><p>最后只要将确定好位置大小的各节点，通过GPU渲染到屏幕的实际像素。</p>
+<h4 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h4><ul>
+<li>在上述渲染过程中，前3点可能要多次执行，比如js脚本去操作dom、更改css样式时，浏览器又要重新构建DOM、CSSOM树，重新render，重新layout、paint；</li>
+<li>Layout在Paint之前，因此每次Layout重新布局（reflow 回流）后都要重新出发Paint渲染，这时又要去消耗GPU；</li>
+<li>Paint不一定会触发Layout，比如改个颜色改个背景；（repaint 重绘）</li>
+<li>图片下载完也会重新出发Layout和Paint；</li>
+</ul>
+<p><img src="/dom%E6%93%8D%E4%BD%9C%E6%88%90%E6%9C%AC/dom2.png" alt="img"></p>
+<h3 id="何时触发reflow和repaint"><a href="#何时触发reflow和repaint" class="headerlink" title="何时触发reflow和repaint"></a>何时触发reflow和repaint</h3><p>**reflow(回流)**：根据Render Tree布局，意味着元素的内容、结构、位置或尺寸发生了变化，需要重新计算样式和渲染树</p>
+<p>**repaint(重绘)**：意味着元素发生的改变只影响了节点的一些样式（背景色，边框颜色，文字颜色等），只需要应用新样式绘制这个元素就可以了</p>
+<p>reflow回流的成本开销要高于repaint重绘，一个节点的回流往往回导致子节点以及同级节点的回流；</p>
+<h4 id="引起reflow"><a href="#引起reflow" class="headerlink" title="引起reflow"></a>引起reflow</h4><p>现代浏览器会对回流做优化，它会等到足够数量的变化发生，再做一次批处理回流。</p>
+<ol>
+<li>页面第一次渲染（初始化）</li>
+<li>DOM树变化（如：增删节点）</li>
+<li>Render树变化（如：padding改变）</li>
+<li>浏览器窗口resize</li>
+<li>获取元素的某些属性</li>
+</ol>
+<p>浏览器为了获得正确的值也会<strong>提前触发回流</strong>，这样就使得浏览器的优化失效了，这些属性包括offsetLeft、offsetTop、offsetWidth、offsetHeight、 scrollTop&#x2F;Left&#x2F;Width&#x2F;Height、clientTop&#x2F;Left&#x2F;Width&#x2F;Height、调用了getComputedStyle()或者IE的currentStyle。</p>
+<h4 id="引起repaint"><a href="#引起repaint" class="headerlink" title="引起repaint"></a>引起repaint</h4><ol>
+<li>reflow回流必定引起repaint重绘，重绘可以单独触发</li>
+<li>背景色、颜色、字体改变（字体大小发生变化时，会触发回流）</li>
+</ol>
+<h4 id="如何减少reflow、repaint触发次数"><a href="#如何减少reflow、repaint触发次数" class="headerlink" title="如何减少reflow、repaint触发次数"></a>如何减少reflow、repaint触发次数</h4><ul>
+<li>避免逐个修改节点样式，尽量一次性修改</li>
+<li>使用DocumentFragment将需要多次修改的DOM元素缓存，最后一次性append到真实DOM中渲染</li>
+<li>可以将需要多次修改的DOM元素设置 <code>display :none</code>，操作完再显示。（因为隐藏元素不在render树内，因此修改隐藏元素不会触发回流重绘）</li>
+<li>避免多次读取某些属性</li>
+<li>将复杂的节点元素脱离文档流，降低回流成本</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>操作DOM具体的成本，说到底是造成浏览器回流reflow和重绘reflow，从而消耗GPU资源。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

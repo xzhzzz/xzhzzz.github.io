@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,142 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/04/23/meta%E6%A0%87%E7%AD%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/23/meta%E6%A0%87%E7%AD%BE/" class="post-title-link" itemprop="url">meta标签</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-23 12:02:55" itemprop="dateCreated datePublished" datetime="2022-04-23T12:02:55+08:00">2022-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><p><code>meta</code>标签一般放在整个<code>html</code>页面的<code>head</code>标签里，在<code>MDN</code>中的定义：</p>
+<blockquote>
+<p>meta是<strong>文档级元数据元素</strong>，用来表示那些不能由其它 HTML 元相关元素（<code>&lt;base&gt;</code>、<code>&lt;link&gt;</code>, <code>&lt;script&gt;</code>、<code>&lt;style&gt;</code>或 <code>&lt;title&gt;</code>）之一表示的任何元数据。</p>
+</blockquote>
+<p>简单说就是传达页面信息。</p>
+<p><code>meta</code> 标签定义的元数据的类型：</p>
+<ul>
+<li>如果设置了 <code>name</code>属性，<code>meta</code> 元素提供的是文档级别的元数据，应用于整个页面。</li>
+<li>如果设置了 <code>http-equiv</code>属性，<code>meta</code> 元素则是编译指令，提供的信息与类似命名的 HTTP 头部相同。</li>
+<li>如果设置了 <code>charset</code>属性，<code>meta</code> 元素是一个字符集声明，告诉文档使用哪种字符编码。</li>
+<li>如果设置了 <code>itemprop</code> 属性，<code>meta</code> 元素提供用户定义的元数据。</li>
+</ul>
+<h2 id="name属性"><a href="#name属性" class="headerlink" title="name属性"></a>name属性</h2><p><code>name</code>和<code>content</code>一起使用，前者表示要表示的元数据的<code>名称</code>，后者是元数据的<code>值</code>。</p>
+<h3 id="author"><a href="#author" class="headerlink" title="author"></a>author</h3><p>用来表示网页的作者的名字，例如某个组织或者机构。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;author&quot;</span> <span class="attr">content</span>=<span class="string">&quot;aaa@mail.abc.com&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="description"><a href="#description" class="headerlink" title="description"></a>description</h3><p>是一段对页面内容的描述。以百度的<code>description</code>标签为例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;description&quot;</span> <span class="attr">content</span>=<span class="string">&quot;全球领先的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，可以瞬间找到相关的搜索结果。&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="keywords"><a href="#keywords" class="headerlink" title="keywords"></a>keywords</h3><p>与页面内容相关的关键词，使用逗号分隔。某些搜索引擎在遇到这些关键字时，会用这些关键字对文档进行分类。 还是以百度为例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;Keywords&quot;</span> <span class="attr">content</span>=<span class="string">&quot;网上购物,网上商城,家电,手机,电脑,服装,居家,母婴,美妆,个护,食品,生鲜,京东&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="viewpoint"><a href="#viewpoint" class="headerlink" title="viewpoint"></a>viewpoint</h3><p>为 viewport（视口）的初始大小提供指示。目前仅用于移动设备。</p>
+<p>可能你也发现了，我们在<code>vscode</code>中自动生成<code>html</code>的代码片段时，会自动生成：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>width</code>用来设置 viewport 的宽度为设备宽度;</p>
+<p><code>initial-scale</code>为设备宽度与 viewport 大小之间的缩放比例。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;minimum-scale=1,initial-scale=1,maximum-scale=1,user-scalable=no&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="robots"><a href="#robots" class="headerlink" title="robots"></a>robots</h3><p>表示爬虫对此页面的处理行为，或者说，应当遵守的规则，是用来做搜索引擎抓取的。</p>
+<p>它的<code>content</code>可以为：</p>
+<ol>
+<li><code>all</code>:搜索引擎将索引此网页，并继续通过此网页的链接索引文件将被检索</li>
+<li><code>none</code>:搜索引擎讲忽略此网页</li>
+<li><code>index</code>:搜索引擎索引此网页</li>
+<li><code>follow</code>:搜索引擎继续通过此网页的链接索引搜索其它的网页</li>
+</ol>
+<h3 id="renderer"><a href="#renderer" class="headerlink" title="renderer"></a>renderer</h3><p>用来指定双核浏览器的渲染方式，比如360浏览器，可以通过这个设置来指定360浏览器的渲染方式</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;webkit&quot;</span>&gt;</span> //默认webkit内核</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie-comp&quot;</span>&gt;</span> //默认IE兼容模式</span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;renderer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie-stand&quot;</span>&gt;</span> //默认IE标准模式</span><br></pre></td></tr></table></figure>
+
+<h2 id="http-equiv"><a href="#http-equiv" class="headerlink" title="http-equiv"></a>http-equiv</h2><p><code>http-equiv</code>也是和<code>content</code>一起使用，前者表示要表示的元数据的<code>名称</code>，后者是元数据的<code>值</code>。</p>
+<p><code>http-equiv</code> 所有允许的值都是特定 HTTP 头部的名称，</p>
+<h3 id="X-UA-Compatible"><a href="#X-UA-Compatible" class="headerlink" title="X-UA-Compatible"></a>X-UA-Compatible</h3><p>我们最常见的<code>http-equiv</code>值可能就是<code>X-UA-Compatible</code>了，它常常长这个样子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge,chrome=1&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>它是用来是做IE浏览器适配的。</p>
+<p><code>IE=edge</code>告诉浏览器，以当前浏览器支持的最新版本来渲染，IE9就以IE9版本来渲染。</p>
+<p><code>chrome=1</code>告诉浏览器，如果当前IE浏览器安装了<code>Google Chrome Frame</code>插件，就以chrome内核来渲染页面。</p>
+<p>像上图这种两者都存在的情况：如果有chrome插件，就以chrome内核渲染，如果没有，就以当前浏览器支持的最高版本渲染。</p>
+<p>另外，这个属性支持的范围是<code>IE8-IE11</code></p>
+<p>你可能注意到了，如果在我们的<code>http</code>头部中也设置了这个属性，并且和<code>meta</code>中设置的有冲突，那么哪一个优先呢？ 开发者偏好（<code>meta</code>标签）优先于Web服务器设置（HTTP头）。</p>
+<h3 id="content-type"><a href="#content-type" class="headerlink" title="content-type"></a>content-type</h3><p>用来声明文档类型和字符集</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="x-dns-prefetch-control"><a href="#x-dns-prefetch-control" class="headerlink" title="x-dns-prefetch-control"></a>x-dns-prefetch-control</h3><p>一般来说，HTML页面中的a标签会自动启用DNS提前解析来提升网站性能，但是在使用https协议的网站中失效了，我们可以设置：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;x-dns-prefetch-control&quot;</span> <span class="attr">content</span>=<span class="string">&quot;yes&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>来打开dns对a标签的提前解析</p>
+<h3 id="cache-control、Pragma、Expires"><a href="#cache-control、Pragma、Expires" class="headerlink" title="cache-control、Pragma、Expires"></a>cache-control、Pragma、Expires</h3><p>和缓存相关的设置，但是遗憾的是这些往往不生效，我们一般都通过<code>http headers</code>来设置缓存策略。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1325,130 +1461,6 @@
 <p>方法2：把要计算的数字升级（乘以10的n次幂）成计算机能够精确识别的整数，计算完以后再降级。（建议使用该方法）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 将一个浮点数转换成整数，返回整数和倍数</span></span><br><span class="line"><span class="comment">* 如 3.14 -&gt; 314 倍数是100</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">function <span class="title function_">toInteger</span><span class="params">(floatNum)</span> &#123;</span><br><span class="line">    <span class="type">const</span> <span class="variable">ret</span> <span class="operator">=</span> &#123; times: <span class="number">1</span>, num: <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否为一个整数</span></span><br><span class="line">    <span class="keyword">if</span> (Math.floor(floatNum) === floatNum) &#123;</span><br><span class="line">        ret.num = floatNum</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="variable">strfi</span> <span class="operator">=</span> `$&#123;floatNum&#125;`</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 查找小数点的下标</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">dotPos</span> <span class="operator">=</span> strfi.indexOf(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 获取小数的位数</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">len</span> <span class="operator">=</span> strfi.substr(dotPos + <span class="number">1</span>).length</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// Math.pow(10,len)指定10的len次幂 </span></span><br><span class="line">    <span class="type">const</span> <span class="variable">time</span> <span class="operator">=</span> Math.pow(<span class="number">10</span>, len)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 将浮点数转化为整数</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">intNum</span> <span class="operator">=</span> parseInt(floatNum * time + <span class="number">0.5</span>, <span class="number">10</span>)</span><br><span class="line">    ret.times = time</span><br><span class="line">    ret.num = intNum</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*进行运算</span></span><br><span class="line"><span class="comment">*三个参数分别是要运算的两个数和运算符</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">function <span class="title function_">operation</span><span class="params">(a, b, op)</span> &#123;</span><br><span class="line">    <span class="type">const</span> <span class="variable">o1</span> <span class="operator">=</span> toInteger(a)</span><br><span class="line">    <span class="type">const</span> <span class="variable">o2</span> <span class="operator">=</span> toInteger(b)</span><br><span class="line">    <span class="type">const</span> <span class="variable">n1</span> <span class="operator">=</span> o1.num</span><br><span class="line">    <span class="type">const</span> <span class="variable">n2</span> <span class="operator">=</span> o2.num</span><br><span class="line">    <span class="type">const</span> <span class="variable">t1</span> <span class="operator">=</span> o1.times</span><br><span class="line">    <span class="type">const</span> <span class="variable">t2</span> <span class="operator">=</span> o2.times</span><br><span class="line">    <span class="type">const</span> <span class="variable">max</span> <span class="operator">=</span> t1 &gt; t2 ? t1 : t2</span><br><span class="line">    <span class="type">let</span> <span class="variable">result</span> <span class="operator">=</span> <span class="literal">null</span></span><br><span class="line">    <span class="title function_">switch</span> <span class="params">(op)</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;add&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 + n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 + n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) + n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;subtract&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 - n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 - n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) - n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;multiply&#x27;</span>:</span><br><span class="line">        result = (n1 * n2) / (t1 * t2)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;divide&#x27;</span>:</span><br><span class="line">        result = (n1 / n2) / (t2 / t1)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        console.log(<span class="string">&#x27;不存在的运算类型&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0.1 + 0.2 </span></span><br><span class="line">operation(<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="string">&#x27;add&#x27;</span>) <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2019/05/16/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xzhzzz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="...">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/16/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">函数式编程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-05-16 23:07:16" itemprop="dateCreated datePublished" datetime="2019-05-16T23:07:16+08:00">2019-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="什么是函数式编程"><a href="#什么是函数式编程" class="headerlink" title="什么是函数式编程"></a>什么是函数式编程</h3><p>函数式编程（functional programming），又称泛函编程，是一种编程范式，它将电脑运算视为数学上的函数计算，并且避免使用程序状态以及易变对象。</p>
-<p>函数式编程具有以下基本特征：</p>
-<ul>
-<li><strong>函数是第一等公民</strong></li>
-<li><strong>纯函数</strong></li>
-<li><strong>声明式编程</strong></li>
-<li><strong>引用透明（相同的输入始终产生相同的结果）</strong></li>
-<li><strong>不可变性（创建后不能更改的数据）</strong></li>
-</ul>
-<h4 id="函数是一等公民-first-class"><a href="#函数是一等公民-first-class" class="headerlink" title="函数是一等公民(first class)"></a>函数是一等公民(first class)</h4><p>就是说函数和其它的数据类型具有相同的属性。它能够作为函数的参数，能够赋值给变量，也可以作为别的函数的返回值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 赋值</span></span><br><span class="line"><span class="keyword">var</span> test = <span class="keyword">function</span> <span class="title function_">fn1</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数作为参数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">test</span>) &#123;</span><br><span class="line">    <span class="title function_">test</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数作为返回值</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn2</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="函数是纯函数（pure-function）"><a href="#函数是纯函数（pure-function）" class="headerlink" title="函数是纯函数（pure function）"></a>函数是纯函数（pure function）</h4><p>定义：对于相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用，也不会依赖外部环境的状态。</p>
-<p>从纯函数的概念可以知道纯函数具有两个特点：</p>
-<ul>
-<li>同输入同输出</li>
-<li>无副作用（函数内部的操作不会对外部产生影响（如修改全局变量的值、修改 dom 节点等））</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 纯函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x, y</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出不确定，非纯函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">random</span>(<span class="params">x</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">random</span>() * x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有副作用，非纯函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">setColor</span>(<span class="params">el,color</span>)&#123;</span><br><span class="line">    el.<span class="property">style</span>.<span class="property">color</span> = color</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出不确定、有副作用，非纯函数</span></span><br><span class="line"><span class="keyword">var</span> count = <span class="number">0</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addCount</span>(<span class="params">x</span>)&#123;</span><br><span class="line">    count += x</span><br><span class="line">    <span class="keyword">return</span> count</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>作用：</p>
-<ul>
-<li>在JavaScript中你可以很容易的创建全局变量，这些变量可以在所有函数中访问到。这也是一个导致bug数常见的原因，因为程序中的任何部分都可能修改全局变量从而导致异常行为的出现。</li>
-<li>纯函数非常容易进行单元测试，因为不需要考虑上下文环境，只需要考虑输入和输出。</li>
-<li>纯函数是健壮的，改变执行次序不会对系统造成影响，因为纯函数的操作是可以并行执行的。</li>
-</ul>
-<h4 id="声明式编程"><a href="#声明式编程" class="headerlink" title="声明式编程"></a>声明式编程</h4><p>函数式编程属于声明式编程范式：这种范式会描述一系列的操作，但并不会暴露它们是如何实现的或是数据流如何传过它们。数据库SQL查询语句就是一种很典型的声明式编程，它由一个个描述查询结果应该是什么样的断言组成，对数据检索的内部机制进行了抽象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令式方式</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.<span class="property">length</span>; i++) &#123;</span><br><span class="line">		array[i] = <span class="title class_">Math</span>.<span class="title function_">pow</span>(array[i], <span class="number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array <span class="comment">// [0, 1, 4, 9]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明式方式</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="title function_">map</span>(<span class="function"><span class="params">num</span> =&gt;</span> <span class="title class_">Math</span>.<span class="title function_">pow</span>(num, <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
-
-<p>由上述例子可以看到命令式很具体的告诉计算机如何执行某个任务。而声明式是将程序的描述与求值分离开来。它关注如何用各种表达式来描述程序逻辑，而不一定要指明其控制流或状态关系的变化。</p>
-<h3 id="函数式编程基本运算：合成（compose）和柯里化（Currying）"><a href="#函数式编程基本运算：合成（compose）和柯里化（Currying）" class="headerlink" title="函数式编程基本运算：合成（compose）和柯里化（Currying）"></a>函数式编程基本运算：合成（compose）和柯里化（Currying）</h3><h4 id="合成（compose）"><a href="#合成（compose）" class="headerlink" title="合成（compose）"></a>合成（compose）</h4><p>函数合成指的是将代表各个动作的多个函数合并成一个函数。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算一个数加上1再乘以2的值</span></span><br><span class="line"><span class="comment">// 正常的实现方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">calculate</span>(<span class="params">x</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> (x + <span class="number">1</span>) * <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">calculate</span>(<span class="number">1</span>))  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 运用compose实现</span></span><br><span class="line"><span class="comment">// 先实现一个简单的compose函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">compose</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params">x</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">a</span>(<span class="title function_">b</span>(x))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 分别用实现加法和乘法函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">multiply</span>(<span class="params">x</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> x * <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用compose函数组合加法和乘法函数</span></span><br><span class="line"><span class="keyword">var</span> result = <span class="title function_">compose</span>(multiply, add) <span class="comment">// 从右往左执行</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result) <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
-
-<p>由上面的例子可以看出，函数式编程是对过程的抽象，关注的是动作，把每一步的动作都抽离出来，再进行组合，这样代码就会更加清晰和灵活。上述的compose的基本实现，如果要多个函数进行组合，可以写一个通用的compose函数。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用的compose函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">compose</span>(<span class="params"></span>) &#123;</span><br><span class="line">		<span class="keyword">var</span> args = <span class="variable language_">arguments</span></span><br><span class="line">  	<span class="keyword">var</span> length = args.<span class="property">length</span> - <span class="number">1</span></span><br><span class="line">  	<span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      	<span class="keyword">var</span> i = length - <span class="number">1</span></span><br><span class="line">      	<span class="keyword">var</span> result = args[length].<span class="title function_">apply</span>(<span class="variable language_">this</span>, <span class="variable language_">arguments</span>)</span><br><span class="line">      	<span class="keyword">while</span> (i &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">            result = args[i].<span class="title function_">call</span>(<span class="variable language_">this</span>, result)</span><br><span class="line">            i--</span><br><span class="line">      	&#125;</span><br><span class="line">      	<span class="keyword">return</span> result</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本用法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成字符串</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addHello</span>(<span class="params">str</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello &#x27;</span>+ str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转换为大写</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">toUpperCase</span>(<span class="params">str</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">toUpperCase</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 反转</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reverse</span>(<span class="params">str</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reverse</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用compose函数组合需要执行的函数，灵活组合</span></span><br><span class="line"><span class="keyword">var</span> fn = <span class="title function_">compose</span>(reverse, toUpperCase, addHello) <span class="comment">// 右往左执行</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">fn</span>(<span class="string">&#x27;world&#x27;</span>))  <span class="comment">// DLROW OLLEH</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn1 = <span class="title function_">compose</span>(reverse, toUpperCase) <span class="comment">// 右往左执行</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">fn1</span>(<span class="string">&#x27;say hello&#x27;</span>)) <span class="comment">// OLLEH YAS</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="柯里化（Currying）"><a href="#柯里化（Currying）" class="headerlink" title="柯里化（Currying）"></a>柯里化（Currying）</h4><p>定义：在计算机科学中，柯里化（Currying）是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数且返回结果的新函数的技术。柯里化函数则是将函数柯里化之后得到的一个新函数。</p>
-<p>由上述定义可知，柯里化函数有如下两个特性：</p>
-<ul>
-<li>接受一个单一参数</li>
-<li>返回接受余下的参数而且返回结果的新函数</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用Currying函数，参数从左到右传递</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createCurry</span>(<span class="params">func, arrArgs</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="variable language_">arguments</span></span><br><span class="line">    <span class="keyword">var</span> funcLength = func.<span class="property">length</span></span><br><span class="line">    <span class="keyword">var</span> arrArgs = arrArgs || []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> _arrArgs = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">slice</span>.<span class="title function_">call</span>(<span class="variable language_">arguments</span>)</span><br><span class="line">        <span class="keyword">var</span> allArrArgs = arrArgs.<span class="title function_">concat</span>(_arrArgs)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果参数个数小于最初的func.length，则递归调用，继续收集参数</span></span><br><span class="line">        <span class="keyword">if</span> (allArrArgs.<span class="property">length</span> &lt; funcLength) &#123;</span><br><span class="line">            <span class="keyword">return</span> args.<span class="property">callee</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, func, allArrArgs)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 参数收集完毕，则执行func</span></span><br><span class="line">        <span class="keyword">return</span> func.<span class="title function_">apply</span>(<span class="variable language_">this</span>, allArrArgs)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// createCurry返回一个柯里化函数</span></span><br><span class="line"><span class="keyword">var</span> addCurry = <span class="title function_">createCurry</span>(<span class="keyword">function</span>(<span class="params">a, b, c</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b + c</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">addCurry</span>(<span class="number">1</span>)(<span class="number">2</span>)(<span class="number">3</span>))  <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-
-<p>应用场景：</p>
-<ul>
-<li>兼容浏览器事件监听方法</li>
-<li>防抖和节流</li>
-</ul>
 
       
     </div>
