@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,123 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2023/03/09/%E6%9F%AF%E9%87%8C%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/09/%E6%9F%AF%E9%87%8C%E5%8C%96/" class="post-title-link" itemprop="url">柯里化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-09 12:19:20 / 修改时间：12:20:10" itemprop="dateCreated datePublished" datetime="2023-03-09T12:19:20+08:00">2023-03-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JavaScript函数式编程中有不少编程技巧，而柯里化则是很常见的一种，本篇文章将带你了解它的意义和原理，以及运用场景，并实现一个 <code>curry</code> 函数。</p>
+<h2 id="什么是柯里化？"><a href="#什么是柯里化？" class="headerlink" title="什么是柯里化？"></a>什么是柯里化？</h2><blockquote>
+<p>在计算机科学中，柯里化（英語：Currying），又译为卡瑞化或加里化，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。</p>
+</blockquote>
+<p>这是维基百科上的定义，它的意思用代码呈现出来就是下面这种效果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  原函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params">a, b, c</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正常调用</span></span><br><span class="line"><span class="title function_">func</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 被柯里化后可单个调用</span></span><br><span class="line"><span class="keyword">const</span> curriedFunc = <span class="title function_">curry</span>(func); <span class="comment">// 把接受多个参数的函数变换成接受一个单一参数</span></span><br><span class="line"><span class="keyword">const</span> curriedFunc1 = <span class="title function_">curriedFunc</span>(<span class="number">1</span>); <span class="comment">// 返回一个 “可接受余下的参数 b 和 c ” 的新函数</span></span><br><span class="line"><span class="keyword">const</span> curriedFunc2 = <span class="title function_">curriedFunc1</span>(<span class="number">2</span>); <span class="comment">// 返回一个 “可接受余下的参数 c ” 的新函数</span></span><br><span class="line"><span class="comment">// 没有剩余参数，因此返回结果。</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">curriedFunc2</span>(<span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<p>但现实编程常常更需要效果是：可以一次传递多个参数，只要没有大于等于函数的参数个数，都返回一个 “可接受余下的参数” 的新函数。比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> curriedFunc1 = <span class="title function_">curriedFunc</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// 没有剩余参数，因此返回结果，不会管多余的参数。</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">curriedFunc2</span>(<span class="number">3</span>, <span class="number">4</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<p>第一次调用，只传递了部分参数，因此返回了一个 “可接受余下的参数” 的新函数，下次调用传入最后一个参数，才会直接返回结果，当然多传递了参数没有影响，计算的是初始函数的参数个数。</p>
+<p>当然也可以直接当成原函数调用，一次性传递所有参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">curriedFunc</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候直接接受了所有参数，没有剩余参数，因此直接返回结果，<code>curriedFunc</code> 和 <code>curry</code> 就表现一致，这样就没有 <code>柯里化</code> 的必要了。</p>
+<p>注意到没，每一次调用我都是分开写，而不是直接一次写完，因为如果一次性写完的话，使用意义就不大了，<code>curriedFunc(1)(2)(3)</code> 和 <code>func(1, 2, 3)</code> 结果没有任何差别，分开来写才是柯里化在编程中的运用的意义所在。</p>
+<h2 id="柯里化的运用场景和原理探索"><a href="#柯里化的运用场景和原理探索" class="headerlink" title="柯里化的运用场景和原理探索"></a>柯里化的运用场景和原理探索</h2><p>上面介绍了 <code>柯里化</code> 的含义，其实 <code>柯里化</code> 并不是说一定要使用 <code>curry</code> 来转化一个函数，然后去分开传递参数，这样的运用场景在 <code>JavaScript</code> 实践中其实比较少用到，相反用的特别多的是它的原理，而不是这个根据原理去实现的 <code>curry</code> 函数，当然如果你理解了这个本质，那么你可以去使用 <code>curry</code> 函数来简化部分代码。</p>
+<p>这里先来看一下平时一般会怎么运用 <code>curry</code> 的原理，比如需要创建一个请求方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// createRequest.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createRequest</span>(<span class="params">config</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">url, params</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> axios.<span class="title function_">post</span>(url, params, config);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后可以在应用初始化的时候单独去创建 request 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="title function_">createRequest</span>(config);</span><br></pre></td></tr></table></figure>
+
+<p>使用 request ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pageA.js</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getListData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">request</span>(<span class="string">&quot;/api/xxx&quot;</span>, &#123;&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回的 request 函数以后每次只用传递 <code>url</code> , <code>params</code> 两个参数，而不需要重复传递 <code>config</code> 的数据，这样公共部分参数也更好管理配置一些。</p>
+<p>看到这里是不是有些清晰了，这不就是使用闭包来缓存数据，事实就是这样的，<code>柯里化</code> 本身就是使用闭包来缓存之前传入的函数参数。上面的代码 createRequest 改变一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// createRequest.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">postRequest</span>(<span class="params">url, params, config</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> axios.<span class="title function_">post</span>(url, params, config);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createRequest = <span class="title function_">curry</span>(postRequest);</span><br></pre></td></tr></table></figure>
+
+<p>应用初始化的代码不变，仍然是这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="title function_">createRequest</span>(config);</span><br></pre></td></tr></table></figure>
+
+<p>使用 request 的时候，也保持 <code>request(&quot;/api/xxx&quot;, params)</code> 不变，最后的结果也不变。</p>
+<p>这时候甚至还可以这样使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pageA.js</span></span><br><span class="line"><span class="keyword">const</span> getList = <span class="title function_">request</span>(<span class="string">&quot;/api/xxx&quot;</span>); <span class="comment">// 只用写一次，就可以在多个地方调用了</span></span><br><span class="line"><span class="keyword">let</span> pageNo = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getListData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">getList</span>(&#123; <span class="attr">pageNo</span>: pageNo &#125;);</span><br><span class="line">    pageNo++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">resetListData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    pageNo = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">getList</span>(&#123; <span class="attr">pageNo</span>: <span class="number">0</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>柯里化</code> 可以很大程度的去缓存函数参数，然后简化代码，特别是越复杂应用，越能体现出它的强大能力。</p>
+<h2 id="实现一个柯里化函数"><a href="#实现一个柯里化函数" class="headerlink" title="实现一个柯里化函数"></a>实现一个柯里化函数</h2><p>原理都说明白了，下面我们来实现一个简单版的 <code>curry</code> 函数：</p>
+<p>实现思路：</p>
+<ol>
+<li>记录元函数长度</li>
+<li>实现创建“一个返回函数”的函数，函数内部需要判断传递的总参数是否足够，足够则直接执行原函数并返回原函数执行结果，不够则进行再次 <code>创建“一个返回函数”的函数</code>（这里就是递归模式了，跳出递归条件就是所有参数&gt;&#x3D;原函数）。</li>
+<li>需要注意总参数的存储，需要放在 <code>createCurried</code> 函数的参数中来进行传递。</li>
+</ol>
+<p>具体代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span>(<span class="params">func</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> funcArgsLength = func.<span class="property">length</span>; <span class="comment">// 原函数长度</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">createCurried</span>(<span class="params">oldArgs = []</span>) &#123; <span class="comment">// oldArgs为已记录的函数参数。</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">curried</span>(<span class="params">...newArgs</span>) &#123; <span class="comment">// newArgs每次调用时传递的新参数</span></span><br><span class="line">            <span class="comment">// 参数至少需要传递一个，否则就当传递了一个空的参数，函数执行什么都不处理。</span></span><br><span class="line">            <span class="keyword">const</span> args = [...oldArgs, ...(newArgs.<span class="property">length</span> ? newArgs : [<span class="literal">undefined</span>] )]</span><br><span class="line">            <span class="comment">// 没有剩余参数，则直接执行 func 并返回结果。</span></span><br><span class="line">            <span class="keyword">if</span> (args.<span class="property">length</span> &gt;= funcArgsLength) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_">func</span>(...args);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 有剩余参数，因此返回了一个 “可接受余下的参数” 的新函数，也就是创建 curried</span></span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createCurried</span>([...args]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> curried;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回被一个被柯里化的函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createCurried</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1216,98 +1333,6 @@ URL.createObjectURL(blob) 存在于当前document内，清除方式只有upload(
 <li>peerDependencies用于开发第三方npm组件库&#x2F;插件所使用，用于指定当前开发的组件&#x2F;插件兼容的宿主版本；</li>
 </ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/05/28/vue-css-scoped%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xzhzzz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="...">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/28/vue-css-scoped%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">vue css scoped学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-28 15:19:26" itemprop="dateCreated datePublished" datetime="2022-05-28T15:19:26+08:00">2022-05-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在Vue单文件组件中，我们只需要在<code>style</code>标签上加<code>scoped</code>属性，就可以实现标签内的样式只作用于当前模板输出的HTML标签，其实现原理如下：</p>
-<ul>
-<li>每个Vue文件都将对应一个唯一的id，该id可以根据文件路径名和内容hash生成</li>
-<li>编译<code>template</code>标签时时为每个标签添加了当前组件的id，如<code>&lt;div class=&quot;demo&quot;&gt;&lt;/div&gt;</code>会被编译成<code>&lt;div class=&quot;demo&quot; data-v-27e4e96e&gt;&lt;/div&gt;</code></li>
-<li>编译<code>style</code>标签时，会根据当前组件的id通过属性选择器和组合选择器输出样式，如<code>.demo&#123;color: red;&#125;</code>会被编译成<code>.demo[data-v-27e4e96e]&#123;color: red;&#125;</code></li>
-</ul>
-<h4 id="VueLoaderPlugin"><a href="#VueLoaderPlugin" class="headerlink" title="VueLoaderPlugin"></a>VueLoaderPlugin</h4><p>VueLoaderPlugin 获取了 webpack配置中的 rules（ 即 <code>compiler.option.module.rule</code> 的比如 <code>test:/.vue$/</code> 规则），然后创建了<code>pitcher</code> 规则，pitcher 中的 <strong>pitcher-loader</strong> 可以通过 <strong>resourceQuery</strong> 识别引入文件的 <strong>query</strong> 带的关键字，进行 <strong>loader</strong> 解析；</p>
-<p>然后 VueLoaderPlugin 将进行 <code>clonedRule</code>（ 即对 <strong>vueRule</strong> 以外的 rule 进行处理），具体是重写 <strong>resource</strong> 和 <strong>resourceQuery</strong>，使得 loader 最终能匹配上文件；</p>
-<h4 id="vue-loader"><a href="#vue-loader" class="headerlink" title="vue-loader"></a>vue-loader</h4><p>得到匹配文件后，利用 <strong>vue-loader</strong> 插件来处理，首先 <code>@vue/component-compiler-utils</code> <code>.parse</code> 方法可以将 .vue后缀文件按照 <strong>template&#x2F;script&#x2F;style</strong> 分成代码块，然后会根据文件路径和文件内容生成 <code>hash</code> 值，并赋给 id ，跟在文件参数后面；</p>
-<p>对于 style 代码块，vue-loader 会在 css-loader 前增加<code>stylePostLoader</code>，<code>stylePostLoader</code> 正是 Vue scoped 的原理核心之一，它会给每个选择器增加属性<code>[data-v-hash]</code> ，这里的 hash 值就是上面的 id 值；如<code>.demo&#123;color: red;&#125;</code>会被编译成<code>.demo[data-v-27e4e96e]&#123;color: red;&#125;</code></p>
-<p>对于 template 的代码块，vue-loader 的 <code>normalizeComponent</code> 方法，判断如果 vue 文件中有 scoped 的 style，则其返回的 <strong><code>options._ScopedId</code></strong> 为上面的 scopedId；在 vnode 渲染生成 DOM 的时候会在 dom元素上增增加 scopedId，也就是增加 data-v-hash，如<code>&lt;div class=&quot;demo&quot;&gt;&lt;/div&gt;</code>会被编译成<code>&lt;div class=&quot;demo&quot; data-v-27e4e96e&gt;&lt;/div&gt;</code>。</p>
-<p>这样就可以实现标签内的样式只作用于当前模板输出的HTML标签。</p>
-<h3 id="scoped-样式穿透"><a href="#scoped-样式穿透" class="headerlink" title="scoped 样式穿透"></a>scoped 样式穿透</h3><blockquote>
-<p>在Vue项目中，当我们引入第三方组件库时(如使用element-ui)，需要在局部组件中修改第三方组件库样式，而又不想去除scoped属性造成组件之间的样式覆盖。这时可以通过特殊的方式<strong>穿透scoped</strong></p>
-</blockquote>
-<h4 id="stylus的样式穿透-使用-gt-gt-gt"><a href="#stylus的样式穿透-使用-gt-gt-gt" class="headerlink" title="stylus的样式穿透 使用 &gt;&gt;&gt;"></a>stylus的样式穿透 使用 &gt;&gt;&gt;</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span> &gt;&gt;&gt; <span class="selector-class">.swiper-pagination-bullet-active</span></span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="sass和less的样式穿透-使用-x2F-deep-x2F"><a href="#sass和less的样式穿透-使用-x2F-deep-x2F" class="headerlink" title="sass和less的样式穿透 使用 &#x2F;deep&#x2F;"></a>sass和less的样式穿透 使用 &#x2F;deep&#x2F;</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 语法</span><br><span class="line">外层 /deep/ 第三方组件 &#123;</span><br><span class="line">    样式</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// eg</span><br><span class="line"><span class="selector-class">.wrapper</span> /deep/ <span class="selector-class">.swiper-pagination-bullet-active</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 

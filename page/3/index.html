@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,105 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2019/10/20/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/20/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">浮点数运算精度问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-20 21:16:14" itemprop="dateCreated datePublished" datetime="2019-10-20T21:16:14+08:00">2019-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="精度丢失问题"><a href="#精度丢失问题" class="headerlink" title="精度丢失问题"></a>精度丢失问题</h3><p>因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运算时精度丢失现象</span></span><br><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> = <span class="number">0.30000000000000004</span></span><br><span class="line"><span class="number">0.3</span> - <span class="number">0.2</span> = <span class="number">0.09999999999999998</span></span><br><span class="line"><span class="number">19.9</span> * <span class="number">100</span> = <span class="number">1989.9999999999998</span></span><br><span class="line"><span class="number">0.3</span> / <span class="number">0.1</span> = <span class="number">2.9999999999999996</span></span><br><span class="line"><span class="number">1000000000000000128</span> === <span class="number">1000000000000000129</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么算术运算时会出现精度丢失"><a href="#为什么算术运算时会出现精度丢失" class="headerlink" title="为什么算术运算时会出现精度丢失"></a>为什么算术运算时会出现精度丢失</h3><p>首先JavaScript中不管是整数还是小数都是用Number类型，而Number类型采用“IEEE 754标准定义的双精度64位格式”（double-precision 64-bit format IEEE 754 values）存储，这样的存储结构优点是可以归一化处理整数和小数，节省存储空间。</p>
+<p>64-bit存储可分为三个部分：</p>
+<ul>
+<li>符号位S：第 1 位是正负数符号位（sign），0代表正数，1代表负数</li>
+<li>指数位E：中间的 11 位存储指数（exponent），用来表示次方数</li>
+<li>尾数位M：最后的 52 位是尾数（mantissa），<strong>超出的部分自动进一舍零</strong></li>
+</ul>
+<p><img src="/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E9%97%AE%E9%A2%98/1.png" alt="Storage"></p>
+<p><strong>以0.1 + 0.2为例子说一说精度丢失的现象</strong></p>
+<p>首先，进行计算前十进制的0.1和0.2会被转换成二进制，但是由于浮点数用二进制表示时这两个数是无穷的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.1</span> -&gt; <span class="number">0.0001</span> <span class="number">1001</span> <span class="number">1001</span> <span class="number">1001.</span>..(<span class="number">1100</span>循环)</span><br><span class="line"><span class="number">0.2</span> -&gt; <span class="number">0.0011</span> <span class="number">0011</span> <span class="number">0011</span> <span class="number">0011</span>...(<span class="number">0011</span>循环)</span><br></pre></td></tr></table></figure>
+
+<p>IEEE 754标准定义的双精度64位格式的小数部分最多支持53位二进制位，因为浮点数小数位的限制而超出的部分自动进一舍零，所以两者相加之后得到二进制为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.0100110011001100110011001100110011001100110011001100</span></span><br></pre></td></tr></table></figure>
+
+<p>再转换为十进制，就成了0.30000000000000004，所以进行算术计算时会出现精度丢失。</p>
+<p>不单单只是JavaScript会出现这种问题，只要是数字格式采用“IEEE 754标准定义的双精度64位格式”的语言都会出现这种问题（具体有哪些语言可以访问<a target="_blank" rel="noopener" href="http://0.30000000000000004.com/%EF%BC%89%EF%BC%8C%E4%BD%86%E9%83%A8%E5%88%86%E8%AF%AD%E8%A8%80%E5%A6%82C++/C#/Java%E7%AD%89%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%B0%81%E8%A3%85%E5%A5%BD%E4%BA%86%E6%96%B9%E6%B3%95%E6%9D%A5%E9%81%BF%E5%85%8D%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C%E8%80%8C">http://0.30000000000000004.com/），但部分语言如C++/C#/Java等语言中已经封装好了方法来避免精度丢失的问题，而</a> JavaScript是一门弱类型的语言，从设计思想上就没有对浮点数有个严格的数据类型，所以精度丢失的问题就显得格外突出。</p>
+<h3 id="规避的方法"><a href="#规避的方法" class="headerlink" title="规避的方法"></a>规避的方法</h3><p>方法1：通过toFixed()方法来保留小数。因为这个方法是根据四舍五入来保留小数的，所以最后的计算结果不精确。</p>
+<p>方法2：把要计算的数字升级（乘以10的n次幂）成计算机能够精确识别的整数，计算完以后再降级。（建议使用该方法）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 将一个浮点数转换成整数，返回整数和倍数</span></span><br><span class="line"><span class="comment">* 如 3.14 -&gt; 314 倍数是100</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">function <span class="title function_">toInteger</span><span class="params">(floatNum)</span> &#123;</span><br><span class="line">    <span class="type">const</span> <span class="variable">ret</span> <span class="operator">=</span> &#123; times: <span class="number">1</span>, num: <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否为一个整数</span></span><br><span class="line">    <span class="keyword">if</span> (Math.floor(floatNum) === floatNum) &#123;</span><br><span class="line">        ret.num = floatNum</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="variable">strfi</span> <span class="operator">=</span> `$&#123;floatNum&#125;`</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 查找小数点的下标</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">dotPos</span> <span class="operator">=</span> strfi.indexOf(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 获取小数的位数</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">len</span> <span class="operator">=</span> strfi.substr(dotPos + <span class="number">1</span>).length</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// Math.pow(10,len)指定10的len次幂 </span></span><br><span class="line">    <span class="type">const</span> <span class="variable">time</span> <span class="operator">=</span> Math.pow(<span class="number">10</span>, len)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 将浮点数转化为整数</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">intNum</span> <span class="operator">=</span> parseInt(floatNum * time + <span class="number">0.5</span>, <span class="number">10</span>)</span><br><span class="line">    ret.times = time</span><br><span class="line">    ret.num = intNum</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*进行运算</span></span><br><span class="line"><span class="comment">*三个参数分别是要运算的两个数和运算符</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">function <span class="title function_">operation</span><span class="params">(a, b, op)</span> &#123;</span><br><span class="line">    <span class="type">const</span> <span class="variable">o1</span> <span class="operator">=</span> toInteger(a)</span><br><span class="line">    <span class="type">const</span> <span class="variable">o2</span> <span class="operator">=</span> toInteger(b)</span><br><span class="line">    <span class="type">const</span> <span class="variable">n1</span> <span class="operator">=</span> o1.num</span><br><span class="line">    <span class="type">const</span> <span class="variable">n2</span> <span class="operator">=</span> o2.num</span><br><span class="line">    <span class="type">const</span> <span class="variable">t1</span> <span class="operator">=</span> o1.times</span><br><span class="line">    <span class="type">const</span> <span class="variable">t2</span> <span class="operator">=</span> o2.times</span><br><span class="line">    <span class="type">const</span> <span class="variable">max</span> <span class="operator">=</span> t1 &gt; t2 ? t1 : t2</span><br><span class="line">    <span class="type">let</span> <span class="variable">result</span> <span class="operator">=</span> <span class="literal">null</span></span><br><span class="line">    <span class="title function_">switch</span> <span class="params">(op)</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;add&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 + n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 + n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) + n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;subtract&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 - n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 - n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) - n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;multiply&#x27;</span>:</span><br><span class="line">        result = (n1 * n2) / (t1 * t2)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;divide&#x27;</span>:</span><br><span class="line">        result = (n1 / n2) / (t2 / t1)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        console.log(<span class="string">&#x27;不存在的运算类型&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0.1 + 0.2 </span></span><br><span class="line">operation(<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="string">&#x27;add&#x27;</span>) <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1207,206 +1306,6 @@
 <p>代码分析：<br>对于每一次查询，都会通过 once 方法订阅 selected 事件。当某个查询正在进行时，其他同时到达的查询处于 pending 状态，在订阅了 selected 事件后什么都不做，而请求的回调被压入事件队列中。当查询结束时，执行 emit 方法发布 selected 事件并更新状态。此时，那些订阅了 selected 事件的查询的回调函数被依次调用，并传入查询结果 results 作为参数。由于 once 方法的（执行一次就会将监视器移除）特点，每个查询的回调只会被执行一次。执行回调函数以后，由于 status 变为 ready，又可以响应其他的查询。</p>
 <p>在这个过程中，对于相同的 SQL 语句，保证在同一个查询开始到结束的时间中永远只有一次，在这查询期间到来的相同查询，只需在队列中等待数据就绪即可。这些相同查询只是利用了这次查询的结果执行了回调而已，并没有查询数据库，节省了重复的数据库调用开销。</p>
 <p>由于 Node.js 单线程执行的原因，此处无需担心状态问题。这种方式其实也可以应用到其他远程调用的场景中，即使外部没有缓存策略，也能有效节省重复开销。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2018/08/04/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xzhzzz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="...">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/08/04/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">正则表达式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-08-04 17:48:44" itemprop="dateCreated datePublished" datetime="2018-08-04T17:48:44+08:00">2018-08-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><h2 id="了解正则表达式"><a href="#了解正则表达式" class="headerlink" title="了解正则表达式"></a>了解正则表达式</h2><ul>
-<li>什么是正则表达式<br>正则表达式(regular expression)是一个描述字符模式的对象。</li>
-<li>为什么要使用正则表达式<br>正则表达式能够进行强大的“模式匹配”和“文本检索与替换”功能。前端往往有大量的表单数据校验的工作，采用正则表达式会使得数据校验的工作量大大减轻</li>
-</ul>
-<h2 id="创建正则表达式"><a href="#创建正则表达式" class="headerlink" title="创建正则表达式"></a>创建正则表达式</h2><h3 id="使用RegExp构造函数，"><a href="#使用RegExp构造函数，" class="headerlink" title="使用RegExp构造函数，"></a>使用RegExp构造函数，</h3><ul>
-<li><p>第一个参数就是我们的模式“字符串”</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg= <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;study&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用特殊字符</span></span><br><span class="line"><span class="keyword">var</span> reg= <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&#x27;\\d\\w+&#x27;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第二个参数可选，模式修饰符</p>
-<ul>
-<li>i: case-insensitive，表示忽略大小写</li>
-<li>g: global，表示全局匹配</li>
-<li>m: multiline，表示多行匹配</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var reg = new RegExp(&#x27;study&#x27;, &#x27;ig&#x27;);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="还可以用直接量方式直接声明"><a href="#还可以用直接量方式直接声明" class="headerlink" title="还可以用直接量方式直接声明"></a>还可以用直接量方式直接声明</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var reg = /study/gi;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>直接量是字符匹配，不支持变量</li>
-</ul>
-<h2 id="使用正则表达式"><a href="#使用正则表达式" class="headerlink" title="使用正则表达式"></a>使用正则表达式</h2><h3 id="支持正则表达式的字符串方法"><a href="#支持正则表达式的字符串方法" class="headerlink" title="支持正则表达式的字符串方法"></a>支持正则表达式的字符串方法</h3><ul>
-<li>search<br>返回第一次匹配时所在的索引值,如果匹配不到则返回-1</li>
-<li>match<ul>
-<li>默认匹配字符串，返回一个数组<ul>
-<li>0:所匹配的字符</li>
-<li>index:匹配第一个字符所在的索引</li>
-<li>input:对字符串的引用</li>
-</ul>
-</li>
-<li>全局匹配(g)，返回一个匹配所有字符串数组</li>
-<li>如果匹配不到则返回null</li>
-</ul>
-</li>
-<li>replace<br>替换字符串</li>
-<li>split<br><code>&#39;a, b, c, d, e&#39;.split(/\s*,\s* /);</code></li>
-</ul>
-<h3 id="正则表达式的属性和方法"><a href="#正则表达式的属性和方法" class="headerlink" title="正则表达式的属性和方法"></a>正则表达式的属性和方法</h3><ul>
-<li><p>测试正则表达式用test方法,返回布尔值</p>
-<ul>
-<li>格式：正则表达式.test(字符串)</li>
-<li>用&lt;正则表达式&gt;测试&lt;字符串&gt;是否匹配,返回true&#x2F;false</li>
-</ul>
-</li>
-<li><p>测试正则表达式exec方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/xx/.exec(字符串)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="匹配规则"><a href="#匹配规则" class="headerlink" title="匹配规则"></a>匹配规则</h3><ul>
-<li><p>所有字母和数字都是按照字面量进行匹配,和字符串匹配等效<br><code>/good/gi</code></p>
-</li>
-<li><p>字符类（只记小写字母即可）</p>
-<ul>
-<li><p>. : 除换行以外的字符</p>
-</li>
-<li><p>\w : 代表数字或字母或下划线</p>
-</li>
-<li><p>\W : 非数字字母和下划线字符</p>
-</li>
-<li><p>\d : 数字</p>
-</li>
-<li><p>\D : 非数字</p>
-</li>
-<li><p>\s : 代表一个空格</p>
-</li>
-<li><p>\S : 空格以外的字符</p>
-</li>
-<li><p>\b : 匹配一个单词边界，也就是指单词和空格间的位置</p>
-</li>
-<li><p>\B : 匹配非单词边界。</p>
-<blockquote>
-<p>PS:以上所有字符类都只是匹配“一个”字符</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>特殊符号</p>
-<blockquote>
-<p>^ $ . * + ? &#x3D; ! : | \ &#x2F; () [] {}</p>
-</blockquote>
-<ul>
-<li><p>[]: 代表任意“单个字符” ,里面的内容表示“或”的关系</p>
-<ul>
-<li>-: 代表范围</li>
-<li>^: 代表非</li>
-</ul>
-</li>
-<li><p>(): 表示分组（n是以最左边括号出现的顺序排列）</p>
-<ul>
-<li><p>$1: 表示第一个分组</p>
-</li>
-<li><p>$n: 表示第n个分组（不能写在正则表达式里）</p>
-</li>
-<li><p>\n: 在正则分组后面使用，表示对第n个分组的引用(一定要写在正则表达式里)</p>
-<blockquote>
-<p>PS: 编写的正则分组数量越少越好</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>|: 表示或者</p>
-</li>
-<li><p>锚点定位</p>
-<ul>
-<li>^: 表示以什么开头</li>
-<li>$: 表示以什么结尾</li>
-</ul>
-</li>
-<li><p>表示数量，对前一个字符计数，</p>
-<ul>
-<li><p>*: 代表0个或0个以上 &lt;&#x3D;&#x3D;&#x3D;&gt;{0,}</p>
-</li>
-<li><p>+: 代表1个或1个以上 &lt;&#x3D;&#x3D;&#x3D;&gt;{1,}</p>
-</li>
-<li><p>?: 代表0个或1个 &lt;&#x3D;&#x3D;&#x3D;&gt;{0,1}</p>
-</li>
-<li><p>{}:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\d&#123;5&#125;: 匹配5个数字</span><br><span class="line">\d&#123;5,10&#125;: 匹配5个到10个数字</span><br><span class="line">\d&#123;5,&#125;: 匹配5个或5个以上的数字</span><br></pre></td></tr></table></figure></li>
-</ul>
-<blockquote>
-<p>PS:<br>1）数量词*,+,{5,}，会尽可能多的去匹配结果（贪婪）<br>2）在后面加一个?表示尽可能少的去匹配结果（非贪婪）<br>google,goooogle &#x3D;&#x3D;&gt; &#x2F;go+&#x2F;</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
 
       
     </div>

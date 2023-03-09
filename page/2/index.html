@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -137,6 +137,98 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2022/05/28/vue-css-scoped%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/28/vue-css-scoped%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">vue css scoped学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-28 15:19:26" itemprop="dateCreated datePublished" datetime="2022-05-28T15:19:26+08:00">2022-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在Vue单文件组件中，我们只需要在<code>style</code>标签上加<code>scoped</code>属性，就可以实现标签内的样式只作用于当前模板输出的HTML标签，其实现原理如下：</p>
+<ul>
+<li>每个Vue文件都将对应一个唯一的id，该id可以根据文件路径名和内容hash生成</li>
+<li>编译<code>template</code>标签时时为每个标签添加了当前组件的id，如<code>&lt;div class=&quot;demo&quot;&gt;&lt;/div&gt;</code>会被编译成<code>&lt;div class=&quot;demo&quot; data-v-27e4e96e&gt;&lt;/div&gt;</code></li>
+<li>编译<code>style</code>标签时，会根据当前组件的id通过属性选择器和组合选择器输出样式，如<code>.demo&#123;color: red;&#125;</code>会被编译成<code>.demo[data-v-27e4e96e]&#123;color: red;&#125;</code></li>
+</ul>
+<h4 id="VueLoaderPlugin"><a href="#VueLoaderPlugin" class="headerlink" title="VueLoaderPlugin"></a>VueLoaderPlugin</h4><p>VueLoaderPlugin 获取了 webpack配置中的 rules（ 即 <code>compiler.option.module.rule</code> 的比如 <code>test:/.vue$/</code> 规则），然后创建了<code>pitcher</code> 规则，pitcher 中的 <strong>pitcher-loader</strong> 可以通过 <strong>resourceQuery</strong> 识别引入文件的 <strong>query</strong> 带的关键字，进行 <strong>loader</strong> 解析；</p>
+<p>然后 VueLoaderPlugin 将进行 <code>clonedRule</code>（ 即对 <strong>vueRule</strong> 以外的 rule 进行处理），具体是重写 <strong>resource</strong> 和 <strong>resourceQuery</strong>，使得 loader 最终能匹配上文件；</p>
+<h4 id="vue-loader"><a href="#vue-loader" class="headerlink" title="vue-loader"></a>vue-loader</h4><p>得到匹配文件后，利用 <strong>vue-loader</strong> 插件来处理，首先 <code>@vue/component-compiler-utils</code> <code>.parse</code> 方法可以将 .vue后缀文件按照 <strong>template&#x2F;script&#x2F;style</strong> 分成代码块，然后会根据文件路径和文件内容生成 <code>hash</code> 值，并赋给 id ，跟在文件参数后面；</p>
+<p>对于 style 代码块，vue-loader 会在 css-loader 前增加<code>stylePostLoader</code>，<code>stylePostLoader</code> 正是 Vue scoped 的原理核心之一，它会给每个选择器增加属性<code>[data-v-hash]</code> ，这里的 hash 值就是上面的 id 值；如<code>.demo&#123;color: red;&#125;</code>会被编译成<code>.demo[data-v-27e4e96e]&#123;color: red;&#125;</code></p>
+<p>对于 template 的代码块，vue-loader 的 <code>normalizeComponent</code> 方法，判断如果 vue 文件中有 scoped 的 style，则其返回的 <strong><code>options._ScopedId</code></strong> 为上面的 scopedId；在 vnode 渲染生成 DOM 的时候会在 dom元素上增增加 scopedId，也就是增加 data-v-hash，如<code>&lt;div class=&quot;demo&quot;&gt;&lt;/div&gt;</code>会被编译成<code>&lt;div class=&quot;demo&quot; data-v-27e4e96e&gt;&lt;/div&gt;</code>。</p>
+<p>这样就可以实现标签内的样式只作用于当前模板输出的HTML标签。</p>
+<h3 id="scoped-样式穿透"><a href="#scoped-样式穿透" class="headerlink" title="scoped 样式穿透"></a>scoped 样式穿透</h3><blockquote>
+<p>在Vue项目中，当我们引入第三方组件库时(如使用element-ui)，需要在局部组件中修改第三方组件库样式，而又不想去除scoped属性造成组件之间的样式覆盖。这时可以通过特殊的方式<strong>穿透scoped</strong></p>
+</blockquote>
+<h4 id="stylus的样式穿透-使用-gt-gt-gt"><a href="#stylus的样式穿透-使用-gt-gt-gt" class="headerlink" title="stylus的样式穿透 使用 &gt;&gt;&gt;"></a>stylus的样式穿透 使用 &gt;&gt;&gt;</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span> &gt;&gt;&gt; <span class="selector-class">.swiper-pagination-bullet-active</span></span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="sass和less的样式穿透-使用-x2F-deep-x2F"><a href="#sass和less的样式穿透-使用-x2F-deep-x2F" class="headerlink" title="sass和less的样式穿透 使用 &#x2F;deep&#x2F;"></a>sass和less的样式穿透 使用 &#x2F;deep&#x2F;</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 语法</span><br><span class="line">外层 /deep/ 第三方组件 &#123;</span><br><span class="line">    样式</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// eg</span><br><span class="line"><span class="selector-class">.wrapper</span> /deep/ <span class="selector-class">.swiper-pagination-bullet-active</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1362,105 +1454,6 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isArguments</span>(<span class="params">obj</span>)&#123;</span><br><span class="line">  	<span class="keyword">return</span> <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(obj) === <span class="string">&#x27;[object Arguments]&#x27;</span> || (obj != <span class="literal">null</span> &amp;&amp; <span class="title class_">Object</span>.<span class="property">hasOwnProperty</span>.<span class="title function_">call</span>(obj, <span class="string">&#x27;callee&#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>兼容做法原理是通过对象的 hasOwnProperty 方法来判断对象是否拥有 callee 属性从而判断是不是 arguments 对象。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2019/10/20/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xzhzzz">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="...">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | ...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/20/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">浮点数运算精度问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-10-20 21:16:14" itemprop="dateCreated datePublished" datetime="2019-10-20T21:16:14+08:00">2019-10-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-12-16 16:38:36" itemprop="dateModified" datetime="2022-12-16T16:38:36+08:00">2022-12-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="精度丢失问题"><a href="#精度丢失问题" class="headerlink" title="精度丢失问题"></a>精度丢失问题</h3><p>因为JavaScript和其他编程语言（如Python和Java）不同，JavaScript不区分整数值和浮点数值，所有Number类型在 JavaScript 中均用浮点数值表示，所以在进行算术运算的时候会出现精度缺失的问题。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运算时精度丢失现象</span></span><br><span class="line"><span class="number">0.1</span> + <span class="number">0.2</span> = <span class="number">0.30000000000000004</span></span><br><span class="line"><span class="number">0.3</span> - <span class="number">0.2</span> = <span class="number">0.09999999999999998</span></span><br><span class="line"><span class="number">19.9</span> * <span class="number">100</span> = <span class="number">1989.9999999999998</span></span><br><span class="line"><span class="number">0.3</span> / <span class="number">0.1</span> = <span class="number">2.9999999999999996</span></span><br><span class="line"><span class="number">1000000000000000128</span> === <span class="number">1000000000000000129</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="为什么算术运算时会出现精度丢失"><a href="#为什么算术运算时会出现精度丢失" class="headerlink" title="为什么算术运算时会出现精度丢失"></a>为什么算术运算时会出现精度丢失</h3><p>首先JavaScript中不管是整数还是小数都是用Number类型，而Number类型采用“IEEE 754标准定义的双精度64位格式”（double-precision 64-bit format IEEE 754 values）存储，这样的存储结构优点是可以归一化处理整数和小数，节省存储空间。</p>
-<p>64-bit存储可分为三个部分：</p>
-<ul>
-<li>符号位S：第 1 位是正负数符号位（sign），0代表正数，1代表负数</li>
-<li>指数位E：中间的 11 位存储指数（exponent），用来表示次方数</li>
-<li>尾数位M：最后的 52 位是尾数（mantissa），<strong>超出的部分自动进一舍零</strong></li>
-</ul>
-<p><img src="/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E9%97%AE%E9%A2%98/1.png" alt="Storage"></p>
-<p><strong>以0.1 + 0.2为例子说一说精度丢失的现象</strong></p>
-<p>首先，进行计算前十进制的0.1和0.2会被转换成二进制，但是由于浮点数用二进制表示时这两个数是无穷的：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.1</span> -&gt; <span class="number">0.0001</span> <span class="number">1001</span> <span class="number">1001</span> <span class="number">1001.</span>..(<span class="number">1100</span>循环)</span><br><span class="line"><span class="number">0.2</span> -&gt; <span class="number">0.0011</span> <span class="number">0011</span> <span class="number">0011</span> <span class="number">0011</span>...(<span class="number">0011</span>循环)</span><br></pre></td></tr></table></figure>
-
-<p>IEEE 754标准定义的双精度64位格式的小数部分最多支持53位二进制位，因为浮点数小数位的限制而超出的部分自动进一舍零，所以两者相加之后得到二进制为：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.0100110011001100110011001100110011001100110011001100</span></span><br></pre></td></tr></table></figure>
-
-<p>再转换为十进制，就成了0.30000000000000004，所以进行算术计算时会出现精度丢失。</p>
-<p>不单单只是JavaScript会出现这种问题，只要是数字格式采用“IEEE 754标准定义的双精度64位格式”的语言都会出现这种问题（具体有哪些语言可以访问<a target="_blank" rel="noopener" href="http://0.30000000000000004.com/%EF%BC%89%EF%BC%8C%E4%BD%86%E9%83%A8%E5%88%86%E8%AF%AD%E8%A8%80%E5%A6%82C++/C#/Java%E7%AD%89%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%B0%81%E8%A3%85%E5%A5%BD%E4%BA%86%E6%96%B9%E6%B3%95%E6%9D%A5%E9%81%BF%E5%85%8D%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C%E8%80%8C">http://0.30000000000000004.com/），但部分语言如C++/C#/Java等语言中已经封装好了方法来避免精度丢失的问题，而</a> JavaScript是一门弱类型的语言，从设计思想上就没有对浮点数有个严格的数据类型，所以精度丢失的问题就显得格外突出。</p>
-<h3 id="规避的方法"><a href="#规避的方法" class="headerlink" title="规避的方法"></a>规避的方法</h3><p>方法1：通过toFixed()方法来保留小数。因为这个方法是根据四舍五入来保留小数的，所以最后的计算结果不精确。</p>
-<p>方法2：把要计算的数字升级（乘以10的n次幂）成计算机能够精确识别的整数，计算完以后再降级。（建议使用该方法）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 将一个浮点数转换成整数，返回整数和倍数</span></span><br><span class="line"><span class="comment">* 如 3.14 -&gt; 314 倍数是100</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">function <span class="title function_">toInteger</span><span class="params">(floatNum)</span> &#123;</span><br><span class="line">    <span class="type">const</span> <span class="variable">ret</span> <span class="operator">=</span> &#123; times: <span class="number">1</span>, num: <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否为一个整数</span></span><br><span class="line">    <span class="keyword">if</span> (Math.floor(floatNum) === floatNum) &#123;</span><br><span class="line">        ret.num = floatNum</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">const</span> <span class="variable">strfi</span> <span class="operator">=</span> `$&#123;floatNum&#125;`</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 查找小数点的下标</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">dotPos</span> <span class="operator">=</span> strfi.indexOf(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 获取小数的位数</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">len</span> <span class="operator">=</span> strfi.substr(dotPos + <span class="number">1</span>).length</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// Math.pow(10,len)指定10的len次幂 </span></span><br><span class="line">    <span class="type">const</span> <span class="variable">time</span> <span class="operator">=</span> Math.pow(<span class="number">10</span>, len)</span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 将浮点数转化为整数</span></span><br><span class="line">    <span class="type">const</span> <span class="variable">intNum</span> <span class="operator">=</span> parseInt(floatNum * time + <span class="number">0.5</span>, <span class="number">10</span>)</span><br><span class="line">    ret.times = time</span><br><span class="line">    ret.num = intNum</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*进行运算</span></span><br><span class="line"><span class="comment">*三个参数分别是要运算的两个数和运算符</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">function <span class="title function_">operation</span><span class="params">(a, b, op)</span> &#123;</span><br><span class="line">    <span class="type">const</span> <span class="variable">o1</span> <span class="operator">=</span> toInteger(a)</span><br><span class="line">    <span class="type">const</span> <span class="variable">o2</span> <span class="operator">=</span> toInteger(b)</span><br><span class="line">    <span class="type">const</span> <span class="variable">n1</span> <span class="operator">=</span> o1.num</span><br><span class="line">    <span class="type">const</span> <span class="variable">n2</span> <span class="operator">=</span> o2.num</span><br><span class="line">    <span class="type">const</span> <span class="variable">t1</span> <span class="operator">=</span> o1.times</span><br><span class="line">    <span class="type">const</span> <span class="variable">t2</span> <span class="operator">=</span> o2.times</span><br><span class="line">    <span class="type">const</span> <span class="variable">max</span> <span class="operator">=</span> t1 &gt; t2 ? t1 : t2</span><br><span class="line">    <span class="type">let</span> <span class="variable">result</span> <span class="operator">=</span> <span class="literal">null</span></span><br><span class="line">    <span class="title function_">switch</span> <span class="params">(op)</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;add&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 + n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 + n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) + n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;subtract&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> (t1 === t2) &#123;</span><br><span class="line">            result = n1 - n2</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (t1 &gt; t2) &#123;</span><br><span class="line">            result = n1 - n2 * (t1 / t2)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = n1 * (t2 / t1) - n2</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result / max</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;multiply&#x27;</span>:</span><br><span class="line">        result = (n1 * n2) / (t1 * t2)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;divide&#x27;</span>:</span><br><span class="line">        result = (n1 / n2) / (t2 / t1)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        console.log(<span class="string">&#x27;不存在的运算类型&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0.1 + 0.2 </span></span><br><span class="line">operation(<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="string">&#x27;add&#x27;</span>) <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
-
 
       
     </div>

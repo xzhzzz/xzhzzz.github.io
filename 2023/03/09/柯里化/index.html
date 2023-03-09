@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"xzhzzz.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言JavaScript函数式编程中有不少编程技巧，而柯里化则是很常见的一种，本篇文章将带你了解它的意义和原理，以及运用场景，并实现一个 curry 函数。 什么是柯里化？ 在计算机科学中，柯里化（英語：Currying），又译为卡瑞化或加里化，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。  这是维基百科上的定义，它">
+<meta property="og:type" content="article">
+<meta property="og:title" content="柯里化">
+<meta property="og:url" content="https://xzhzzz.github.io/2023/03/09/%E6%9F%AF%E9%87%8C%E5%8C%96/index.html">
+<meta property="og:site_name" content="...">
+<meta property="og:description" content="前言JavaScript函数式编程中有不少编程技巧，而柯里化则是很常见的一种，本篇文章将带你了解它的意义和原理，以及运用场景，并实现一个 curry 函数。 什么是柯里化？ 在计算机科学中，柯里化（英語：Currying），又译为卡瑞化或加里化，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。  这是维基百科上的定义，它">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-09T04:19:20.000Z">
+<meta property="article:modified_time" content="2023-03-09T04:20:10.798Z">
+<meta property="article:author" content="xzhzzz">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xzhzzz.github.io/2023/03/09/%E6%9F%AF%E9%87%8C%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xzhzzz.github.io/2023/03/09/%E6%9F%AF%E9%87%8C%E5%8C%96/","path":"2023/03/09/柯里化/","title":"柯里化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>柯里化 | ...</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">...</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">to the moon</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%9F%AF%E9%87%8C%E5%8C%96%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什么是柯里化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E8%BF%90%E7%94%A8%E5%9C%BA%E6%99%AF%E5%92%8C%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2"><span class="nav-number">3.</span> <span class="nav-text">柯里化的运用场景和原理探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">实现一个柯里化函数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">xzhzzz</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xzhzzz.github.io/2023/03/09/%E6%9F%AF%E9%87%8C%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="xzhzzz">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="...">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="柯里化 | ...">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          柯里化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-09 12:19:20 / 修改时间：12:20:10" itemprop="dateCreated datePublished" datetime="2023-03-09T12:19:20+08:00">2023-03-09</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JavaScript函数式编程中有不少编程技巧，而柯里化则是很常见的一种，本篇文章将带你了解它的意义和原理，以及运用场景，并实现一个 <code>curry</code> 函数。</p>
+<h2 id="什么是柯里化？"><a href="#什么是柯里化？" class="headerlink" title="什么是柯里化？"></a>什么是柯里化？</h2><blockquote>
+<p>在计算机科学中，柯里化（英語：Currying），又译为卡瑞化或加里化，是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。</p>
+</blockquote>
+<p>这是维基百科上的定义，它的意思用代码呈现出来就是下面这种效果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  原函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params">a, b, c</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正常调用</span></span><br><span class="line"><span class="title function_">func</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 被柯里化后可单个调用</span></span><br><span class="line"><span class="keyword">const</span> curriedFunc = <span class="title function_">curry</span>(func); <span class="comment">// 把接受多个参数的函数变换成接受一个单一参数</span></span><br><span class="line"><span class="keyword">const</span> curriedFunc1 = <span class="title function_">curriedFunc</span>(<span class="number">1</span>); <span class="comment">// 返回一个 “可接受余下的参数 b 和 c ” 的新函数</span></span><br><span class="line"><span class="keyword">const</span> curriedFunc2 = <span class="title function_">curriedFunc1</span>(<span class="number">2</span>); <span class="comment">// 返回一个 “可接受余下的参数 c ” 的新函数</span></span><br><span class="line"><span class="comment">// 没有剩余参数，因此返回结果。</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">curriedFunc2</span>(<span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<p>但现实编程常常更需要效果是：可以一次传递多个参数，只要没有大于等于函数的参数个数，都返回一个 “可接受余下的参数” 的新函数。比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> curriedFunc1 = <span class="title function_">curriedFunc</span>(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// 没有剩余参数，因此返回结果，不会管多余的参数。</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">curriedFunc2</span>(<span class="number">3</span>, <span class="number">4</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<p>第一次调用，只传递了部分参数，因此返回了一个 “可接受余下的参数” 的新函数，下次调用传入最后一个参数，才会直接返回结果，当然多传递了参数没有影响，计算的是初始函数的参数个数。</p>
+<p>当然也可以直接当成原函数调用，一次性传递所有参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">curriedFunc</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候直接接受了所有参数，没有剩余参数，因此直接返回结果，<code>curriedFunc</code> 和 <code>curry</code> 就表现一致，这样就没有 <code>柯里化</code> 的必要了。</p>
+<p>注意到没，每一次调用我都是分开写，而不是直接一次写完，因为如果一次性写完的话，使用意义就不大了，<code>curriedFunc(1)(2)(3)</code> 和 <code>func(1, 2, 3)</code> 结果没有任何差别，分开来写才是柯里化在编程中的运用的意义所在。</p>
+<h2 id="柯里化的运用场景和原理探索"><a href="#柯里化的运用场景和原理探索" class="headerlink" title="柯里化的运用场景和原理探索"></a>柯里化的运用场景和原理探索</h2><p>上面介绍了 <code>柯里化</code> 的含义，其实 <code>柯里化</code> 并不是说一定要使用 <code>curry</code> 来转化一个函数，然后去分开传递参数，这样的运用场景在 <code>JavaScript</code> 实践中其实比较少用到，相反用的特别多的是它的原理，而不是这个根据原理去实现的 <code>curry</code> 函数，当然如果你理解了这个本质，那么你可以去使用 <code>curry</code> 函数来简化部分代码。</p>
+<p>这里先来看一下平时一般会怎么运用 <code>curry</code> 的原理，比如需要创建一个请求方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// createRequest.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">createRequest</span>(<span class="params">config</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">url, params</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> axios.<span class="title function_">post</span>(url, params, config);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后可以在应用初始化的时候单独去创建 request 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="title function_">createRequest</span>(config);</span><br></pre></td></tr></table></figure>
+
+<p>使用 request ：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pageA.js</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getListData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">request</span>(<span class="string">&quot;/api/xxx&quot;</span>, &#123;&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回的 request 函数以后每次只用传递 <code>url</code> , <code>params</code> 两个参数，而不需要重复传递 <code>config</code> 的数据，这样公共部分参数也更好管理配置一些。</p>
+<p>看到这里是不是有些清晰了，这不就是使用闭包来缓存数据，事实就是这样的，<code>柯里化</code> 本身就是使用闭包来缓存之前传入的函数参数。上面的代码 createRequest 改变一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// createRequest.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">postRequest</span>(<span class="params">url, params, config</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> axios.<span class="title function_">post</span>(url, params, config);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createRequest = <span class="title function_">curry</span>(postRequest);</span><br></pre></td></tr></table></figure>
+
+<p>应用初始化的代码不变，仍然是这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> request = <span class="title function_">createRequest</span>(config);</span><br></pre></td></tr></table></figure>
+
+<p>使用 request 的时候，也保持 <code>request(&quot;/api/xxx&quot;, params)</code> 不变，最后的结果也不变。</p>
+<p>这时候甚至还可以这样使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pageA.js</span></span><br><span class="line"><span class="keyword">const</span> getList = <span class="title function_">request</span>(<span class="string">&quot;/api/xxx&quot;</span>); <span class="comment">// 只用写一次，就可以在多个地方调用了</span></span><br><span class="line"><span class="keyword">let</span> pageNo = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getListData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">getList</span>(&#123; <span class="attr">pageNo</span>: pageNo &#125;);</span><br><span class="line">    pageNo++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">resetListData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    pageNo = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">getList</span>(&#123; <span class="attr">pageNo</span>: <span class="number">0</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>柯里化</code> 可以很大程度的去缓存函数参数，然后简化代码，特别是越复杂应用，越能体现出它的强大能力。</p>
+<h2 id="实现一个柯里化函数"><a href="#实现一个柯里化函数" class="headerlink" title="实现一个柯里化函数"></a>实现一个柯里化函数</h2><p>原理都说明白了，下面我们来实现一个简单版的 <code>curry</code> 函数：</p>
+<p>实现思路：</p>
+<ol>
+<li>记录元函数长度</li>
+<li>实现创建“一个返回函数”的函数，函数内部需要判断传递的总参数是否足够，足够则直接执行原函数并返回原函数执行结果，不够则进行再次 <code>创建“一个返回函数”的函数</code>（这里就是递归模式了，跳出递归条件就是所有参数&gt;&#x3D;原函数）。</li>
+<li>需要注意总参数的存储，需要放在 <code>createCurried</code> 函数的参数中来进行传递。</li>
+</ol>
+<p>具体代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">curry</span>(<span class="params">func</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> funcArgsLength = func.<span class="property">length</span>; <span class="comment">// 原函数长度</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">createCurried</span>(<span class="params">oldArgs = []</span>) &#123; <span class="comment">// oldArgs为已记录的函数参数。</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">curried</span>(<span class="params">...newArgs</span>) &#123; <span class="comment">// newArgs每次调用时传递的新参数</span></span><br><span class="line">            <span class="comment">// 参数至少需要传递一个，否则就当传递了一个空的参数，函数执行什么都不处理。</span></span><br><span class="line">            <span class="keyword">const</span> args = [...oldArgs, ...(newArgs.<span class="property">length</span> ? newArgs : [<span class="literal">undefined</span>] )]</span><br><span class="line">            <span class="comment">// 没有剩余参数，则直接执行 func 并返回结果。</span></span><br><span class="line">            <span class="keyword">if</span> (args.<span class="property">length</span> &gt;= funcArgsLength) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="title function_">func</span>(...args);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 有剩余参数，因此返回了一个 “可接受余下的参数” 的新函数，也就是创建 curried</span></span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">createCurried</span>([...args]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> curried;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回被一个被柯里化的函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createCurried</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/02/HTML%E4%B8%ADsrc%E5%92%8Chref%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="HTML中src和href的区别">
+                  <i class="fa fa-chevron-left"></i> HTML中src和href的区别
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xzhzzz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
